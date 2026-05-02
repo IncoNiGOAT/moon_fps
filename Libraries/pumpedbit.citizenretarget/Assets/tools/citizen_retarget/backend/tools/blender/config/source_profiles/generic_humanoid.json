@@ -1,0 +1,36 @@
+{
+  "profileId": "generic_humanoid",
+  "displayName": "Generic Humanoid",
+  "inputType": "animation_only_fbx",
+  "rootBoneCandidates": [
+    "mixamorig:Root",
+    "mixamorig:Hips",
+    "B-root",
+    "B-hips",
+    "root",
+    "Root",
+    "hips",
+    "Hips",
+    "pelvis",
+    "Pelvis",
+    "Armature"
+  ],
+  "leafBoneTokens": [
+    "_leaf",
+    "_end",
+    "End"
+  ],
+  "expectedRestPoseAction": "",
+  "retargetPoseSource": {
+    "mode": "rest_pose",
+    "actionName": "",
+    "frame": 0
+  },
+  "sampleActions": {},
+  "canonicalMapping": {},
+  "optionalCanonicalMapping": {},
+  "notes": [
+    "Runtime default for unknown humanoid FBX files.",
+    "Editor-side Rokoko-style auto mapping and manual overrides provide the actual bone map."
+  ]
+}

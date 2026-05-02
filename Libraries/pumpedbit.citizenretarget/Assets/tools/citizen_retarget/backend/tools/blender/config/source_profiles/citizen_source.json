@@ -1,0 +1,16 @@
+{
+  "profileId": "citizen_source",
+  "displayName": "s&box Citizen animation FBX",
+  "inputType": "animation_only_fbx",
+  "rootBoneCandidates": [
+    "root_IK",
+    "pelvis"
+  ],
+  "leafBoneTokens": [
+    "_leaf"
+  ],
+  "notes": [
+    "Citizen animation FBX files are a useful control sample for transport baseline validation.",
+    "Importer warnings about unsupported user property type Short should be logged but do not automatically fail baseline validation."
+  ]
+}

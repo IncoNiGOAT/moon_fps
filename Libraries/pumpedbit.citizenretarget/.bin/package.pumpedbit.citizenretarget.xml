@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>package.pumpedbit.citizenretarget</name>
+    </assembly>
+    <members>
+        <member name="T:CitizenRetarget.CitizenRetargetLibrary">
+            <summary>
+            Runtime marker for CARL, the Citizen Animation Retargeting Library.
+            Editor functionality lives in the sibling editor assembly.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,202 @@
+{
+  "recipeId": "retarget_rokoko_native_automation_v1",
+  "description": "Native-oriented Rokoko automation experiment for Quaternius to stock citizen_REF, closer to the documented addon workflow.",
+  "sourceProfile": "quaternius_ual2",
+  "targetProfile": "citizen",
+  "debug": {
+    "enabled": true,
+    "saveIntermediateBlendFiles": true,
+    "saveStageMetrics": true
+  },
+  "stages": [
+    {
+      "id": "import_fbx",
+      "enabled": true,
+      "kind": "core",
+      "config": {
+        "automaticBoneOrientation": true,
+        "animOffset": 0.0
+      }
+    },
+    {
+      "id": "collect_source_metadata",
+      "enabled": true,
+      "kind": "validator",
+      "config": {}
+    },
+    {
+      "id": "validate_import",
+      "enabled": true,
+      "kind": "validator",
+      "config": {
+        "requireSingleArmature": true,
+        "requireSelectedAction": true,
+        "requireRootBone": true
+      }
+    },
+    {
+      "id": "load_target_reference",
+      "enabled": true,
+      "kind": "core",
+      "config": {
+        "targetReferencePath": "D:\\SteamLibrary\\steamapps\\common\\sbox\\addons\\citizen\\Assets\\models\\citizen\\citizen_REF.fbx"
+      }
+    },
+    {
+      "id": "collect_target_metadata",
+      "enabled": true,
+      "kind": "validator",
+      "config": {}
+    },
+    {
+      "id": "align_rest_pose",
+      "enabled": true,
+      "kind": "normalization",
+      "config": {}
+    },
+    {
+      "id": "build_bone_map",
+      "enabled": true,
+      "kind": "retarget",
+      "config": {
+        "requiredSlots": [
+          "pelvis",
+          "spine_0",
+          "spine_1",
+          "spine_2",
+          "head",
+          "arm_upper_L",
+          "arm_lower_L",
+          "hand_L",
+          "arm_upper_R",
+          "arm_lower_R",
+          "hand_R",
+          "leg_upper_L",
+          "leg_lower_L",
+          "ankle_L",
+          "ball_L",
+          "leg_upper_R",
+          "leg_lower_R",
+          "ankle_R",
+          "ball_R"
+        ]
+      }
+    },
+    {
+      "id": "normalize_retarget_pose",
+      "enabled": true,
+      "kind": "normalization",
+      "config": {
+        "targetPosePresetId": "citizen_t_pose_calibrated_v1",
+        "applySourcePoseToSourceArmature": true
+      }
+    },
+    {
+      "id": "retarget_to_citizen",
+      "enabled": true,
+      "kind": "retarget",
+      "config": {
+        "retargetBackend": "rokoko_operator",
+        "autoScaling": false,
+        "usePose": "CURRENT",
+        "useSourcePoseReference": false,
+        "useTargetPoseProxy": false,
+        "sourceObjectBasisMode": "match_target_rotation",
+        "sourceObjectBasisToleranceDegrees": 0.5
+      }
+    },
+    {
+      "id": "bake_target_animation",
+      "enabled": true,
+      "kind": "retarget",
+      "config": {}
+    },
+    {
+      "id": "rebuild_citizen_ik",
+      "enabled": true,
+      "kind": "retarget",
+      "config": {
+        "enabledTargets": [
+          "foot_R_IK_target",
+          "foot_L_IK_target",
+          "hand_R_IK_target",
+          "hand_L_IK_target"
+        ]
+      }
+    },
+    {
+      "id": "analyze_motion_trajectories",
+      "enabled": true,
+      "kind": "validator",
+      "config": {
+        "referenceSlot": "pelvis",
+        "trackedSlots": [
+          "hand_L",
+          "hand_R",
+          "ankle_L",
+          "ankle_R"
+        ],
+        "requiredDominantAxisMatchSlots": [
+          "hand_L",
+          "hand_R"
+        ],
+        "minTargetAnkleAlternationSignChanges": 2
+      }
+    },
+    {
+      "id": "validate_target_animation",
+      "enabled": true,
+      "kind": "validator",
+      "config": {
+        "staticBoneGroups": [
+          "twist",
+          "helper",
+          "log_only"
+        ]
+      }
+    },
+    {
+      "id": "export_fbx",
+      "enabled": true,
+      "kind": "core",
+      "config": {
+        "globalScale": 1.0,
+        "axisForward": "-Z",
+        "axisUp": "Y",
+        "primaryBoneAxis": "Y",
+        "secondaryBoneAxis": "X",
+        "applyUnitScale": true,
+        "useArmatureDeformOnly": false,
+        "addLeafBones": false,
+        "bakeAnim": true,
+        "bakeAnimUseAllBones": true,
+        "bakeAnimForceStartEndKeying": true,
+        "bakeAnimSimplifyFactor": 0.0,
+        "pathMode": "AUTO",
+        "embedTextures": false
+      }
+    },
+    {
+      "id": "validate_export",
+      "enabled": true,
+      "kind": "validator",
+      "config": {
+        "compareFrameRange": true,
+        "compareBoneNames": true,
+        "failOnLeafBones": true,
+        "compareAnimatedBoneSet": false,
+        "compareBoneCount": true,
+        "compareRootMotion": true,
+        "rootMotionToleranceAbsolute": 0.01,
+        "rootMotionToleranceRelative": 0.001,
+        "allowBoneCountDelta": 0
+      }
+    },
+    {
+      "id": "write_result_manifest",
+      "enabled": true,
+      "kind": "core",
+      "config": {}
+    }
+  ]
+}

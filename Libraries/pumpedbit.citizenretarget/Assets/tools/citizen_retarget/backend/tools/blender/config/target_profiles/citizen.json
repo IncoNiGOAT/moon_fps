@@ -1,0 +1,511 @@
+{
+  "profileId": "citizen",
+  "displayName": "s&box Citizen",
+  "sourceFiles": {
+    "citizenRefFbx": "models/citizen/citizen_ref.fbx",
+    "citizenFbx": "models/citizen/citizen.fbx",
+    "citizenVmdl": "models/citizen/citizen.vmdl"
+  },
+  "defaultRootBone": "pelvis",
+  "defaultRetargetPosePreset": "citizen_t_pose_calibrated_v1",
+  "rootBoneCandidates": [
+    "root_IK",
+    "pelvis"
+  ],
+  "canonicalSlots": {
+    "pelvis": "pelvis",
+    "spine_0": "spine_0",
+    "spine_1": "spine_1",
+    "spine_2": "spine_2",
+    "neck_0": "neck_0",
+    "head": "head",
+    "clavicle_L": "clavicle_L",
+    "arm_upper_L": "arm_upper_L",
+    "arm_lower_L": "arm_lower_L",
+    "hand_L": "hand_L",
+    "clavicle_R": "clavicle_R",
+    "arm_upper_R": "arm_upper_R",
+    "arm_lower_R": "arm_lower_R",
+    "hand_R": "hand_R",
+    "leg_upper_L": "leg_upper_L",
+    "leg_lower_L": "leg_lower_L",
+    "ankle_L": "ankle_L",
+    "ball_L": "ball_L",
+    "leg_upper_R": "leg_upper_R",
+    "leg_lower_R": "leg_lower_R",
+    "ankle_R": "ankle_R",
+    "ball_R": "ball_R"
+  },
+  "ikTargetPairs": {
+    "foot_R_IK_target": "ankle_R",
+    "foot_L_IK_target": "ankle_L",
+    "hand_R_IK_target": "hand_R",
+    "hand_L_IK_target": "hand_L"
+  },
+  "retargetPosePresets": {
+    "citizen_t_pose_v1": {
+      "rotationFormat": "euler_xyz_degrees",
+      "bones": {
+        "clavicle_L": [
+          -20.0,
+          -20.0,
+          20.0
+        ],
+        "arm_upper_L": [
+          0.0,
+          20.0,
+          -20.0
+        ],
+        "arm_lower_L": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "hand_L": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "clavicle_R": [
+          20.0,
+          20.0,
+          20.0
+        ],
+        "arm_upper_R": [
+          0.0,
+          -20.0,
+          20.0
+        ],
+        "arm_lower_R": [
+          0.0,
+          0.0,
+          -20.0
+        ],
+        "hand_R": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "citizen_t_pose_calibrated_v1": {
+      "rotationFormat": "euler_xyz_degrees",
+      "phase": "rest_pose_alignment_locked",
+      "bones": {
+        "clavicle_L": [
+          0.0,
+          15.75,
+          0.0
+        ],
+        "arm_upper_L": [
+          0.0,
+          29.25,
+          0.0
+        ],
+        "clavicle_R": [
+          0.0,
+          -15.75,
+          0.0
+        ],
+        "arm_upper_R": [
+          0.0,
+          -29.25,
+          0.0
+        ],
+        "hand_L": [
+          -1.419057,
+          5.272699,
+          -0.598295
+        ],
+        "hand_R": [
+          -1.419102,
+          -5.272708,
+          -0.598316
+        ],
+        "finger_thumb_0_L": [
+          12.93911,
+          4.36085,
+          8.285549
+        ],
+        "finger_thumb_0_R": [
+          12.939133,
+          -4.360844,
+          8.285588
+        ],
+        "finger_thumb_2_L": [
+          -0.157387,
+          -0.071064,
+          -0.293913
+        ],
+        "finger_thumb_2_R": [
+          -0.157405,
+          0.071061,
+          -0.293913
+        ],
+        "finger_index_meta_L": [
+          -3.345212,
+          6.283531,
+          -1.251044
+        ],
+        "finger_index_meta_R": [
+          -3.345207,
+          -6.28352,
+          -1.251049
+        ],
+        "finger_index_0_L": [
+          -2.29326,
+          14.905148,
+          -5.78339
+        ],
+        "finger_index_0_R": [
+          -2.29335,
+          -14.90515,
+          -5.783383
+        ],
+        "finger_index_1_L": [
+          2.400457,
+          23.16106,
+          -11.314447
+        ],
+        "finger_index_1_R": [
+          2.400423,
+          -23.161059,
+          -11.314434
+        ],
+        "finger_index_2_L": [
+          0.111517,
+          3.664368,
+          -1.681419
+        ],
+        "finger_index_2_R": [
+          0.111612,
+          -3.664367,
+          -1.681417
+        ],
+        "finger_middle_meta_L": [
+          -0.3266,
+          1.354765,
+          -0.165293
+        ],
+        "finger_middle_meta_R": [
+          -0.326602,
+          -1.354764,
+          -0.165291
+        ],
+        "finger_middle_0_L": [
+          -2.101629,
+          15.729229,
+          -3.240006
+        ],
+        "finger_middle_0_R": [
+          -2.101698,
+          -15.729219,
+          -3.240005
+        ],
+        "finger_middle_1_L": [
+          0.44023,
+          24.718907,
+          -6.945788
+        ],
+        "finger_middle_1_R": [
+          0.440002,
+          -24.718907,
+          -6.945791
+        ],
+        "finger_middle_2_L": [
+          -0.028146,
+          3.886543,
+          -1.070794
+        ],
+        "finger_middle_2_R": [
+          -0.027946,
+          -3.886542,
+          -1.070792
+        ],
+        "finger_ring_meta_L": [
+          -0.002186,
+          4.584715,
+          -0.009783
+        ],
+        "finger_ring_meta_R": [
+          -0.002199,
+          -4.584717,
+          -0.009773
+        ],
+        "finger_ring_0_L": [
+          -1.732762,
+          16.152525,
+          -0.276897
+        ],
+        "finger_ring_0_R": [
+          -1.732828,
+          -16.152511,
+          -0.276899
+        ],
+        "finger_ring_1_L": [
+          -1.640218,
+          25.504031,
+          -1.749956
+        ],
+        "finger_ring_1_R": [
+          -1.640177,
+          -25.504024,
+          -1.749952
+        ],
+        "finger_ring_2_L": [
+          -0.268261,
+          4.006774,
+          -0.3487
+        ],
+        "finger_ring_2_R": [
+          -0.268186,
+          -4.006773,
+          -0.348692
+        ]
+      }
+    },
+    "citizen_t_pose_v2": {
+      "rotationFormat": "euler_xyz_degrees",
+      "bones": {
+        "pelvis": [
+          14.4586,
+          89.9999,
+          0.0
+        ],
+        "spine_0": [
+          -7.2217,
+          89.9704,
+          0.1915
+        ],
+        "spine_1": [
+          -9.2044,
+          90.0159,
+          -0.315
+        ],
+        "spine_2": [
+          73.8306,
+          89.9698,
+          73.8967
+        ],
+        "neck_0": [
+          14.9942,
+          89.9996,
+          0.0
+        ],
+        "head": [
+          -9.0247,
+          89.9996,
+          0.0
+        ],
+        "clavicle_L": [
+          -1.9713,
+          3.3256,
+          16.7111
+        ],
+        "arm_upper_L": [
+          77.8557,
+          -9.6796,
+          178.8764
+        ],
+        "arm_lower_L": [
+          19.6825,
+          5.6156,
+          41.1653
+        ],
+        "hand_L": [
+          -93.0385,
+          41.945,
+          -21.8874
+        ],
+        "clavicle_R": [
+          -1.9715,
+          176.6743,
+          16.7107
+        ],
+        "arm_upper_R": [
+          -102.1437,
+          -9.6798,
+          -1.1238
+        ],
+        "arm_lower_R": [
+          -75.2076,
+          -40.9251,
+          -82.559
+        ],
+        "hand_R": [
+          -93.0385,
+          138.055,
+          -21.8875
+        ],
+        "leg_upper_L": [
+          -14.0583,
+          0.0,
+          -90.0
+        ],
+        "leg_lower_L": [
+          0.0711,
+          -90.0154,
+          -177.9723
+        ],
+        "ankle_L": [
+          14.4169,
+          -90.0544,
+          145.6969
+        ],
+        "ball_L": [
+          30.6489,
+          90.0593,
+          -90.0515
+        ],
+        "leg_upper_R": [
+          -14.0585,
+          -89.9999,
+          0.0
+        ],
+        "leg_lower_R": [
+          -0.0042,
+          -90.0152,
+          -177.8972
+        ],
+        "ankle_R": [
+          14.3121,
+          -90.0545,
+          145.7993
+        ],
+        "ball_R": [
+          30.8062,
+          90.0591,
+          -89.8935
+        ]
+      }
+    }
+  },
+  "boneGroups": {
+    "deform": [
+      "pelvis",
+      "spine_0",
+      "spine_1",
+      "spine_2",
+      "neck_0",
+      "head",
+      "eye_L",
+      "eye_R",
+      "face_lid_lower_R",
+      "face_lid_lower_L",
+      "face_lid_upper_L",
+      "face_lid_upper_R",
+      "ear_R",
+      "ear_L",
+      "clavicle_L",
+      "arm_upper_L",
+      "arm_lower_L",
+      "hand_L",
+      "finger_thumb_0_L",
+      "finger_thumb_1_L",
+      "finger_thumb_2_L",
+      "finger_index_meta_L",
+      "finger_index_0_L",
+      "finger_index_1_L",
+      "finger_index_2_L",
+      "finger_middle_meta_L",
+      "finger_middle_0_L",
+      "finger_middle_1_L",
+      "finger_middle_2_L",
+      "finger_ring_meta_L",
+      "finger_ring_0_L",
+      "finger_ring_1_L",
+      "finger_ring_2_L",
+      "clavicle_R",
+      "arm_upper_R",
+      "arm_lower_R",
+      "hand_R",
+      "finger_thumb_0_R",
+      "finger_thumb_1_R",
+      "finger_thumb_2_R",
+      "finger_index_meta_R",
+      "finger_index_0_R",
+      "finger_index_1_R",
+      "finger_index_2_R",
+      "finger_middle_meta_R",
+      "finger_middle_0_R",
+      "finger_middle_1_R",
+      "finger_middle_2_R",
+      "finger_ring_meta_R",
+      "finger_ring_0_R",
+      "finger_ring_1_R",
+      "finger_ring_2_R",
+      "leg_upper_R",
+      "leg_lower_R",
+      "ankle_R",
+      "ball_R",
+      "leg_upper_L",
+      "leg_lower_L",
+      "ankle_L",
+      "ball_L"
+    ],
+    "ik": [
+      "root_IK",
+      "foot_R_IK_target",
+      "foot_L_IK_target",
+      "hand_R_IK_target",
+      "hand_L_IK_target"
+    ],
+    "twist": [
+      "arm_upper_L_twist0",
+      "arm_upper_L_twist1",
+      "arm_lower_L_twist0",
+      "arm_lower_L_twist1",
+      "arm_upper_R_twist0",
+      "arm_upper_R_twist1",
+      "arm_lower_R_twist0",
+      "arm_lower_R_twist1",
+      "leg_upper_L_twist0",
+      "leg_upper_L_twist1",
+      "leg_lower_L_twist0",
+      "leg_lower_L_twist1",
+      "leg_upper_R_twist0",
+      "leg_upper_R_twist1",
+      "leg_lower_R_twist0",
+      "leg_lower_R_twist1"
+    ],
+    "helper": [
+      "arm_elbow_helper_L",
+      "arm_elbow_helper_R",
+      "leg_knee_helper_L",
+      "leg_knee_helper_R",
+      "leg_glute_helper_L",
+      "leg_glute_helper_R",
+      "hand_R_to_L_ikrule",
+      "hand_L_to_R_ikrule",
+      "neck_clothing",
+      "hold_L",
+      "hold_R"
+    ],
+    "log_only": [
+      "aim_matrix_02a",
+      "aim_matrix_02b",
+      "aim_matrix_01"
+    ]
+  },
+  "animationExport": {
+    "includeBoneGroups": [
+      "deform",
+      "ik"
+    ],
+    "includeBones": [
+      "hold_L",
+      "hold_R",
+      "hand_R_to_L_ikrule",
+      "hand_L_to_R_ikrule"
+    ],
+    "excludeBones": [
+      "ear_R",
+      "ear_L"
+    ]
+  },
+  "exportCriticalNotes": [
+    "citizen.vmdl uses a ScaleAndMirror modifier at 0.3937 because source assets are in centimeters.",
+    "The AnimationList default root bone name is pelvis.",
+    "IK targets and helper behavior are part of the citizen skeleton contract and must be treated explicitly during retargeting."
+  ]
+}

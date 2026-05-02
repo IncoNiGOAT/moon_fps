@@ -1,0 +1,177 @@
+{
+  "profileId": "quaternius_ual2",
+  "displayName": "Quaternius Universal Animation Library 2 (Unity FBX)",
+  "inputType": "animation_only_fbx",
+  "rootBoneCandidates": [
+    "mixamorig:Root",
+    "mixamorig:Hips",
+    "B-root",
+    "B-hips",
+    "root",
+    "hips",
+    "pelvis"
+  ],
+  "leafBoneTokens": [
+    "_leaf"
+  ],
+  "expectedRestPoseAction": "A_TPose",
+  "retargetPoseSource": {
+    "mode": "rest_pose",
+    "actionName": "",
+    "frame": 0
+  },
+  "sampleActions": {
+    "locomotion": "Walk_Fwd_Loop",
+    "stress": "Melee_Combo"
+  },
+  "canonicalMapping": {
+    "root": [
+      "root"
+    ],
+    "pelvis": [
+      "pelvis"
+    ],
+    "spine_0": [
+      "spine_01"
+    ],
+    "spine_1": [
+      "spine_02"
+    ],
+    "spine_2": [
+      "spine_03"
+    ],
+    "neck_0": [
+      "neck_01"
+    ],
+    "head": [
+      "Head"
+    ],
+    "clavicle_L": [
+      "clavicle_l"
+    ],
+    "arm_upper_L": [
+      "upperarm_l"
+    ],
+    "arm_lower_L": [
+      "lowerarm_l"
+    ],
+    "hand_L": [
+      "hand_l"
+    ],
+    "clavicle_R": [
+      "clavicle_r"
+    ],
+    "arm_upper_R": [
+      "upperarm_r"
+    ],
+    "arm_lower_R": [
+      "lowerarm_r"
+    ],
+    "hand_R": [
+      "hand_r"
+    ],
+    "leg_upper_L": [
+      "thigh_l"
+    ],
+    "leg_lower_L": [
+      "calf_l"
+    ],
+    "ankle_L": [
+      "foot_l"
+    ],
+    "ball_L": [
+      "ball_l"
+    ],
+    "leg_upper_R": [
+      "thigh_r"
+    ],
+    "leg_lower_R": [
+      "calf_r"
+    ],
+    "ankle_R": [
+      "foot_r"
+    ],
+    "ball_R": [
+      "ball_r"
+    ]
+  },
+  "optionalCanonicalMapping": {
+    "finger_thumb_0_L": [
+      "thumb_01_l"
+    ],
+    "finger_thumb_1_L": [
+      "thumb_02_l"
+    ],
+    "finger_thumb_2_L": [
+      "thumb_03_l"
+    ],
+    "finger_index_meta_L": [
+      "index_01_l"
+    ],
+    "finger_index_0_L": [
+      "index_02_l"
+    ],
+    "finger_index_1_L": [
+      "index_03_l"
+    ],
+    "finger_middle_meta_L": [
+      "middle_01_l"
+    ],
+    "finger_middle_0_L": [
+      "middle_02_l"
+    ],
+    "finger_middle_1_L": [
+      "middle_03_l"
+    ],
+    "finger_ring_meta_L": [
+      "ring_01_l"
+    ],
+    "finger_ring_0_L": [
+      "ring_02_l"
+    ],
+    "finger_ring_1_L": [
+      "ring_03_l"
+    ],
+    "finger_thumb_0_R": [
+      "thumb_01_r"
+    ],
+    "finger_thumb_1_R": [
+      "thumb_02_r"
+    ],
+    "finger_thumb_2_R": [
+      "thumb_03_r"
+    ],
+    "finger_index_meta_R": [
+      "index_01_r"
+    ],
+    "finger_index_0_R": [
+      "index_02_r"
+    ],
+    "finger_index_1_R": [
+      "index_03_r"
+    ],
+    "finger_middle_meta_R": [
+      "middle_01_r"
+    ],
+    "finger_middle_0_R": [
+      "middle_02_r"
+    ],
+    "finger_middle_1_R": [
+      "middle_03_r"
+    ],
+    "finger_ring_meta_R": [
+      "ring_01_r"
+    ],
+    "finger_ring_0_R": [
+      "ring_02_r"
+    ],
+    "finger_ring_1_R": [
+      "ring_03_r"
+    ]
+  },
+  "notes": [
+    "The Unity FBX bundle contains many actions in a single file.",
+    "The baseline runner should select one action explicitly for comparison.",
+    "Leaf tip bones are part of the source rig and should be preserved, not injected."
+  ]
+}

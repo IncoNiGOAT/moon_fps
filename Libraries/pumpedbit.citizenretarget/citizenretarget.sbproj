@@ -1,0 +1,18 @@
+{
+  "Title": "CARL",
+  "Type": "library",
+  "Org": "pumpedbit",
+  "Ident": "citizenretarget",
+  "Schema": 1,
+  "IncludeSourceFiles": false,
+  "Resources": null,
+  "PackageReferences": [],
+  "EditorReferences": null,
+  "Mounts": null,
+  "IsStandaloneOnly": false,
+  "Metadata": {
+    "PackageSummary": "CARL retargets FBX character animations onto Citizen-based s&box models from the editor.",
+    "PackageDescription": "<h2>CARL</h2><p><b>Citizen Animation Retargeting Library</b> imports FBX animation clips, maps source skeletons, runs the Rokoko/Blender retarget backend, and previews generated Citizen target animations inside s&box.</p><p>Open it from <b>CARL > Open Retargeter</b>, then use the Diagnostics tab to verify Blender, the Rokoko addon, bundled backend files, native FBX scanning, and the current target model before running jobs.</p><p>Source, install instructions, setup notes, and support workflow: <a href='https://github.com/pumped-bit/citizen-animation-retargeting-library'>github.com/pumped-bit/citizen-animation-retargeting-library</a>.</p>",
+    "PackageThumb": "branding/carl_logo.jpg"
+  }
+}

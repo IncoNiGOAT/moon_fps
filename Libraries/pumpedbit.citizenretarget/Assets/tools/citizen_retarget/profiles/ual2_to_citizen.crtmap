@@ -1,0 +1,660 @@
+{
+  "ProfileId": "ual2_to_citizen",
+  "DisplayName": "UAL2 -> Citizen",
+  "TargetProfileId": "citizen",
+  "TargetPosePresetId": "citizen_t_pose_calibrated_v1",
+  "Slots": [
+    {
+      "SlotId": "ankle_L",
+      "TargetBone": "ankle_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "ankle_R",
+      "AssignedSourceBone": "foot_l",
+      "SourceAliases": [
+        "foot_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "ankle_R",
+      "TargetBone": "ankle_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "ankle_L",
+      "AssignedSourceBone": "foot_r",
+      "SourceAliases": [
+        "foot_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "arm_lower_L",
+      "TargetBone": "arm_lower_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "arm_lower_R",
+      "AssignedSourceBone": "lowerarm_l",
+      "SourceAliases": [
+        "lowerarm_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "arm_lower_R",
+      "TargetBone": "arm_lower_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "arm_lower_L",
+      "AssignedSourceBone": "lowerarm_r",
+      "SourceAliases": [
+        "lowerarm_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "arm_upper_L",
+      "TargetBone": "arm_upper_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "arm_upper_R",
+      "AssignedSourceBone": "upperarm_l",
+      "SourceAliases": [
+        "upperarm_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "arm_upper_R",
+      "TargetBone": "arm_upper_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "arm_upper_L",
+      "AssignedSourceBone": "upperarm_r",
+      "SourceAliases": [
+        "upperarm_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "ball_L",
+      "TargetBone": "ball_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "ball_R",
+      "AssignedSourceBone": "ball_l",
+      "SourceAliases": [
+        "ball_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "ball_R",
+      "TargetBone": "ball_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "ball_L",
+      "AssignedSourceBone": "ball_r",
+      "SourceAliases": [
+        "ball_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "clavicle_L",
+      "TargetBone": "clavicle_L",
+      "Group": "body",
+      "Required": false,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "clavicle_R",
+      "AssignedSourceBone": "clavicle_l",
+      "SourceAliases": [
+        "clavicle_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "clavicle_R",
+      "TargetBone": "clavicle_R",
+      "Group": "body",
+      "Required": false,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "clavicle_L",
+      "AssignedSourceBone": "clavicle_r",
+      "SourceAliases": [
+        "clavicle_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "hand_L",
+      "TargetBone": "hand_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "hand_R",
+      "AssignedSourceBone": "hand_l",
+      "SourceAliases": [
+        "hand_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "hand_R",
+      "TargetBone": "hand_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "hand_L",
+      "AssignedSourceBone": "hand_r",
+      "SourceAliases": [
+        "hand_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "head",
+      "TargetBone": "head",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "",
+      "AssignedSourceBone": "Head",
+      "SourceAliases": [
+        "Head"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "leg_lower_L",
+      "TargetBone": "leg_lower_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "leg_lower_R",
+      "AssignedSourceBone": "calf_l",
+      "SourceAliases": [
+        "calf_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "leg_lower_R",
+      "TargetBone": "leg_lower_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "leg_lower_L",
+      "AssignedSourceBone": "calf_r",
+      "SourceAliases": [
+        "calf_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "leg_upper_L",
+      "TargetBone": "leg_upper_L",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "leg_upper_R",
+      "AssignedSourceBone": "thigh_l",
+      "SourceAliases": [
+        "thigh_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "leg_upper_R",
+      "TargetBone": "leg_upper_R",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "leg_upper_L",
+      "AssignedSourceBone": "thigh_r",
+      "SourceAliases": [
+        "thigh_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "neck_0",
+      "TargetBone": "neck_0",
+      "Group": "body",
+      "Required": false,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "",
+      "AssignedSourceBone": "neck_01",
+      "SourceAliases": [
+        "neck_01"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "pelvis",
+      "TargetBone": "pelvis",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "",
+      "AssignedSourceBone": "pelvis",
+      "SourceAliases": [
+        "pelvis"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "spine_0",
+      "TargetBone": "spine_0",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "",
+      "AssignedSourceBone": "spine_01",
+      "SourceAliases": [
+        "spine_01"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "spine_1",
+      "TargetBone": "spine_1",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "",
+      "AssignedSourceBone": "spine_02",
+      "SourceAliases": [
+        "spine_02"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "spine_2",
+      "TargetBone": "spine_2",
+      "Group": "body",
+      "Required": true,
+      "Enabled": true,
+      "Locked": true,
+      "MirrorSlotId": "",
+      "AssignedSourceBone": "spine_03",
+      "SourceAliases": [
+        "spine_03"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_index_0_L",
+      "TargetBone": "finger_index_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_index_0_R",
+      "AssignedSourceBone": "index_01_l",
+      "SourceAliases": [
+        "index_01_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_index_0_R",
+      "TargetBone": "finger_index_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_index_0_L",
+      "AssignedSourceBone": "index_01_r",
+      "SourceAliases": [
+        "index_01_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_index_1_L",
+      "TargetBone": "finger_index_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_index_1_R",
+      "AssignedSourceBone": "index_02_l",
+      "SourceAliases": [
+        "index_02_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_index_1_R",
+      "TargetBone": "finger_index_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_index_1_L",
+      "AssignedSourceBone": "index_02_r",
+      "SourceAliases": [
+        "index_02_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_index_2_L",
+      "TargetBone": "finger_index_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_index_2_R",
+      "AssignedSourceBone": "index_03_l",
+      "SourceAliases": [
+        "index_03_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_index_2_R",
+      "TargetBone": "finger_index_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_index_2_L",
+      "AssignedSourceBone": "index_03_r",
+      "SourceAliases": [
+        "index_03_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_middle_0_L",
+      "TargetBone": "finger_middle_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_middle_0_R",
+      "AssignedSourceBone": "middle_01_l",
+      "SourceAliases": [
+        "middle_01_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_middle_0_R",
+      "TargetBone": "finger_middle_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_middle_0_L",
+      "AssignedSourceBone": "middle_01_r",
+      "SourceAliases": [
+        "middle_01_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_middle_1_L",
+      "TargetBone": "finger_middle_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_middle_1_R",
+      "AssignedSourceBone": "middle_02_l",
+      "SourceAliases": [
+        "middle_02_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_middle_1_R",
+      "TargetBone": "finger_middle_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_middle_1_L",
+      "AssignedSourceBone": "middle_02_r",
+      "SourceAliases": [
+        "middle_02_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_middle_2_L",
+      "TargetBone": "finger_middle_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_middle_2_R",
+      "AssignedSourceBone": "middle_03_l",
+      "SourceAliases": [
+        "middle_03_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_middle_2_R",
+      "TargetBone": "finger_middle_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_middle_2_L",
+      "AssignedSourceBone": "middle_03_r",
+      "SourceAliases": [
+        "middle_03_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_ring_0_L",
+      "TargetBone": "finger_ring_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_ring_0_R",
+      "AssignedSourceBone": "ring_01_l",
+      "SourceAliases": [
+        "ring_01_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_ring_0_R",
+      "TargetBone": "finger_ring_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_ring_0_L",
+      "AssignedSourceBone": "ring_01_r",
+      "SourceAliases": [
+        "ring_01_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_ring_1_L",
+      "TargetBone": "finger_ring_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_ring_1_R",
+      "AssignedSourceBone": "ring_02_l",
+      "SourceAliases": [
+        "ring_02_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_ring_1_R",
+      "TargetBone": "finger_ring_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_ring_1_L",
+      "AssignedSourceBone": "ring_02_r",
+      "SourceAliases": [
+        "ring_02_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_ring_2_L",
+      "TargetBone": "finger_ring_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_ring_2_R",
+      "AssignedSourceBone": "ring_03_l",
+      "SourceAliases": [
+        "ring_03_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_ring_2_R",
+      "TargetBone": "finger_ring_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_ring_2_L",
+      "AssignedSourceBone": "ring_03_r",
+      "SourceAliases": [
+        "ring_03_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_thumb_0_L",
+      "TargetBone": "finger_thumb_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_thumb_0_R",
+      "AssignedSourceBone": "thumb_01_l",
+      "SourceAliases": [
+        "thumb_01_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_thumb_0_R",
+      "TargetBone": "finger_thumb_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_thumb_0_L",
+      "AssignedSourceBone": "thumb_01_r",
+      "SourceAliases": [
+        "thumb_01_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_thumb_1_L",
+      "TargetBone": "finger_thumb_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_thumb_1_R",
+      "AssignedSourceBone": "thumb_02_l",
+      "SourceAliases": [
+        "thumb_02_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_thumb_1_R",
+      "TargetBone": "finger_thumb_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_thumb_1_L",
+      "AssignedSourceBone": "thumb_02_r",
+      "SourceAliases": [
+        "thumb_02_r"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_thumb_2_L",
+      "TargetBone": "finger_thumb_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_thumb_2_R",
+      "AssignedSourceBone": "thumb_03_l",
+      "SourceAliases": [
+        "thumb_03_l"
+      ],
+      "Notes": ""
+    },
+    {
+      "SlotId": "finger_thumb_2_R",
+      "TargetBone": "finger_thumb_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Enabled": true,
+      "Locked": false,
+      "MirrorSlotId": "finger_thumb_2_L",
+      "AssignedSourceBone": "thumb_03_r",
+      "SourceAliases": [
+        "thumb_03_r"
+      ],
+      "Notes": ""
+    }
+  ],
+  "ValidationSuppressions": [],
+  "Notes": [
+    "Seed mapping generated from the legacy UAL2 -> Citizen mapping JSON.",
+    "Finger chains are optional and can be toggled from the workstation UI.",
+    "UAL2 finger chains map onto Citizen finger 0/1/2 segments and intentionally skip Citizen meta finger bones."
+  ],
+  "__references": [],
+  "__version": 0
+}

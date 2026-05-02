@@ -1,0 +1,79 @@
+{
+  "recipeId": "transport_baseline_v1",
+  "description": "Import/export baseline for animation-only FBX transport validation before retargeting.",
+  "sourceProfile": "quaternius_ual2",
+  "targetProfile": "citizen",
+  "debug": {
+    "enabled": true,
+    "saveIntermediateBlendFiles": true,
+    "saveStageMetrics": true
+  },
+  "stages": [
+    {
+      "id": "import_fbx",
+      "enabled": true,
+      "kind": "core",
+      "config": {
+        "automaticBoneOrientation": false,
+        "animOffset": 0.0
+      }
+    },
+    {
+      "id": "collect_source_metadata",
+      "enabled": true,
+      "kind": "validator",
+      "config": {}
+    },
+    {
+      "id": "validate_import",
+      "enabled": true,
+      "kind": "validator",
+      "config": {
+        "requireSingleArmature": true,
+        "requireSelectedAction": true,
+        "requireRootBone": true
+      }
+    },
+    {
+      "id": "export_fbx",
+      "enabled": true,
+      "kind": "core",
+      "config": {
+        "globalScale": 1.0,
+        "axisForward": "-Z",
+        "axisUp": "Y",
+        "primaryBoneAxis": "Y",
+        "secondaryBoneAxis": "X",
+        "applyUnitScale": true,
+        "useArmatureDeformOnly": false,
+        "addLeafBones": false,
+        "bakeAnim": true,
+        "bakeAnimUseAllBones": true,
+        "bakeAnimUseAllActions": false,
+        "bakeAnimUseNlaStrips": false,
+        "bakeAnimSimplifyFactor": 0.0
+      }
+    },
+    {
+      "id": "validate_export",
+      "enabled": true,
+      "kind": "validator",
+      "config": {
+        "exactBoneCount": true,
+        "exactFrameRange": true,
+        "exactAnimatedBoneSet": true,
+        "exactBoneNameSet": true,
+        "checkLeafBoneInjection": true,
+        "checkRootPathDrift": true,
+        "rootDriftAbsoluteTolerance": 0.01,
+        "rootDriftRelativeTolerance": 0.001
+      }
+    },
+    {
+      "id": "write_result_manifest",
+      "enabled": true,
+      "kind": "core",
+      "config": {}
+    }
+  ]
+}

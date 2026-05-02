@@ -1,0 +1,27 @@
+{
+  "method": "rest_pose_arm_compensation_coordinate_descent",
+  "notes": [
+    "Computed from rest pose differences only.",
+    "Targets clavicle, upper arm, lower arm, and hand only."
+  ],
+  "offsets_deg": {
+    "L": {
+      "clavicle_L.Y": -72.0,
+      "arm_upper_L.Y": -60.0,
+      "arm_upper_L.Z": -21.0,
+      "arm_lower_L.Y": -48.0,
+      "arm_lower_L.Z": 9.0,
+      "hand_L.Y": -46.5,
+      "hand_L.Z": 277.5
+    },
+    "R": {
+      "clavicle_R.Y": 72.0,
+      "arm_upper_R.Y": 60.0,
+      "arm_upper_R.Z": -21.0,
+      "arm_lower_R.Y": 48.0,
+      "arm_lower_R.Z": 9.0,
+      "hand_R.Y": -81.0,
+      "hand_R.Z": 9.0
+    }
+  }
+}

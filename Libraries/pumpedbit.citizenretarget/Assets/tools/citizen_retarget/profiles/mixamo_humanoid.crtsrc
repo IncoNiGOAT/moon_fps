@@ -1,0 +1,40 @@
+{
+  "ProfileId": "mixamo_humanoid",
+  "BackendSourceProfileId": "mixamo_humanoid",
+  "DisplayName": "Mixamo Humanoid (FBX)",
+  "SampleReferenceFbxPath": "",
+  "DefaultMappingProfilePath": "tools/citizen_retarget/profiles/ual2_to_citizen.crtmap",
+  "DefaultPoseReferenceAction": "",
+  "DefaultPoseReferenceFrame": 0,
+  "DefaultSourceFacingEulerDegrees": [ 0, 0, 180 ],
+  "RootBoneCandidates": [
+    "mixamorig:Root",
+    "mixamorig:Hips",
+    "Hips",
+    "Armature"
+  ],
+  "CanonicalSourceAliases": [
+    { "SlotId": "pelvis", "Group": "body", "Required": true, "Aliases": [ "mixamorig:Hips" ] },
+    { "SlotId": "spine_0", "Group": "body", "Required": true, "Aliases": [ "mixamorig:Spine" ] },
+    { "SlotId": "spine_1", "Group": "body", "Required": true, "Aliases": [ "mixamorig:Spine1" ] },
+    { "SlotId": "spine_2", "Group": "body", "Required": true, "Aliases": [ "mixamorig:Spine2" ] },
+    { "SlotId": "neck_0", "Group": "body", "Required": false, "Aliases": [ "mixamorig:Neck" ] },
+    { "SlotId": "head", "Group": "body", "Required": true, "Aliases": [ "mixamorig:Head" ] },
+    { "SlotId": "clavicle_L", "Group": "body", "Required": false, "Aliases": [ "mixamorig:LeftShoulder" ] },
+    { "SlotId": "arm_upper_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftArm" ] },
+    { "SlotId": "arm_lower_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftForeArm" ] },
+    { "SlotId": "hand_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftHand" ] },
+    { "SlotId": "clavicle_R", "Group": "body", "Required": false, "Aliases": [ "mixamorig:RightShoulder" ] },
+    { "SlotId": "arm_upper_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightArm" ] },
+    { "SlotId": "arm_lower_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightForeArm" ] },
+    { "SlotId": "hand_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightHand" ] },
+    { "SlotId": "leg_upper_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftUpLeg" ] },
+    { "SlotId": "leg_lower_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftLeg" ] },
+    { "SlotId": "ankle_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftFoot" ] },
+    { "SlotId": "ball_L", "Group": "body", "Required": true, "Aliases": [ "mixamorig:LeftToeBase" ] },
+    { "SlotId": "leg_upper_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightUpLeg" ] },
+    { "SlotId": "leg_lower_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightLeg" ] },
+    { "SlotId": "ankle_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightFoot" ] },
+    { "SlotId": "ball_R", "Group": "body", "Required": true, "Aliases": [ "mixamorig:RightToeBase" ] }
+  ]
+}

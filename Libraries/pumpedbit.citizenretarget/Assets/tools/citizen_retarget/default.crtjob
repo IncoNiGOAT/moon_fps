@@ -1,0 +1,91 @@
+{
+  "SourceFbxPath": "__external__:QzovVXNlcnMvbmljb2wvRG93bmxvYWRzL0FlcmlhbCBFdmFkZTIuZmJ4",
+  "SourceProfilePath": "tools/citizen_retarget/profiles/mixamo_humanoid.crtsrc",
+  "MappingProfilePath": "tools/citizen_retarget/profiles/ual2_to_citizen.crtmap",
+  "TargetVmdlPath": "models/citizen_custom/citizen_citizen_target.vmdl",
+  "TargetAnimGraphPath": "",
+  "OutputAnimationFolder": "models/citizen_custom/animations/citizen_target",
+  "SequencePrefix": "citizen_target_",
+  "TargetPosePresetId": "citizen_t_pose_calibrated_v1",
+  "RootMotionMode": "Keep",
+  "ImportHands": true,
+  "GeneratePreviewVideo": false,
+  "GenerateComparisonVideo": false,
+  "AutoOpenModelDoc": false,
+  "SelectedClipNames": [
+    "Layer0"
+  ],
+  "LastImportedClip": "Layer0",
+  "LastSuccessfulRunId": "20260501_180912_2cce7b55",
+  "LastSuccessfulSequenceName": "citizen_target_layer0",
+  "LastManifestPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwOTEyXzJjY2U3YjU1XHJlc3VsdF9tYW5pZmVzdC5qc29u",
+  "RecentRuns": [
+    {
+      "RunId": "20260501_180912_2cce7b55",
+      "ClipName": "Layer0",
+      "SequenceName": "citizen_target_layer0",
+      "Status": "completed",
+      "TargetVmdlPath": "models/citizen_custom/citizen_citizen_target.vmdl",
+      "ManifestPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwOTEyXzJjY2U3YjU1XHJlc3VsdF9tYW5pZmVzdC5qc29u",
+      "ExportPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwOTEyXzJjY2U3YjU1XGV4cG9ydHNcY2l0aXplbl9SRUZfX1JFVEFSR0VUX19jaXRpemVuX19CYXNlX19yb2tva29fb3BlcmF0b3IuZmJ4",
+      "PreviewVideoPath": "",
+      "ComparisonVideoPath": "",
+      "ImportedAssetPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXEFzc2V0c1xtb2RlbHNcY2l0aXplbl9jdXN0b21cYW5pbWF0aW9uc1xjaXRpemVuX3RhcmdldFxhbmltc1xjaXRpemVuX3RhcmdldF9sYXllcjAuZmJ4",
+      "CreatedUtc": "2026-05-01T18:09:18.9202063Z"
+    },
+    {
+      "RunId": "20260501_180834_62ade432",
+      "ClipName": "Layer0",
+      "SequenceName": "retarget_layer0",
+      "Status": "completed",
+      "TargetVmdlPath": "models/citizen_custom/citizen_retarget.vmdl",
+      "ManifestPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwODM0XzYyYWRlNDMyXHJlc3VsdF9tYW5pZmVzdC5qc29u",
+      "ExportPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwODM0XzYyYWRlNDMyXGV4cG9ydHNcY2l0aXplbl9SRUZfX1JFVEFSR0VUX19jaXRpemVuX19CYXNlX19yb2tva29fb3BlcmF0b3IuZmJ4",
+      "PreviewVideoPath": "",
+      "ComparisonVideoPath": "",
+      "ImportedAssetPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXEFzc2V0c1xtb2RlbHNcY2l0aXplbl9jdXN0b21cYW5pbWF0aW9uc1xyZXRhcmdldFxhbmltc1xyZXRhcmdldF9sYXllcjAuZmJ4",
+      "CreatedUtc": "2026-05-01T18:08:40.4765483Z"
+    },
+    {
+      "RunId": "20260501_180353_c57849a4",
+      "ClipName": "Layer0",
+      "SequenceName": "retarget_layer0",
+      "Status": "completed",
+      "TargetVmdlPath": "models/citizen_custom/citizen_retarget.vmdl",
+      "ManifestPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwMzUzX2M1Nzg0OWE0XHJlc3VsdF9tYW5pZmVzdC5qc29u",
+      "ExportPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwMzUzX2M1Nzg0OWE0XGV4cG9ydHNcY2l0aXplbl9SRUZfX1JFVEFSR0VUX19jaXRpemVuX19CYXNlX19yb2tva29fb3BlcmF0b3IuZmJ4",
+      "PreviewVideoPath": "",
+      "ComparisonVideoPath": "",
+      "ImportedAssetPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXEFzc2V0c1xtb2RlbHNcY2l0aXplbl9jdXN0b21cYW5pbWF0aW9uc1xyZXRhcmdldFxhbmltc1xyZXRhcmdldF9sYXllcjAuZmJ4",
+      "CreatedUtc": "2026-05-01T18:03:59.4612489Z"
+    },
+    {
+      "RunId": "20260501_180145_dafcaf1c",
+      "ClipName": "Layer0",
+      "SequenceName": "retarget_layer0",
+      "Status": "completed",
+      "TargetVmdlPath": "models/citizen_custom/citizen_retarget.vmdl",
+      "ManifestPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwMTQ1X2RhZmNhZjFjXHJlc3VsdF9tYW5pZmVzdC5qc29u",
+      "ExportPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTgwMTQ1X2RhZmNhZjFjXGV4cG9ydHNcY2l0aXplbl9SRUZfX1JFVEFSR0VUX19jaXRpemVuX19MYXllcjBfX3Jva29rb19vcGVyYXRvci5mYng=",
+      "PreviewVideoPath": "",
+      "ComparisonVideoPath": "",
+      "ImportedAssetPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXEFzc2V0c1xtb2RlbHNcY2l0aXplbl9jdXN0b21cYW5pbWF0aW9uc1xyZXRhcmdldFxhbmltc1xyZXRhcmdldF9sYXllcjAuZmJ4",
+      "CreatedUtc": "2026-05-01T18:01:52.0301637Z"
+    },
+    {
+      "RunId": "20260501_175905_2c43210d",
+      "ClipName": "Layer0",
+      "SequenceName": "retarget_layer0",
+      "Status": "completed",
+      "TargetVmdlPath": "models/citizen_custom/citizen_retarget.vmdl",
+      "ManifestPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTc1OTA1XzJjNDMyMTBkXHJlc3VsdF9tYW5pZmVzdC5qc29u",
+      "ExportPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXC50bXBcY2l0aXplbl9yZXRhcmdldFxiYWNrZW5kX3J1bnNcMjAyNjA1MDFfMTc1OTA1XzJjNDMyMTBkXGV4cG9ydHNcY2l0aXplbl9SRUZfX1JFVEFSR0VUX19jaXRpemVuX19MYXllcjBfX3Jva29rb19vcGVyYXRvci5mYng=",
+      "PreviewVideoPath": "",
+      "ComparisonVideoPath": "",
+      "ImportedAssetPath": "__external__:QzpcVXNlcnNcbmljb2xcRG9jdW1lbnRzXHMmYm94IHByb2plY3RzXG1vb25fZnBzXEFzc2V0c1xtb2RlbHNcY2l0aXplbl9jdXN0b21cYW5pbWF0aW9uc1xyZXRhcmdldFxhbmltc1xyZXRhcmdldF9sYXllcjAuZmJ4",
+      "CreatedUtc": "2026-05-01T17:59:12.2426748Z"
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

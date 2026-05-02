@@ -1,0 +1,469 @@
+{
+  "ProfileId": "quaternius_ual2",
+  "BackendSourceProfileId": "quaternius_ual2",
+  "DisplayName": "Quaternius UAL2 (Unity FBX)",
+  "SampleReferenceFbxPath": "",
+  "DefaultMappingProfilePath": "tools/citizen_retarget/profiles/ual2_to_citizen.crtmap",
+  "DefaultPoseReferenceAction": "A_TPose",
+  "DefaultPoseReferenceFrame": 0,
+  "RootBoneCandidates": [
+    "mixamorig:Root",
+    "mixamorig:Hips",
+    "B-root",
+    "B-hips",
+    "root",
+    "hips",
+    "pelvis"
+  ],
+  "CanonicalSourceAliases": [
+    {
+      "SlotId": "ankle_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "foot_l"
+      ]
+    },
+    {
+      "SlotId": "ankle_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "foot_r"
+      ]
+    },
+    {
+      "SlotId": "arm_lower_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "lowerarm_l"
+      ]
+    },
+    {
+      "SlotId": "arm_lower_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "lowerarm_r"
+      ]
+    },
+    {
+      "SlotId": "arm_upper_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "upperarm_l"
+      ]
+    },
+    {
+      "SlotId": "arm_upper_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "upperarm_r"
+      ]
+    },
+    {
+      "SlotId": "ball_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "ball_l"
+      ]
+    },
+    {
+      "SlotId": "ball_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "ball_r"
+      ]
+    },
+    {
+      "SlotId": "clavicle_L",
+      "Group": "body",
+      "Required": false,
+      "Aliases": [
+        "clavicle_l"
+      ]
+    },
+    {
+      "SlotId": "clavicle_R",
+      "Group": "body",
+      "Required": false,
+      "Aliases": [
+        "clavicle_r"
+      ]
+    },
+    {
+      "SlotId": "hand_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "hand_l"
+      ]
+    },
+    {
+      "SlotId": "hand_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "hand_r"
+      ]
+    },
+    {
+      "SlotId": "head",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "Head"
+      ]
+    },
+    {
+      "SlotId": "leg_lower_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "calf_l"
+      ]
+    },
+    {
+      "SlotId": "leg_lower_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "calf_r"
+      ]
+    },
+    {
+      "SlotId": "leg_upper_L",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "thigh_l"
+      ]
+    },
+    {
+      "SlotId": "leg_upper_R",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "thigh_r"
+      ]
+    },
+    {
+      "SlotId": "neck_0",
+      "Group": "body",
+      "Required": false,
+      "Aliases": [
+        "neck_01"
+      ]
+    },
+    {
+      "SlotId": "pelvis",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "pelvis"
+      ]
+    },
+    {
+      "SlotId": "spine_0",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "spine_01"
+      ]
+    },
+    {
+      "SlotId": "spine_1",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "spine_02"
+      ]
+    },
+    {
+      "SlotId": "spine_2",
+      "Group": "body",
+      "Required": true,
+      "Aliases": [
+        "spine_03"
+      ]
+    },
+    {
+      "SlotId": "finger_index_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "index_01_l"
+      ]
+    },
+    {
+      "SlotId": "finger_index_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "index_01_r"
+      ]
+    },
+    {
+      "SlotId": "finger_index_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "index_02_l"
+      ]
+    },
+    {
+      "SlotId": "finger_index_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "index_02_r"
+      ]
+    },
+    {
+      "SlotId": "finger_index_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "index_03_l"
+      ]
+    },
+    {
+      "SlotId": "finger_index_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "index_03_r"
+      ]
+    },
+    {
+      "SlotId": "finger_middle_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "middle_01_l"
+      ]
+    },
+    {
+      "SlotId": "finger_middle_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "middle_01_r"
+      ]
+    },
+    {
+      "SlotId": "finger_middle_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "middle_02_l"
+      ]
+    },
+    {
+      "SlotId": "finger_middle_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "middle_02_r"
+      ]
+    },
+    {
+      "SlotId": "finger_middle_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "middle_03_l"
+      ]
+    },
+    {
+      "SlotId": "finger_middle_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "middle_03_r"
+      ]
+    },
+    {
+      "SlotId": "finger_ring_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "ring_01_l"
+      ]
+    },
+    {
+      "SlotId": "finger_ring_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "ring_01_r"
+      ]
+    },
+    {
+      "SlotId": "finger_ring_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "ring_02_l"
+      ]
+    },
+    {
+      "SlotId": "finger_ring_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "ring_02_r"
+      ]
+    },
+    {
+      "SlotId": "finger_ring_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "ring_03_l"
+      ]
+    },
+    {
+      "SlotId": "finger_ring_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "ring_03_r"
+      ]
+    },
+    {
+      "SlotId": "finger_thumb_0_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "thumb_01_l"
+      ]
+    },
+    {
+      "SlotId": "finger_thumb_0_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "thumb_01_r"
+      ]
+    },
+    {
+      "SlotId": "finger_thumb_1_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "thumb_02_l"
+      ]
+    },
+    {
+      "SlotId": "finger_thumb_1_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "thumb_02_r"
+      ]
+    },
+    {
+      "SlotId": "finger_thumb_2_L",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "thumb_03_l"
+      ]
+    },
+    {
+      "SlotId": "finger_thumb_2_R",
+      "Group": "fingers",
+      "Required": false,
+      "Aliases": [
+        "thumb_03_r"
+      ]
+    }
+  ],
+  "FingerChainHints": [
+    {
+      "FingerId": "index",
+      "HandSide": "L",
+      "Bones": [
+        "index_01_l",
+        "index_02_l",
+        "index_03_l"
+      ]
+    },
+    {
+      "FingerId": "middle",
+      "HandSide": "L",
+      "Bones": [
+        "middle_01_l",
+        "middle_02_l",
+        "middle_03_l"
+      ]
+    },
+    {
+      "FingerId": "ring",
+      "HandSide": "L",
+      "Bones": [
+        "ring_01_l",
+        "ring_02_l",
+        "ring_03_l"
+      ]
+    },
+    {
+      "FingerId": "thumb",
+      "HandSide": "L",
+      "Bones": [
+        "thumb_01_l",
+        "thumb_02_l",
+        "thumb_03_l"
+      ]
+    },
+    {
+      "FingerId": "index",
+      "HandSide": "R",
+      "Bones": [
+        "index_01_r",
+        "index_02_r",
+        "index_03_r"
+      ]
+    },
+    {
+      "FingerId": "middle",
+      "HandSide": "R",
+      "Bones": [
+        "middle_01_r",
+        "middle_02_r",
+        "middle_03_r"
+      ]
+    },
+    {
+      "FingerId": "ring",
+      "HandSide": "R",
+      "Bones": [
+        "ring_01_r",
+        "ring_02_r",
+        "ring_03_r"
+      ]
+    },
+    {
+      "FingerId": "thumb",
+      "HandSide": "R",
+      "Bones": [
+        "thumb_01_r",
+        "thumb_02_r",
+        "thumb_03_r"
+      ]
+    }
+  ],
+  "Notes": [
+    "Seed profile generated from the legacy UAL2 -> Citizen mapping JSON.",
+    "Body slots are required. Finger slots stay optional and can be disabled per import.",
+    "Finger chains use the Citizen 0/1/2 index shift so source proximal bones skip the Citizen meta finger bones."
+  ],
+  "__references": [],
+  "__version": 0
+}
