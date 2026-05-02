@@ -112,7 +112,7 @@
           "__enabled": true,
           "Flags": 0,
           "ArenaScene": "arena.scene",
-          "ArenaScenePathFallback": "Assets/Arena.scene",
+          "ArenaScenePathFallback": "Arena.scene",
           "AutoCreateIfJoinFails": false,
           "ClickAction": "attack1",
           "CreateAction": "Créer",
@@ -136,7 +136,7 @@
   "SceneProperties": {
     "NetworkInterpolation": true,
     "TimeScale": 1,
-    "WantsSystemScene": true,
+    "WantsSystemScene": false,
     "Metadata": {},
     "NavMesh": {
       "Enabled": false,
@@ -153,17 +153,17 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
+      "Sandbox.SelectionSetsSystem": {
+        "Data": {
+          "SelectionSets": []
+        }
+      },
       "Sandbox.MovieMaker.MovieRecorderSystem": {
         "DisableClientRecording": false
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
           "$blob": "60876704-7f93-4719-a58c-7dd6d8555b76"
-        }
-      },
-      "Sandbox.SelectionSetsSystem": {
-        "Data": {
-          "SelectionSets": []
         }
       }
     }

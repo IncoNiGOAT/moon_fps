@@ -95,7 +95,7 @@
       "__version": 2,
       "Flags": 0,
       "Name": "BallVisual_Ref",
-      "Position": "-5.26393127,0,0",
+      "Position": "213.596664,0,0",
       "Rotation": "0,0,0,1",
       "Scale": "0.600000024,0.600000024,0.600000024",
       "Tags": "",
@@ -1657,7 +1657,7 @@
   "SceneProperties": {
     "NetworkInterpolation": true,
     "TimeScale": 1,
-    "WantsSystemScene": true,
+    "WantsSystemScene": false,
     "Metadata": {},
     "NavMesh": {
       "Enabled": false,

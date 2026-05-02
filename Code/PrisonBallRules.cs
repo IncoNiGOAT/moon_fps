@@ -153,7 +153,7 @@ public sealed class PrisonBallRules : Component
         if ( ArenaSpawns is not null )
             return;
 
-        ArenaSpawns = Scene.GetAllComponents<TeamSpawnManager>().FirstOrDefault();
+        ArenaSpawns = TeamSpawnManager.FindUsableArenaManager( Scene );
     }
 
     private static void Shuffle( List<GameObject> list )

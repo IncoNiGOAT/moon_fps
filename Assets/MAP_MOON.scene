@@ -120,7 +120,12 @@
           "__guid": "d16a5846-7a87-41d5-b0ec-1db29512dcad",
           "__enabled": true,
           "Flags": 0,
-          "ArenaSpawns": null,
+          "ArenaSpawns": {
+            "_type": "component",
+            "component_id": "f4a71a5e-65bf-46a3-bfa0-53b8c008438d",
+            "go": "d879ce82-b941-4ca1-a251-822ad928e7a1",
+            "component_type": "TeamSpawnManager"
+          },
           "ChooseBlueAction": "Slot2",
           "ChooseRedAction": "Slot1",
           "EnforceTeamBalance": true,
@@ -139,17 +144,28 @@
             "_type": "gameobject",
             "go": "a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1"
           },
-          "RemoveFromSceneOnStart": [
-            {
-              "_type": "gameobject",
-              "go": "d879ce82-b941-4ca1-a251-822ad928e7a1"
-            }
-          ],
+          "RemoveFromSceneOnStart": [],
           "RequireOfflineTeamChoice": true,
           "RequireOnlineTeamChoice": true,
           "ShowOfflineTeamHud": true,
           "ShowOnlineTeamHud": true,
           "SpawnOfflineTestBots": true
+        },
+        {
+          "__type": "GameRestartHotkey",
+          "__guid": "b2c3d4e5-f6a7-4890-b123-456789abcdef",
+          "__enabled": true,
+          "Flags": 0,
+          "EnabledHotkey": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OverrideScene": null,
+          "OverrideScenePathFallback": null,
+          "RestartAction": "Reload"
         }
       ],
       "Children": []
@@ -707,7 +723,7 @@
               "__guid": "6fc0f2ee-ab98-4f40-890f-fa1c61ee0ad0",
               "__enabled": true,
               "Flags": 0,
-              "AnimationGraph": "models/citizen/citizen_throw.vanmgrph",
+              "AnimationGraph": "anim/citizen_throw.vanmgrph",
               "BodyGroups": 341,
               "BoneMergeTarget": null,
               "CreateAttachments": false,
@@ -1435,18 +1451,14 @@
           "__enabled": true,
           "Flags": 0,
           "ArenaCenterPoint": null,
-          "BlueSpawnPoints": [
-            null
-          ],
+          "BlueSpawnPoints": [],
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "RedSpawnPoints": [
-            null
-          ],
+          "RedSpawnPoints": [],
           "UseSlotBasedArenaSpawns": true
         }
       ],
@@ -2161,7 +2173,7 @@
   "SceneProperties": {
     "NetworkInterpolation": true,
     "TimeScale": 1,
-    "WantsSystemScene": true,
+    "WantsSystemScene": false,
     "Metadata": {},
     "NavMesh": {
       "Enabled": false,
@@ -2178,17 +2190,17 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
+      "Sandbox.SelectionSetsSystem": {
+        "Data": {
+          "SelectionSets": []
+        }
+      },
       "Sandbox.MovieMaker.MovieRecorderSystem": {
         "DisableClientRecording": false
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
           "$blob": "ab4de2c4-2447-4482-a729-45ff15e5a3ca"
-        }
-      },
-      "Sandbox.SelectionSetsSystem": {
-        "Data": {
-          "SelectionSets": []
         }
       }
     }

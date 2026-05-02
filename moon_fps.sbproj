@@ -5,8 +5,10 @@
   "Ident": "moon_fps",
   "Schema": 1,
   "IncludeSourceFiles": false,
-  "Resources": null,
-  "PackageReferences": [],
+  "Resources": "/Assets/**\n/Code/**\n/Libraries/**",
+  "PackageReferences": [
+    "facepunch.sandbox"
+  ],
   "EditorReferences": null,
   "Mounts": null,
   "IsStandaloneOnly": false,

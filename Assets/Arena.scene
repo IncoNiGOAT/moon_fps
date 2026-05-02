@@ -187,6 +187,24 @@
           "SpawnOfflineTestBots": true
         },
         {
+          "__type": "MoonPlayerSpawnerNetworkRelay",
+          "__guid": "f1a2b3c4-d5e6-4789-a022-3456789abcdf",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Spawner": {
+            "_type": "component",
+            "component_id": "d16a5846-7a87-41d5-b0ec-1db29512dcad",
+            "go": "a2cd8e0a-db9a-442a-828d-ccd2fa079bac",
+            "component_type": "MoonPlayerSpawner"
+          }
+        },
+        {
           "__type": "ArenaStartBallSpawner",
           "__guid": "b4fd9b5a-45e8-4d52-8ed8-0db96d1218c2",
           "__enabled": true,
@@ -255,6 +273,22 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "GameRestartHotkey",
+          "__guid": "a1b2c3d4-e5f6-4789-a012-3456789abcde",
+          "__enabled": true,
+          "Flags": 0,
+          "EnabledHotkey": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OverrideScene": null,
+          "OverrideScenePathFallback": null,
+          "RestartAction": "Reload"
         }
       ],
       "Children": []
@@ -558,7 +592,7 @@
           "RagdollDuration": 3,
           "ThrowAimUpNudge": 0,
           "ThrowForce": 5000,
-          "ThrowReleaseLateralOffset": 0,
+          "ThrowReleaseLateralOffset": -1,
           "ThrowReleaseWorldUpOffset": 40,
           "ThrowWindupTime": 0.12
         },
@@ -635,7 +669,7 @@
         {
           "__type": "TeamSideConstraint",
           "__guid": "43a54493-7fa4-4019-970f-050279e473a0",
-          "__enabled": true,
+          "__enabled": false,
           "Flags": 0,
           "Axis": "X",
           "Margin": 4,
@@ -771,7 +805,7 @@
               "__guid": "6fc0f2ee-ab98-4f40-890f-fa1c61ee0ad0",
               "__enabled": true,
               "Flags": 0,
-              "AnimationGraph": "models/citizen/citizen_throw.vanmgrph",
+              "AnimationGraph": null,
               "BodyGroups": 341,
               "BoneMergeTarget": null,
               "CreateAttachments": false,
@@ -984,7 +1018,7 @@
           "EnableImpactDamage": true,
           "EnhancedCcd": false,
           "Gravity": true,
-          "GravityScale": 1,
+          "GravityScale": 0.2,
           "ImpactDamage": 0,
           "LinearDamping": 0,
           "Locking": {
@@ -1393,7 +1427,7 @@
           "AttackTintRed": "1,0.15814,0.15814,1",
           "HandForwardOffset": 3.7399971,
           "HandRightOffset": 0.22999997,
-          "HandUpOffset": -7.0100155,
+          "HandUpOffset": -9.18,
           "MaxKillBounces": 3,
           "NeutralTint": "1,1,1,1",
           "OnComponentDestroy": null,
@@ -4585,7 +4619,7 @@
   "SceneProperties": {
     "NetworkInterpolation": true,
     "TimeScale": 1,
-    "WantsSystemScene": true,
+    "WantsSystemScene": false,
     "Metadata": {},
     "NavMesh": {
       "Enabled": false,
@@ -4602,17 +4636,17 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
+      "Sandbox.SelectionSetsSystem": {
+        "Data": {
+          "SelectionSets": []
+        }
+      },
       "Sandbox.MovieMaker.MovieRecorderSystem": {
         "DisableClientRecording": false
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
           "$blob": "b7abcf34-989b-4904-ad5b-5dee524d7168"
-        }
-      },
-      "Sandbox.SelectionSetsSystem": {
-        "Data": {
-          "SelectionSets": []
         }
       }
     }

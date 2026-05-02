@@ -1,6 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sandbox;
 using Sandbox.Network;
-using System.Threading.Tasks;
 
 /// <summary>
 /// Menu principal minimal pour prototyper le flow:
@@ -16,7 +18,12 @@ public sealed class MainMenuController : Component
     [Property] public bool ShowHudMenu { get; set; } = true;
     [Property] public bool ForceMouseVisible { get; set; } = true;
     [Property] public SceneFile ArenaScene { get; set; }
-    [Property] public string ArenaScenePathFallback { get; set; } = "Assets/Arena.scene";
+
+    /// <summary>
+    /// Chemin de secours si <see cref="ArenaScene"/> est vide. En éditeur <c>Assets/Arena.scene</c> marche souvent ;
+    /// en package / serveur dédié le VFS expose plutôt <c>Arena.scene</c> (sans préfixe Assets/).
+    /// </summary>
+    [Property] public string ArenaScenePathFallback { get; set; } = "Arena.scene";
     [Property] public string CreateAction { get; set; } = "Slot1";
     [Property] public string JoinAction { get; set; } = "Slot2";
     [Property] public string SettingsAction { get; set; } = "Slot3";
@@ -120,21 +127,10 @@ public sealed class MainMenuController : Component
                 return;
             }
 
-            var loaded = false;
-
-            if ( ArenaScene is not null )
-            {
-                loaded = Scene.Load( ArenaScene );
-            }
-            else if ( !string.IsNullOrWhiteSpace( ArenaScenePathFallback ) )
-            {
-                loaded = Scene.LoadFromFile( ArenaScenePathFallback );
-            }
-
-            if ( !loaded )
+            if ( !TryLoadArenaScene() )
             {
                 State = MenuState.Main;
-                Log.Warning( "[Menu] Impossible de charger l'arene. Assigne ArenaScene (SceneFile) dans l'inspecteur." );
+                Log.Warning( "[Menu] Impossible de charger l'arene. Verifie que Assets/Arena.scene existe et recompile ; en dedie on essaie Arena.scene, Assets/Arena.scene, etc." );
                 return;
             }
 
@@ -390,6 +386,40 @@ public sealed class MainMenuController : Component
         var m = Mouse.Position;
         var r = GetNoLobbyNoRect();
         return m.x >= r.Left && m.x <= r.Right && m.y >= r.Top && m.y <= r.Bottom;
+    }
+
+    /// <summary>
+    /// Charge l'arène : <see cref="ArenaScene"/> si assigné, sinon plusieurs chemins (éditeur vs package dédié).
+    /// </summary>
+    private bool TryLoadArenaScene()
+    {
+        if ( ArenaScene is not null && Scene.Load( ArenaScene ) )
+            return true;
+
+        var candidates = new List<string>();
+        if ( !string.IsNullOrWhiteSpace( ArenaScenePathFallback ) )
+            candidates.Add( ArenaScenePathFallback.Trim() );
+
+        foreach ( var p in new[] { "Arena.scene", "arena.scene", "Assets/Arena.scene", "assets/arena.scene" } )
+        {
+            if ( !candidates.Exists( c => string.Equals( c, p, StringComparison.OrdinalIgnoreCase ) ) )
+                candidates.Add( p );
+        }
+
+        var tried = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+        foreach ( var path in candidates )
+        {
+            if ( string.IsNullOrWhiteSpace( path ) || !tried.Add( path ) )
+                continue;
+
+            if ( Scene.LoadFromFile( path ) )
+            {
+                Log.Info( $"[Menu] Arène chargée : {path}" );
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

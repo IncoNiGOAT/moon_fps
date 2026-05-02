@@ -154,6 +154,13 @@ public sealed partial class BallCarrier : Component
     /// <summary> État exposé à <see cref="PlayerHud"/> / <see cref="BallCarrierAimZoom"/>. </summary>
     public bool HasHeldBall => _heldBall is not null;
 
+    /// <summary>
+    /// Référence directe vers la balle tenue (lecture seule). Utilisé par <see cref="BallPickup"/>
+    /// pour résoudre les races de pickup (un client peut avoir set son <c>_heldBall</c> de manière
+    /// optimiste avant que l'hôte n'ait confirmé qu'un autre client a gagné le pickup).
+    /// </summary>
+    public BallPickup HeldBall => _heldBall;
+
     public bool HasHeldProp => _heldProp is not null;
 
     public bool IsChargingThrowActive => _isChargingThrow;
@@ -548,13 +555,19 @@ public sealed partial class BallCarrier : Component
         return TryGetNetworkRoot( GameObject, out var root ) && root.Network.IsOwner;
     }
 
-    /// <summary> <see cref="BallPickup"/> réplique le ramassage (RPC) : chaque instance du porteur met à jour sa référence balle. </summary>
+    /// <summary>
+    /// Appelé par <see cref="BallPickup"/> sur chaque machine quand l'hôte confirme via [Sync] que
+    /// la balle vient d'être ramassée par ce joueur. Rend la référence cohérente partout.
+    /// </summary>
     internal void NetSetHeldBallFromNetwork( BallPickup ball )
     {
         _heldBall = ball;
     }
 
-    /// <summary> Aligné sur le lancer répliqué : libère la référence balle sur toutes les machines. </summary>
+    /// <summary>
+    /// Appelé par <see cref="BallPickup"/> sur chaque machine quand l'hôte confirme via [Sync] que
+    /// ce joueur ne tient plus la balle (lancer, vol, ou pickup gagné par un autre client).
+    /// </summary>
     internal void NetClearHeldBallFromNetwork()
     {
         _heldBall = null;
