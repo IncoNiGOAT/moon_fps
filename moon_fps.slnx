@@ -1,0 +1,22 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+  </Configurations>
+  <Project Path="Code/moon_fps.csproj" />
+  <Project Path="Editor/moon_fps.editor.csproj" />
+  <Folder Name="/Addons/">
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/addons/base/code/Base Library.csproj" />
+  </Folder>
+  <Folder Name="/Libraries/">
+    <Project Path="Libraries/pumpedbit.citizenretarget/Code/citizenretarget.csproj" />
+    <Project Path="Libraries/pumpedbit.citizenretarget/Editor/citizenretarget.editor.csproj" />
+  </Folder>
+  <Folder Name="/Tools/">
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/addons/tools/Code/Base Editor Library.csproj" />
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/editor/ActionGraph/Code/actiongraph.csproj" />
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/editor/DooEditor/Code/dooeditor.csproj" />
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/editor/Hammer/Code/hammer.csproj" />
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/editor/MovieMaker/Code/moviemaker.csproj" />
+    <Project Path="D:/SteamLibrary/steamapps/common/sbox/editor/ShaderGraph/Code/shadergraph.csproj" />
+  </Folder>
+</Solution>

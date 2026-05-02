@@ -1,0 +1,892 @@
+{
+  "LocalAssetBrowser.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\Anim\u0022,\u0022D:\\\\SteamLibrary\\\\steamapps\\\\common\\\\sbox\\\\editor\\\\DooEditor\u0022,\u0022C:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Libraries\\\\pumpedbit.citizenretarget\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Libraries\\\\pumpedbit.citizenretarget\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\sbox projects\\\\moon_fps\\\\Libraries\\\\pumpedbit.citizenretarget\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Libraries - Copie\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Libraries\\\\pumpedbit.citizenretarget\u0022,\u0022@everything\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\u0022,\u0022@everything\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\materials\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\maps\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\Anim\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\maps\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\Anim\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\maps\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022]",
+    "Timeout": 1780330454,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.HistoryIdx": {
+    "Value": "25",
+    "Timeout": 1780330454,
+    "DeleteAt": 0
+  },
+  "SceneView.Viewport0.Settings": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-84.6051483,-77.8233414,107.433853\u0022,\u0022CameraRotation\u0022:\u0022-0.0117268274,0.0300776735,0.363062769,0.931205213\u0022,\u0022View\u0022:0,\u0022RenderMode\u0022:0,\u0022WireframeMode\u0022:false,\u0022EnablePostProcessing\u0022:true,\u0022EnablePrefabLighting\u0022:true,\u0022ShowSkyIn2D\u0022:true,\u0022ShowGrid\u0022:true,\u0022GridOpacity\u0022:0.2,\u0022GridAxis\u0022:0,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780331085,
+    "DeleteAt": 0
+  },
+  "Window.SboxSceneEditor.Dock": {
+    "Value": "{\u0022floatingWindows\u0022:[],\u0022mainWrapper\u0022:{\u0022geometry\u0022:\u0022AdnQywADAAAAAAAAAAAAAAAABPcAAAUrAAAAAAAAAAAAAAT3AAAFKwAAAAAAAAAACgAAAAAAAAAAAAAABPcAAAUr\u0022,\u0022splitter\u0022:{\u0022items\u0022:[{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022SceneTreeWidget\u0022,\u0022name\u0022:\u0022Hierarchy\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022PanelInspectorWidget\u0022,\u0022name\u0022:\u0022UI Panels\u0022}],\u0022type\u0022:\u0022area\u0022},{\u0022items\u0022:[{\u0022items\u0022:[{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022SceneDock\u0022,\u0022name\u0022:\u0022SceneDock:main_menu.scene\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022SceneDock\u0022,\u0022name\u0022:\u0022SceneDock:arena.scene\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022SceneDock\u0022,\u0022name\u0022:\u0022SceneDock:ball_fx_dev.scene\u0022}],\u0022type\u0022:\u0022area\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022MainAssetBrowser\u0022,\u0022name\u0022:\u0022Asset Browser\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022ConsoleWidget\u0022,\u0022name\u0022:\u0022Console\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022MixerDock\u0022,\u0022name\u0022:\u0022Mixer\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022LibraryManagerDock\u0022,\u0022name\u0022:\u0022Library Manager\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAAD0gAAAk0A/////wEAAAACAA==\u0022,\u0022type\u0022:\u0022splitter\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022Inspector\u0022,\u0022name\u0022:\u0022Inspector\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAAF5wAAAh8A/////wEAAAABAA==\u0022,\u0022type\u0022:\u0022splitter\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAAB6gAACAoA/////wEAAAABAA==\u0022,\u0022type\u0022:\u0022splitter\u0022}},\u0022toolWindowManagerStateFormat\u0022:1}",
+    "Timeout": 1780324589,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Material.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\addons\\\\citizen\\\\assets\\\\models\\\\citizen\\\\skin\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\core\\\\materials\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\\\\Balle\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\\\\Balle\\\\Texture\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\\\\Balle\\\\Texture\\\\Balle\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\\\\Balle\\\\Texture\\\\Balle\\\\2K\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022]",
+    "Timeout": 1780314658,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Material.HistoryIdx": {
+    "Value": "11",
+    "Timeout": 1780314658,
+    "DeleteAt": 0
+  },
+  "LastSaveLocation.scene": {
+    "Value": "C:\\Users\\nicol\\Documents\\s\u0026box projects\\moon_fps\\Assets",
+    "Timeout": 1780277318,
+    "DeleteAt": 0
+  },
+  "map_moon.scene.Viewport0": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-922.110657,-1482.94556,1940.12244\u0022,\u0022CameraRotation\u0022:\u0022-0.181383461,0.268408149,0.529720247,0.783870935\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780331085,
+    "DeleteAt": 0
+  },
+  "expand.f2e91ffd-f509-4729-b9a6-007c16400c47.BoxCollider": {
+    "Value": "false",
+    "Timeout": 1780229503,
+    "DeleteAt": 0
+  },
+  "expand.f2e91ffd-f509-4729-b9a6-007c16400c47.ModelRenderer": {
+    "Value": "false",
+    "Timeout": 1780229503,
+    "DeleteAt": 0
+  },
+  "expand.0626f061-d6e1-4054-8fbf-60c7a1c72b39.BoxCollider": {
+    "Value": "false",
+    "Timeout": 1780328538,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.MoveModeSwim": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.MoveModeLadder": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Animation Graph.ViewMode": {
+    "Value": "1",
+    "Timeout": 1780252160,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.JumpManager": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.GravityManager": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "gizmo.settings": {
+    "Value": "{\u0022EditMode\u0022:\u0022position\u0022,\u0022Selection\u0022:true,\u0022ViewMode\u0022:\u00223d\u0022,\u0022GizmosEnabled\u0022:true,\u0022GizmoScale\u0022:1,\u0022GridSpacing\u0022:32,\u0022SnapToGrid\u0022:false,\u0022SnapToAngles\u0022:true,\u0022AngleSpacing\u0022:15,\u0022GlobalSpace\u0022:true,\u0022DebugActionGraphs\u0022:false,\u0022DisabledGizmos\u0022:{}}",
+    "Timeout": 1780324131,
+    "DeleteAt": 0
+  },
+  "SceneView.Layout": {
+    "Value": "{\u0022Layout\u0022:0,\u0022SplitterState\u0022:[]}",
+    "Timeout": 1780330048,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.MoveModeWalk": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.0626f061-d6e1-4054-8fbf-60c7a1c72b39.Rigidbody": {
+    "Value": "false",
+    "Timeout": 1780328538,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Image,Sheetfile.HistoryIdx": {
+    "Value": "3",
+    "Timeout": 1780263110,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Animation Graph.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022@everything\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\addons\\\\citizen\\\\assets\\\\models\\\\citizen\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\addons\\\\citizen\\\\assets\\\\models\\\\citizen\u0022]",
+    "Timeout": 1780252160,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Animation Graph.HistoryIdx": {
+    "Value": "4",
+    "Timeout": 1780252160,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.ViewMode": {
+    "Value": "3",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.ShowJunkFiles": {
+    "Value": "false",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.HideNonAssets": {
+    "Value": "false",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.ShowRecursiveFiles": {
+    "Value": "false",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Search": {
+    "Value": "\u0022\u0022",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.ActiveTags": {
+    "Value": "\u0022\u0022",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.ExcludedTags": {
+    "Value": "\u0022\u0022",
+    "Timeout": 1780329899,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.DashManager": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Image,Sheetfile.History": {
+    "Value": "[\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\core\\\\materials\\\\default\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\assets\\\\models\\\\balle\\\\texture\\\\balle\\\\2k\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\core\\\\materials\\\\default\u0022]",
+    "Timeout": 1780263110,
+    "DeleteAt": 0
+  },
+  "Window.SboxHammer.Dock": {
+    "Value": "{\u0022floatingWindows\u0022:[],\u0022mainWrapper\u0022:{\u0022geometry\u0022:\u0022AdnQywADAAAAAAAAAAAAAAAACcoAAAUCAAAAAAAAAAAAAAnKAAAFAgAAAAAAAAAACgAAAAAAAAAAAAAACcoAAAUC\u0022,\u0022splitter\u0022:{\u0022items\u0022:[{\u0022items\u0022:[{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022\u0022,\u0022name\u0022:\u0022Tool Properties\u0022}],\u0022type\u0022:\u0022area\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022\u0022,\u0022name\u0022:\u0022Active Material\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAABaAAAAH8A/////wEAAAACAA==\u0022,\u0022type\u0022:\u0022splitter\u0022},{\u0022items\u0022:[{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022\u0022,\u0022name\u0022:\u0022Map View\u0022}],\u0022type\u0022:\u0022area\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022HammerAssetBrowser\u0022,\u0022name\u0022:\u0022Asset Browser\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022HammerCloudBrowser\u0022,\u0022name\u0022:\u0022Cloud Browser\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAADsQAAAfYA/////wEAAAACAA==\u0022,\u0022type\u0022:\u0022splitter\u0022},{\u0022items\u0022:[{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022\u0022,\u0022name\u0022:\u0022Outliner\u0022},{\u0022data\u0022:null,\u0022managedType\u0022:\u0022\u0022,\u0022name\u0022:\u0022Selection Sets\u0022}],\u0022type\u0022:\u0022area\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022\u0022,\u0022name\u0022:\u0022Object Properties\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAAA8AAAAPAA/////wEAAAACAA==\u0022,\u0022type\u0022:\u0022splitter\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAADAAABYgAABFMAAAFqAP////8BAAAAAQA=\u0022,\u0022type\u0022:\u0022splitter\u0022}},\u0022toolWindowManagerStateFormat\u0022:1}",
+    "Timeout": 1780164527,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Model.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\maps\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\addons\\\\citizen\\\\assets\\\\models\\\\citizen\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\core\\\\models\\\\dev\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Editor\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Localization\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Localization\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Editor\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\\\\Balle\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\core\\\\models\\\\dev\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Editor\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Code\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\models\\\\Balle\u0022]",
+    "Timeout": 1780274474,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Model.HistoryIdx": {
+    "Value": "21",
+    "Timeout": 1780274474,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Map.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\assets\\\\maps\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\assets\\\\maps\u0022]",
+    "Timeout": 1780152255,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Map.HistoryIdx": {
+    "Value": "2",
+    "Timeout": 1780152255,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Prefab.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022]",
+    "Timeout": 1780168262,
+    "DeleteAt": 0
+  },
+  "expand.8d9983a9-f970-42b5-a56f-b2ba7887d83e.EditorOnlyMarker": {
+    "Value": "false",
+    "Timeout": 1780155576,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Texture.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\addons\\\\base\\\\assets\\\\textures\\\\shapes\u0022,\u0022d:\\\\steamlibrary\\\\steamapps\\\\common\\\\sbox\\\\addons\\\\base\\\\assets\\\\textures\\\\shapes\u0022]",
+    "Timeout": 1780159489,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Texture.HistoryIdx": {
+    "Value": "2",
+    "Timeout": 1780159489,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.TeamSideConstraint": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.e25abb68-b0fa-4363-af06-8764d1f6f95d.GravityManager": {
+    "Value": "false",
+    "Timeout": 1780155905,
+    "DeleteAt": 0
+  },
+  "expand.e25abb68-b0fa-4363-af06-8764d1f6f95d.JumpManager": {
+    "Value": "false",
+    "Timeout": 1780155905,
+    "DeleteAt": 0
+  },
+  "expand.e25abb68-b0fa-4363-af06-8764d1f6f95d.DashManager": {
+    "Value": "false",
+    "Timeout": 1780155905,
+    "DeleteAt": 0
+  },
+  "expand.e25abb68-b0fa-4363-af06-8764d1f6f95d.BallCarrier": {
+    "Value": "false",
+    "Timeout": 1780155905,
+    "DeleteAt": 0
+  },
+  "expand.e25abb68-b0fa-4363-af06-8764d1f6f95d.PlayerHealth": {
+    "Value": "false",
+    "Timeout": 1780155905,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Prefab.HistoryIdx": {
+    "Value": "1",
+    "Timeout": 1780168262,
+    "DeleteAt": 0
+  },
+  "expand.069f47ea-83b9-4bd9-8f54-b970249ae1ad.SpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780167684,
+    "DeleteAt": 0
+  },
+  "expand.2202a792-7ff3-4c5f-a39b-4e8e8ae0ee65.SpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780167927,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.PlayerController": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.MoveModeWalk": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.MoveModeSwim": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.MoveModeLadder": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.Dresser": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.GravityManager": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.JumpManager": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.DashManager": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.14e2dd2d-2397-4e34-b78a-9d95d35202ab.BallCarrier": {
+    "Value": "false",
+    "Timeout": 1780157315,
+    "DeleteAt": 0
+  },
+  "expand.e339030a-f3a1-442c-b989-bed77f3b69db.SpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780167805,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.MissingComponent": {
+    "Value": "false",
+    "Timeout": 1780158173,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sprite.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022@recents\u0022,\u0022@everything\u0022,\u0022C:\\\\Users\\\\nicol\\\\Documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022]",
+    "Timeout": 1780267197,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sprite.HistoryIdx": {
+    "Value": "4",
+    "Timeout": 1780267197,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sprite.ViewMode": {
+    "Value": "0",
+    "Timeout": 1780267197,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sprite.ShowJunkFiles": {
+    "Value": "false",
+    "Timeout": 1780267197,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sprite.HideNonAssets": {
+    "Value": "false",
+    "Timeout": 1780267197,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sprite.ShowRecursiveFiles": {
+    "Value": "false",
+    "Timeout": 1780267197,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.PlayerController": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.MoveModeWalk": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.MoveModeSwim": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.MoveModeLadder": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.Dresser": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.GravityManager": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.JumpManager": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.DashManager": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.BallCarrier": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.TeamMember": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.f8836d80-5e80-4617-bb14-2257992cd5c2.PrisonBallPlayer": {
+    "Value": "false",
+    "Timeout": 1780162454,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.PlayerController": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.MoveModeWalk": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.MoveModeSwim": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.MoveModeLadder": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.Dresser": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.GravityManager": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.JumpManager": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.DashManager": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.BallCarrier": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.TeamMember": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.c4a79d4a-79e3-4b5f-9f45-d7445290f846.PrisonBallPlayer": {
+    "Value": "false",
+    "Timeout": 1780163638,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.PlayerController": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.MoveModeWalk": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.MoveModeSwim": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.MoveModeLadder": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.Dresser": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.GravityManager": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.JumpManager": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.DashManager": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.BallCarrier": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.e62b17f8-c8c3-415d-bfbd-29401ab93f98.TeamMember": {
+    "Value": "false",
+    "Timeout": 1780162452,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.TeamSideConstraint": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.TeamMember": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "map_moon.scene.Viewport1": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-162.3582,0,85.8465042\u0022,\u0022CameraRotation\u0022:\u0022-0.5,0.5,0.5,0.5\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780164290,
+    "DeleteAt": 0
+  },
+  "SceneView.Viewport1.Settings": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-162.3582,0,85.8465042\u0022,\u0022CameraRotation\u0022:\u0022-0.5,0.5,0.5,0.5\u0022,\u0022View\u0022:1,\u0022RenderMode\u0022:0,\u0022WireframeMode\u0022:false,\u0022EnablePostProcessing\u0022:true,\u0022EnablePrefabLighting\u0022:true,\u0022ShowSkyIn2D\u0022:false,\u0022ShowGrid\u0022:true,\u0022GridOpacity\u0022:0.2,\u0022GridAxis\u0022:0,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780164290,
+    "DeleteAt": 0
+  },
+  "main_menu.scene.Viewport0": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-84.6051483,-77.8233414,107.433853\u0022,\u0022CameraRotation\u0022:\u0022-0.0117268274,0.0300776735,0.363062769,0.931205213\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780331085,
+    "DeleteAt": 0
+  },
+  ".Viewport0": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-176.058441,-634.114319,1973.05957\u0022,\u0022CameraRotation\u0022:\u0022-0.3724446,0.350338429,0.625972271,0.588818133\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780330273,
+    "DeleteAt": 0
+  },
+  "arena.scene.Viewport0": {
+    "Value": "{\u0022CameraPosition\u0022:\u0022-176.058441,-634.114319,1973.05957\u0022,\u0022CameraRotation\u0022:\u0022-0.356942743,0.395703942,0.566769958,0.62831682\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780331085,
+    "DeleteAt": 0
+  },
+  "expand.8749f61f-909b-48aa-adca-615283fc3aac.DebugPlayerSwitcher": {
+    "Value": "false",
+    "Timeout": 1780264424,
+    "DeleteAt": 0
+  },
+  "expand.f2e91ffd-f509-4729-b9a6-007c16400c47.Rigidbody": {
+    "Value": "false",
+    "Timeout": 1780229503,
+    "DeleteAt": 0
+  },
+  "expand.b90f6628-5a13-4fa0-95d7-6e7d7b3782fc.BoxCollider": {
+    "Value": "false",
+    "Timeout": 1780322021,
+    "DeleteAt": 0
+  },
+  "expand.84dff0bb-2864-4f1c-aade-fba49e1768c5.Rigidbody": {
+    "Value": "false",
+    "Timeout": 1780329984,
+    "DeleteAt": 0
+  },
+  "expand.a2cd8e0a-db9a-442a-828d-ccd2fa079bac.PrisonBallRules": {
+    "Value": "false",
+    "Timeout": 1780323131,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sound Event.History": {
+    "Value": "[\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\u0022,\u0022c:\\\\users\\\\nicol\\\\documents\\\\s\\u0026box projects\\\\moon_fps\\\\Assets\\\\Sound\u0022]",
+    "Timeout": 1780182282,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Sound Event.HistoryIdx": {
+    "Value": "2",
+    "Timeout": 1780182282,
+    "DeleteAt": 0
+  },
+  "expand.8749f61f-909b-48aa-adca-615283fc3aac.DebugPrisonTools": {
+    "Value": "false",
+    "Timeout": 1780264424,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.BallCarrierHud": {
+    "Value": "false",
+    "Timeout": 1780320388,
+    "DeleteAt": 0
+  },
+  "expand.a2cd8e0a-db9a-442a-828d-ccd2fa079bac.LocalSoloInputGate": {
+    "Value": "false",
+    "Timeout": 1780323131,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.PrisonBallPlayer": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.BallCarrierAimZoom": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.59fed219-3050-4bad-bc91-b41b11a1bf9d.BoxCollider": {
+    "Value": "false",
+    "Timeout": 1780229539,
+    "DeleteAt": 0
+  },
+  "expand.aeec590e-c792-407c-995d-365eb80d563f.BoxCollider": {
+    "Value": "false",
+    "Timeout": 1780329629,
+    "DeleteAt": 0
+  },
+  "expand.aeec590e-c792-407c-995d-365eb80d563f.Rigidbody": {
+    "Value": "false",
+    "Timeout": 1780329629,
+    "DeleteAt": 0
+  },
+  "editor.playmode": {
+    "Value": "false",
+    "Timeout": 1780330251,
+    "DeleteAt": 0
+  },
+  "Window.RectEditor.Dock": {
+    "Value": "{\u0022floatingWindows\u0022:[],\u0022mainWrapper\u0022:{\u0022geometry\u0022:\u0022AdnQywADAAAAAAAAAAAAAAAAA\u002B8AAAJ5AAAAAAAAAAAAAAPvAAACeQAAAAAAAAAACgAAAAAAAAAAAAAAA\u002B8AAAJ5\u0022,\u0022splitter\u0022:{\u0022items\u0022:[{\u0022items\u0022:[{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022Properties\u0022,\u0022name\u0022:\u0022Properties\u0022}],\u0022type\u0022:\u0022area\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022MaterialReference\u0022,\u0022name\u0022:\u0022Material Reference\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAABIAAAAOwA/////wEAAAACAA==\u0022,\u0022type\u0022:\u0022splitter\u0022},{\u0022currentIndex\u0022:0,\u0022objects\u0022:[{\u0022data\u0022:null,\u0022managedType\u0022:\u0022RectView\u0022,\u0022name\u0022:\u0022Rect View\u0022}],\u0022type\u0022:\u0022area\u0022}],\u0022state\u0022:\u0022AAAA/wAAAAEAAAACAAAA/gAAAX4A/////wEAAAABAA==\u0022,\u0022type\u0022:\u0022splitter\u0022}},\u0022toolWindowManagerStateFormat\u0022:1}",
+    "Timeout": 1780234308,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Model.ViewMode": {
+    "Value": "0",
+    "Timeout": 1780274467,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Model.ShowJunkFiles": {
+    "Value": "false",
+    "Timeout": 1780274467,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Model.HideNonAssets": {
+    "Value": "false",
+    "Timeout": 1780274467,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Model.ShowRecursiveFiles": {
+    "Value": "false",
+    "Timeout": 1780274467,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Animation Graph.ShowJunkFiles": {
+    "Value": "false",
+    "Timeout": 1780252160,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Animation Graph.HideNonAssets": {
+    "Value": "false",
+    "Timeout": 1780252160,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Animation Graph.ShowRecursiveFiles": {
+    "Value": "false",
+    "Timeout": 1780252160,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.Dresser": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Image,Sheetfile.ViewMode": {
+    "Value": "1",
+    "Timeout": 1780263110,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Image,Sheetfile.ShowJunkFiles": {
+    "Value": "false",
+    "Timeout": 1780263110,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Image,Sheetfile.HideNonAssets": {
+    "Value": "false",
+    "Timeout": 1780263110,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Image,Sheetfile.ShowRecursiveFiles": {
+    "Value": "false",
+    "Timeout": 1780263110,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Material.ViewMode": {
+    "Value": "1",
+    "Timeout": 1780314658,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Material.ShowJunkFiles": {
+    "Value": "false",
+    "Timeout": 1780314658,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Material.HideNonAssets": {
+    "Value": "false",
+    "Timeout": 1780314658,
+    "DeleteAt": 0
+  },
+  "LocalAssetBrowser.Material.ShowRecursiveFiles": {
+    "Value": "false",
+    "Timeout": 1780314658,
+    "DeleteAt": 0
+  },
+  "ball_fx_dev.scene.Viewport0": {
+    "Value": "{\u0022CameraPosition\u0022:\u00222.70796776,198.415268,212.966858\u0022,\u0022CameraRotation\u0022:\u00220.1190589,0.264292002,-0.393096,0.872611165\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1780331085,
+    "DeleteAt": 0
+  },
+  "expand.def3e6b0-640c-4c81-8f0b-fcae88397a12.ParticleSphereEmitter": {
+    "Value": "false",
+    "Timeout": 1780266208,
+    "DeleteAt": 0
+  },
+  "expand.def3e6b0-640c-4c81-8f0b-fcae88397a12.ParticleEffect": {
+    "Value": "false",
+    "Timeout": 1780266208,
+    "DeleteAt": 0
+  },
+  "expand.77b1e20c-2de4-4820-98a7-5740cc234726.ParticleEffect": {
+    "Value": "false",
+    "Timeout": 1780267986,
+    "DeleteAt": 0
+  },
+  "expand.5d12939b-a25d-494a-a6b4-c043b33f2aae.ParticleSpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780266775,
+    "DeleteAt": 0
+  },
+  "expand.77b1e20c-2de4-4820-98a7-5740cc234726.ParticleConeEmitter": {
+    "Value": "false",
+    "Timeout": 1780267964,
+    "DeleteAt": 0
+  },
+  "expand.1f8fb04c-4a6a-4b5a-ab6d-4ab77cd17bd9.ParticleSphereEmitter": {
+    "Value": "false",
+    "Timeout": 1780268534,
+    "DeleteAt": 0
+  },
+  "expand.1f8fb04c-4a6a-4b5a-ab6d-4ab77cd17bd9.ParticleSpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780269274,
+    "DeleteAt": 0
+  },
+  "expand.0c4147bb-85d5-4d61-b2da-e1f5bbd8c34a.ParticleConeEmitter": {
+    "Value": "false",
+    "Timeout": 1780274086,
+    "DeleteAt": 0
+  },
+  "expand.0c4147bb-85d5-4d61-b2da-e1f5bbd8c34a.ParticleEffect": {
+    "Value": "false",
+    "Timeout": 1780274086,
+    "DeleteAt": 0
+  },
+  "expand.0c4147bb-85d5-4d61-b2da-e1f5bbd8c34a.ParticleSpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780274086,
+    "DeleteAt": 0
+  },
+  "expand.0c4147bb-85d5-4d61-b2da-e1f5bbd8c34a.GrooveEnergyParticles": {
+    "Value": "false",
+    "Timeout": 1780272882,
+    "DeleteAt": 0
+  },
+  "expand.affe60f9-a44d-43ac-87f6-040ffd2eac1f.ParticleEffect": {
+    "Value": "false",
+    "Timeout": 1780273274,
+    "DeleteAt": 0
+  },
+  "expand.84dff0bb-2864-4f1c-aade-fba49e1768c5.SphereCollider": {
+    "Value": "false",
+    "Timeout": 1780329984,
+    "DeleteAt": 0
+  },
+  "expand.d20c6605-1a78-4c71-a194-316ce8221052.ParticleTrailRenderer": {
+    "Value": "false",
+    "Timeout": 1780276375,
+    "DeleteAt": 0
+  },
+  "expand.1fc284af-bd42-44a0-919e-b8904097801b.ParticleSphereEmitter": {
+    "Value": "false",
+    "Timeout": 1780309234,
+    "DeleteAt": 0
+  },
+  "expand.1fc284af-bd42-44a0-919e-b8904097801b.ParticleSpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780309234,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.PlayerController": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.7567f8f9-c07c-4309-bfe6-ba653c2cef41.ParticleSpriteRenderer": {
+    "Value": "false",
+    "Timeout": 1780316632,
+    "DeleteAt": 0
+  },
+  "expand.a3ce3c4d-a6b4-45ea-ad3b-4ca5553399b1.BallCarrier": {
+    "Value": "false",
+    "Timeout": 1780328239,
+    "DeleteAt": 0
+  },
+  "expand.101ae072-bcbe-4abf-bf95-ac4b743c2b18.ParticleEffect": {
+    "Value": "false",
+    "Timeout": 1780318805,
+    "DeleteAt": 0
+  },
+  "expand.101ae072-bcbe-4abf-bf95-ac4b743c2b18.ParticleSphereEmitter": {
+    "Value": "false",
+    "Timeout": 1780318805,
+    "DeleteAt": 0
+  },
+  "expand.45fd073e-6628-4f55-9670-4887870df6c2.BallPickup": {
+    "Value": "false",
+    "Timeout": 1780319697,
+    "DeleteAt": 0
+  },
+  "expand.dfe208dc-3b3d-4b3f-9566-b55bc4f7aaca.TrailRenderer": {
+    "Value": "false",
+    "Timeout": 1780319566,
+    "DeleteAt": 0
+  },
+  "expand.8d7e9af1-044a-4252-abb3-9b142b00445c.TrailRenderer": {
+    "Value": "false",
+    "Timeout": 1780319948,
+    "DeleteAt": 0
+  },
+  "expand.311fde36-0046-429e-af22-52ea98af6097.PlayerController": {
+    "Value": "false",
+    "Timeout": 1780320506,
+    "DeleteAt": 0
+  },
+  "expand.311fde36-0046-429e-af22-52ea98af6097.MoveModeWalk": {
+    "Value": "false",
+    "Timeout": 1780320506,
+    "DeleteAt": 0
+  },
+  "expand.311fde36-0046-429e-af22-52ea98af6097.MoveModeSwim": {
+    "Value": "false",
+    "Timeout": 1780320506,
+    "DeleteAt": 0
+  },
+  "expand.311fde36-0046-429e-af22-52ea98af6097.MoveModeLadder": {
+    "Value": "false",
+    "Timeout": 1780320506,
+    "DeleteAt": 0
+  },
+  "expand.311fde36-0046-429e-af22-52ea98af6097.Dresser": {
+    "Value": "false",
+    "Timeout": 1780320506,
+    "DeleteAt": 0
+  },
+  "expand.84dff0bb-2864-4f1c-aade-fba49e1768c5.BallPickup": {
+    "Value": "false",
+    "Timeout": 1780329984,
+    "DeleteAt": 0
+  },
+  "expand.a8a88541-f04c-4802-ab52-156c36818a0a.ModelRenderer": {
+    "Value": "false",
+    "Timeout": 1780328245,
+    "DeleteAt": 0
+  },
+  "expand.a8a88541-f04c-4802-ab52-156c36818a0a.BoxCollider": {
+    "Value": "false",
+    "Timeout": 1780328245,
+    "DeleteAt": 0
+  },
+  "expand.a8a88541-f04c-4802-ab52-156c36818a0a.Rigidbody": {
+    "Value": "false",
+    "Timeout": 1780328245,
+    "DeleteAt": 0
+  },
+  "expand.a8a88541-f04c-4802-ab52-156c36818a0a.ThrowablePropPickup": {
+    "Value": "false",
+    "Timeout": 1780328245,
+    "DeleteAt": 0
+  },
+  "expand.a2cd8e0a-db9a-442a-828d-ccd2fa079bac.ArenaStartBallSpawner": {
+    "Value": "false",
+    "Timeout": 1780323131,
+    "DeleteAt": 0
+  },
+  "expand.a2cd8e0a-db9a-442a-828d-ccd2fa079bac.PeriodicSideBallSpawner": {
+    "Value": "false",
+    "Timeout": 1780323131,
+    "DeleteAt": 0
+  },
+  "expand.84dff0bb-2864-4f1c-aade-fba49e1768c5.ModelRenderer": {
+    "Value": "false",
+    "Timeout": 1780329984,
+    "DeleteAt": 0
+  },
+  "EditorDisplayMode": {
+    "Value": "\u002216:9 Aspect\u0022",
+    "Timeout": 1780330251,
+    "DeleteAt": 0
+  }
+}

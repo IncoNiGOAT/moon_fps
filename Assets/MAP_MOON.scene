@@ -128,6 +128,7 @@
           "MaxPlayers": 8,
           "MaxTeamSizeDelta": 1,
           "OfflinePreferredTeam": "Red",
+          "OfflineTestBotsPerTeam": 3,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -147,7 +148,8 @@
           "RequireOfflineTeamChoice": true,
           "RequireOnlineTeamChoice": true,
           "ShowOfflineTeamHud": true,
-          "ShowOnlineTeamHud": true
+          "ShowOnlineTeamHud": true,
+          "SpawnOfflineTestBots": true
         }
       ],
       "Children": []
@@ -490,41 +492,45 @@
           "__guid": "982f20aa-caef-436d-afcf-b0825128f327",
           "__enabled": true,
           "Flags": 0,
-          "HoldPoint": {
-            "_type": "gameobject",
-            "go": "c3f85770-5526-4afc-8411-ba651d79c6ea"
-          },
+          "AllyPassOverchargeMaxBounces": 0,
+          "BallCarryUpperBodyAnimParameter": "b_carry_ball",
+          "CancelChargeAction": "Attack2",
           "ChargeHoldAnimParameter": "b_charge_hold",
+          "ChargeNormalZoneEnd01": 0.8,
+          "ChargeOverchargeZoneWidth01": 0.05,
           "ChargePoseRenderer": {
             "_type": "component",
             "component_id": "6fc0f2ee-ab98-4f40-890f-fa1c61ee0ad0",
             "go": "78652bad-a72d-4458-acff-14aa374d825b",
             "component_type": "SkinnedModelRenderer"
           },
+          "EnemyCatchOverchargeBonusSeconds": 5,
+          "GrantOverchargeOnAllyPassCatch": true,
+          "HoldPoint": {
+            "_type": "gameobject",
+            "go": "c3f85770-5526-4afc-8411-ba651d79c6ea"
+          },
           "MaxChargeTime": 1,
-          "ChargeNormalZoneEnd01": 0.8,
-          "ChargeOverchargeZoneWidth01": 0.05,
-          "NormalThrowForceMin": 700,
           "NormalThrowForceMax": 3000,
-          "OverchargeThrowForce": 5000,
+          "NormalThrowForceMin": 700,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "PickupRange": 60,
-          "RagdollDuration": 3,
-          "ThrowForce": 5000,
-          "ThrowWindupTime": 0.12,
-          "CancelChargeAction": "Attack2",
-          "EnemyCatchOverchargeBonusSeconds": 5,
+          "OverchargeThrowDashAnimHoldSeconds": 0.9,
+          "OverchargeThrowForce": 5000,
           "OverchargeThrowSound": null,
           "OverchargeThrowSoundVolume": 1,
-          "GrantOverchargeOnAllyPassCatch": true,
-          "AllyPassOverchargeMaxBounces": 0,
+          "PickupRange": 60,
+          "PropPickupRange": 100,
+          "RagdollDuration": 3,
           "ThrowAimUpNudge": 0,
-          "ThrowReleaseWorldUpOffset": 0
+          "ThrowForce": 5000,
+          "ThrowReleaseLateralOffset": 0,
+          "ThrowReleaseWorldUpOffset": 0,
+          "ThrowWindupTime": 0.12
         },
         {
           "__type": "PlayerHud",
@@ -562,15 +568,35 @@
           "DashHudMarginRight": 36,
           "DashHudPlateDim": "0.05,0.06,0.07,0.5",
           "DashHudPlateReady": "0.06,0.08,0.1,0.88",
+          "DevAlwaysOverchargeBonus": false,
+          "DevAlwaysShowEnemyCatchPrompt": false,
+          "EnemyCatchPromptCircleDiameter": 104,
+          "EnemyCatchPromptFillColor": "0.12,0.14,0.2,0.92",
+          "EnemyCatchPromptMarginRight": 48,
+          "EnemyCatchPromptOffsetFromScreenCenterY": 0,
+          "EnemyCatchPromptRingColor": "0.06,0.08,0.12,0.94",
+          "EnemyCatchPromptRingThickness": 5,
+          "EnemyCatchPromptText": "Press E",
+          "EnemyCatchPromptTextSize": 17,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "OverchargeBonusHudBarOffsetBelowScreenCenter": 200,
+          "OverchargeBonusTimerBarFill": "0.12,0.98,0.38,1",
+          "OverchargeBonusTimerBarHeight": 16,
+          "OverchargeBonusTimerOutline": 3.5,
+          "OverchargeBonusTimerOutlineColor": "0,0,0,1",
+          "OverchargeBonusTimerTrackColor": "1,1,1,1",
+          "OverchargeBonusTitleSize": 38,
           "ShowChargeHud": true,
           "ShowCrosshairHud": true,
-          "ShowDashHud": true
+          "ShowDashHud": true,
+          "ShowEnemyCatchBonusPromptHud": true,
+          "ShowOverchargeBonusHud": true,
+          "ShowOverchargeBonusTimer": true
         },
         {
           "__type": "BallCarrierAimZoom",
@@ -585,7 +611,13 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "OverchargeThrowFovBump": 8,
+          "OverchargeThrowFovRecoilSpeed": 13.33,
+          "OverchargeThrowFovReturnSpeed": 3.125,
+          "OverchargeThrowShakeDegrees": 0.42,
+          "OverchargeThrowShakeRecoilSpeed": 13.33,
+          "OverchargeThrowShakeReturnSpeed": 3.125
         },
         {
           "__type": "TeamMember",
@@ -610,6 +642,19 @@
           "__enabled": true,
           "Flags": 0,
           "ConstraintGraceAfterTeleport": 0.4,
+          "FlipLookDirection": true,
+          "JailCameraBackDistance": 95,
+          "JailCameraFollowSpeed": 7,
+          "JailCameraHeightAboveRagdoll": 38,
+          "JailCameraUpOffset": 26,
+          "JailKnockdownAngularDamping": 0.55,
+          "JailKnockdownDuration": 3,
+          "JailKnockdownForwardImpulse": 28,
+          "JailKnockdownGravityScale": 0.4,
+          "JailKnockdownLinearDamping": 0.35,
+          "JailKnockdownMassScale": 0.1,
+          "JailKnockdownRagdollSetup": "PrisonJailRagdoll",
+          "JailKnockdownUpImpulse": 72,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -636,7 +681,8 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "UseCodeClamp": false
         }
       ],
       "Children": [
@@ -1222,15 +1268,25 @@
           "__guid": "f2f111cc-5770-42a2-91f6-adb20c2f0781",
           "__enabled": true,
           "Flags": 0,
+          "AttackTintBlue": "0.25,0.45,1,1",
+          "AttackTintRed": "1,0.25,0.25,1",
+          "HandForwardOffset": 6,
+          "HandRightOffset": 2,
+          "HandUpOffset": -2,
           "MaxKillBounces": 1,
+          "NeutralTint": "1,1,1,1",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "ParticlesFollowBallTransform": true,
           "ThrowerGraceTime": 0.15,
-          "ThrowForce": 1200
+          "ThrowForce": 1200,
+          "ThrowReleaseLateralOffset": 0,
+          "ThrowReleaseWorldUpOffset": 0,
+          "ThrowSpawnOffset": 26
         }
       ],
       "Children": []
@@ -1378,6 +1434,7 @@
           "__guid": "387a9e3f-f660-43f8-a396-4b181caf8f30",
           "__enabled": true,
           "Flags": 0,
+          "ArenaCenterPoint": null,
           "BlueSpawnPoints": [
             null
           ],
@@ -1389,7 +1446,8 @@
           "OnComponentUpdate": null,
           "RedSpawnPoints": [
             null
-          ]
+          ],
+          "UseSlotBasedArenaSpawns": true
         }
       ],
       "Children": [
@@ -1896,6 +1954,7 @@
           "__guid": "f4a71a5e-65bf-46a3-bfa0-53b8c008438d",
           "__enabled": true,
           "Flags": 0,
+          "ArenaCenterPoint": null,
           "BlueSpawnPoints": [
             {
               "_type": "gameobject",
@@ -1913,7 +1972,8 @@
               "_type": "gameobject",
               "go": "43fb2543-5992-4a21-a039-99333f04669c"
             }
-          ]
+          ],
+          "UseSlotBasedArenaSpawns": true
         }
       ],
       "Children": [
@@ -2118,13 +2178,13 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
+      "Sandbox.MovieMaker.MovieRecorderSystem": {
+        "DisableClientRecording": false
+      },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
           "$blob": "ab4de2c4-2447-4482-a729-45ff15e5a3ca"
         }
-      },
-      "Sandbox.MovieMaker.MovieRecorderSystem": {
-        "DisableClientRecording": false
       },
       "Sandbox.SelectionSetsSystem": {
         "Data": {
