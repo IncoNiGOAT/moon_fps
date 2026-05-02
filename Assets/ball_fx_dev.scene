@@ -161,7 +161,7 @@
         {
           "__type": "BallAttackTrailDevPreview",
           "__guid": "294c1b8f-c375-40d4-ba0d-dd296464ba63",
-          "__enabled": true,
+          "__enabled": false,
           "Flags": 0,
           "AllowWhenNotEditor": false,
           "Ball": {
@@ -1343,7 +1343,7 @@
             {
               "__type": "Sandbox.TrailRenderer",
               "__guid": "5b6bc8cb-0327-4236-b285-99c43e71dddf",
-              "__enabled": true,
+              "__enabled": false,
               "Flags": 0,
               "BlendMode": "Lighten",
               "CastShadows": false,
@@ -1369,7 +1369,7 @@
                 ],
                 "alpha": []
               },
-              "Emitting": true,
+              "Emitting": false,
               "Face": "Normal",
               "LifeTime": 0.33186132,
               "MaxPoints": 75,
@@ -1674,17 +1674,17 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.SelectionSetsSystem": {
-        "Data": {
-          "SelectionSets": []
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "1d587a51-04cf-40a7-b8b8-40cb9ed70c31"
         }
       },
       "Sandbox.MovieMaker.MovieRecorderSystem": {
         "DisableClientRecording": false
       },
-      "Sandbox.Clutter.ClutterGridSystem": {
-        "Storage": {
-          "$blob": "1d587a51-04cf-40a7-b8b8-40cb9ed70c31"
+      "Sandbox.SelectionSetsSystem": {
+        "Data": {
+          "SelectionSets": []
         }
       }
     }

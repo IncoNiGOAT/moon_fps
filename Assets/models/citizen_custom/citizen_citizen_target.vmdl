@@ -76,29 +76,6 @@
 						_class = "Prefab"
 						target_file = "models/citizen/prefabs/citizen_animationlist_menu.vmdl_prefab"
 					},
-					{
-						_class = "AnimFile"
-						name = "citizen_target_layer0"
-						activity_name = ""
-						activity_weight = 1
-						weight_list_name = ""
-						fade_in_time = 0.2
-						fade_out_time = 0.2
-						looping = false
-						delta = false
-						worldSpace = false
-						hidden = false
-						anim_markup_ordered = false
-						disable_compression = false
-						disable_interpolation = false
-						enable_scale = false
-						source_filename = "models/citizen_custom/animations/citizen_target/anims/citizen_target_layer0.fbx"
-						start_frame = -1
-						end_frame = -1
-						framerate = -1.0
-						take = 0
-						reverse = false
-					},
 				]
 				default_root_bone_name = "pelvis"
 			},

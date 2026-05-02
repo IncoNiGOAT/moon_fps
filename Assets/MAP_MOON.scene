@@ -157,14 +157,14 @@
           "__enabled": true,
           "Flags": 0,
           "EnabledHotkey": true,
+          "OverrideScene": null,
+          "OverrideScenePathFallback": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "OverrideScene": null,
-          "OverrideScenePathFallback": null,
           "RestartAction": "Reload"
         }
       ],
@@ -2190,17 +2190,17 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.SelectionSetsSystem": {
-        "Data": {
-          "SelectionSets": []
-        }
-      },
       "Sandbox.MovieMaker.MovieRecorderSystem": {
         "DisableClientRecording": false
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
           "$blob": "ab4de2c4-2447-4482-a729-45ff15e5a3ca"
+        }
+      },
+      "Sandbox.SelectionSetsSystem": {
+        "Data": {
+          "SelectionSets": []
         }
       }
     }

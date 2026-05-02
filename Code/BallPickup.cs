@@ -73,6 +73,8 @@ public sealed class BallPickup : Component, Component.ICollisionListener
 
     protected override void OnStart()
     {
+        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
+
         _rigidbody = Components.Get<Rigidbody>();
         EnsureBallContinuousCollision();
         CacheBallRenderers();
@@ -546,7 +548,6 @@ public sealed class BallPickup : Component, Component.ICollisionListener
             if ( fx is null || !fx.IsValid() )
                 continue;
 
-            fx.Space = ParticleEffect.SimulationSpace.Local;
             fx.ForceSpace = ParticleEffect.SimulationSpace.Local;
             fx.LocalSpace = new ParticleFloat( 1f, 1f );
         }

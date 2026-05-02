@@ -4,12 +4,12 @@ using System.Linq;
 
 /// <summary>
 /// Spawn dynamique des joueurs : 1 perso en solo (pas de session réseau), 1 par connexion en multijoueur.
-/// Calqué sur le NetworkHelper du moteur : <see cref="MoonPlayerSpawnerNetworkRelay"/> reçoit OnActive, puis <see cref="ReceiveConnectionActive"/> + GameObject.NetworkSpawn.
+/// Calqué sur le NetworkHelper du moteur : <see cref="OnActive(Connection)"/> puis <see cref="GameObject.NetworkSpawn"/>.
 /// <para><b>Setup :</b> garde UN joueur complet dans la scène comme modèle (désactivé), assigne-le à <see cref="PlayerPrefab"/>.
 /// Mets les anciens Player Controller de test dans <see cref="RemoveFromSceneOnStart"/> pour les détruire au lancement.
 /// </summary>
 [Title( "Moon Player Spawner" )]
-public sealed class MoonPlayerSpawner : Component
+public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
 {
     [Property] public GameObject PlayerPrefab { get; set; }
     [Property] public TeamSpawnManager ArenaSpawns { get; set; }
@@ -38,10 +38,22 @@ public sealed class MoonPlayerSpawner : Component
     /// <summary> Solo : perso humain après choix d'équipe (pour ne pas piloter la caméra depuis les bots). </summary>
     private GameObject _offlineHumanRoot;
 
+    /// <summary>
+    /// Avant <see cref="OnStart"/> : retire le <c>GameManager</c> du package sandbox (voir <see cref="MoonFpsNetworkSanitizer"/>).
+    /// </summary>
+    protected override void OnAwake()
+    {
+        KillConflictingTemplateGameManagers();
+    }
+
     protected override void OnStart()
     {
+        KillConflictingTemplateGameManagers();
         Invoke( 0.05f, BootstrapOfflineIfNeeded );
     }
+
+    private void KillConflictingTemplateGameManagers() =>
+        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
 
     protected override void OnUpdate()
     {
@@ -81,7 +93,7 @@ public sealed class MoonPlayerSpawner : Component
         if ( Networking.IsActive )
             return;
 
-        if ( !PlayerPrefab.IsValid() )
+        if ( PlayerPrefab is null || !PlayerPrefab.IsValid() )
             return;
 
         if ( _spawnedCount >= MaxPlayers )
@@ -96,11 +108,16 @@ public sealed class MoonPlayerSpawner : Component
         TrySpawnOffline( OfflinePreferredTeam );
     }
 
-    /// <summary> Appelé via <see cref="MoonPlayerSpawnerNetworkRelay"/> quand une connexion est prête (hôte). </summary>
+    /// <summary> Hôte : connexion prête (équivalent doc s&amp;box <c>INetworkListener.OnActive</c>). </summary>
+    public void OnActive( Connection channel ) => ReceiveConnectionActive( channel );
+
+    /// <summary> Point d’entrée interne (tests / relais obsolète). </summary>
     public void ReceiveConnectionActive( Connection channel )
     {
         try
         {
+            KillConflictingTemplateGameManagers();
+
             // Ne pas lire channel.IsActive ici : sur certaines builds l’accès peut lever alors que la connexion est pourtant valide pour l’enqueue.
             if ( channel is null )
                 return;
@@ -234,6 +251,9 @@ public sealed class MoonPlayerSpawner : Component
 
     private GameObject SpawnCloneAtTeam( TeamId team, int arenaSlot, bool offline, bool setAsOfflineHumanRoot = false )
     {
+        if ( PlayerPrefab is null || !PlayerPrefab.IsValid() )
+            return null;
+
         GameObject clone;
         if ( TryGetSpawnTransform( team, arenaSlot, out var spawnTx ) )
             clone = PlayerPrefab.Clone( spawnTx );
@@ -506,13 +526,20 @@ public sealed class MoonPlayerSpawner : Component
             if ( _spawnedCount >= MaxPlayers )
                 return;
 
-            if ( channel.Pressed( ChooseRedAction ) )
+            // Sur listen server, Connection.Pressed peut ne pas recevoir Slot1/Slot2 pour la connexion locale.
+            var local = Connection.Local;
+            var red = channel.Pressed( ChooseRedAction )
+                || ( local is not null && ReferenceEquals( channel, local ) && Input.Pressed( ChooseRedAction ) );
+            var blue = channel.Pressed( ChooseBlueAction )
+                || ( local is not null && ReferenceEquals( channel, local ) && Input.Pressed( ChooseBlueAction ) );
+
+            if ( red )
             {
                 SetPreferredTeam( channel, TeamId.Red );
                 continue;
             }
 
-            if ( channel.Pressed( ChooseBlueAction ) )
+            if ( blue )
             {
                 SetPreferredTeam( channel, TeamId.Blue );
             }
@@ -574,7 +601,7 @@ public sealed class MoonPlayerSpawner : Component
 
     private void TrySpawnOffline( TeamId preferredTeam )
     {
-        if ( Networking.IsActive || !PlayerPrefab.IsValid() || _spawnedCount >= MaxPlayers )
+        if ( Networking.IsActive || PlayerPrefab is null || !PlayerPrefab.IsValid() || _spawnedCount >= MaxPlayers )
             return;
 
         var team = EnforceTeamBalance
@@ -601,7 +628,7 @@ public sealed class MoonPlayerSpawner : Component
 
     private void SpawnOfflineTestBotsFill()
     {
-        if ( OfflineTestBotsPerTeam <= 0 || !PlayerPrefab.IsValid() )
+        if ( OfflineTestBotsPerTeam <= 0 || PlayerPrefab is null || !PlayerPrefab.IsValid() )
             return;
 
         foreach ( var sideTeam in new[] { TeamId.Red, TeamId.Blue } )

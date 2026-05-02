@@ -37,8 +37,15 @@ public sealed class MainMenuController : Component
     private bool _quickJoinBusy;
     private bool _noLobbyDialogOpen;
 
+    protected override void OnAwake()
+    {
+        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
+    }
+
     protected override void OnStart()
     {
+        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
+
         if ( ForceMouseVisible )
             Mouse.Visibility = MouseVisibility.Visible;
     }

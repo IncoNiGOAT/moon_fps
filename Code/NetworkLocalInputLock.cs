@@ -18,18 +18,24 @@ public sealed class NetworkLocalInputLock : Component
         if ( !Networking.IsActive )
             return;
 
-        var anyNetworkedPlayer = false;
-
+        // Tant qu'aucun perso n'est possédé localement, ne rien verrouiller (choix d'équipe MoonPlayerSpawner, lobby, etc.).
+        var hasLocalOwnedPlayer = false;
         foreach ( var pc in Scene.GetAllComponents<PlayerController>() )
         {
             if ( pc is null )
                 continue;
 
-            if ( TryGetNetworkRoot( pc.GameObject, out var root ) )
-                anyNetworkedPlayer = true;
+            if ( !TryGetNetworkRoot( pc.GameObject, out var root ) )
+                continue;
+
+            if ( root.Network.IsOwner )
+            {
+                hasLocalOwnedPlayer = true;
+                break;
+            }
         }
 
-        if ( !anyNetworkedPlayer )
+        if ( !hasLocalOwnedPlayer )
             return;
 
         foreach ( var pc in Scene.GetAllComponents<PlayerController>() )

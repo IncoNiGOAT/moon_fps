@@ -187,24 +187,6 @@
           "SpawnOfflineTestBots": true
         },
         {
-          "__type": "MoonPlayerSpawnerNetworkRelay",
-          "__guid": "f1a2b3c4-d5e6-4789-a022-3456789abcdf",
-          "__enabled": true,
-          "Flags": 0,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Spawner": {
-            "_type": "component",
-            "component_id": "d16a5846-7a87-41d5-b0ec-1db29512dcad",
-            "go": "a2cd8e0a-db9a-442a-828d-ccd2fa079bac",
-            "component_type": "MoonPlayerSpawner"
-          }
-        },
-        {
           "__type": "ArenaStartBallSpawner",
           "__guid": "b4fd9b5a-45e8-4d52-8ed8-0db96d1218c2",
           "__enabled": true,
@@ -805,7 +787,7 @@
               "__guid": "6fc0f2ee-ab98-4f40-890f-fa1c61ee0ad0",
               "__enabled": true,
               "Flags": 0,
-              "AnimationGraph": null,
+              "AnimationGraph": "anim/citizen_throw.vanmgrph",
               "BodyGroups": 341,
               "BoneMergeTarget": null,
               "CreateAttachments": false,
@@ -4641,13 +4623,13 @@
           "SelectionSets": []
         }
       },
-      "Sandbox.MovieMaker.MovieRecorderSystem": {
-        "DisableClientRecording": false
-      },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
-          "$blob": "b7abcf34-989b-4904-ad5b-5dee524d7168"
+          "$blob": "af81f1c8-2a92-4a72-af24-87be1cbe815c"
         }
+      },
+      "Sandbox.MovieMaker.MovieRecorderSystem": {
+        "DisableClientRecording": false
       }
     }
   },

@@ -6,9 +6,7 @@
   "Schema": 1,
   "IncludeSourceFiles": false,
   "Resources": "/Assets/**\n/Code/**\n/Libraries/**",
-  "PackageReferences": [
-    "facepunch.sandbox"
-  ],
+  "PackageReferences": [],
   "EditorReferences": null,
   "Mounts": null,
   "IsStandaloneOnly": false,

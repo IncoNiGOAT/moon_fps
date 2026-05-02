@@ -44,7 +44,9 @@ public static class SoftMidlineBarrier
         rules.Pairs[new CollisionRules.Pair( p, "trigger" )] = CollisionRules.Result.Trigger;
         rules.Pairs[new CollisionRules.Pair( p, "playerclip" )] = CollisionRules.Result.Collide;
 
+#pragma warning disable CS0612 // CollisionRules.Clean : pas d’API de remplacement documentée (normalise les paires).
         rules.Clean();
+#pragma warning restore CS0612
     }
 
     /// <summary> Capsule : <see cref="PlayerTag"/> et retrait <c>solid</c> pour que <c>soft_midline</c>×<c>solid</c> Ignore ne s’applique pas au joueur. </summary>
