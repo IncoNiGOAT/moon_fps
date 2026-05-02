@@ -17,16 +17,10 @@ code/Properties/*
 *.generated.*
 *.*_c
 !*.shader_c
-# Compilés s&box requis pour la map + modèles citizen (sinon hiérarchie Map vide / anims cassées)
-!Assets/maps/mapv1.vmdl_c
-!Assets/models/citizen_custom/citizen_retarget.vmdl_c
-!Assets/models/citizen_custom/citizen_citizen_target.vmdl_c
-!Assets/models/citizen_custom/citizen_retarget/head_lod0_vmorf.vtex_c
-!Assets/models/citizen_custom/citizen_citizen_target/head_lod0_vmorf.vtex_c
 *.los
 *.vpk
-# Paquet map Hammer nécessaire pour que MapInstance crée WorldSpawn / WorldPhysics chez les autres clones
-!Assets/maps/*.vpk
+# Cartes du projet : les .vpk sous Assets/maps doivent rester versionnés (chargement MapInstance).
+!Assets/maps/**/*.vpk
 *launchSettings.json
 *.sln
 *.slnx
