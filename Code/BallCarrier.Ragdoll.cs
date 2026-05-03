@@ -45,16 +45,16 @@ public sealed partial class BallCarrier
         {
             var dropDirection = GetCameraThrowDirection();
             var dropF = NormalThrowForceMin > 0f ? NormalThrowForceMin * 0.6f : ThrowForce * 0.5f;
-            _heldBall.Throw( dropDirection, dropF, GetThrowReleaseWorldUpOverrideOrNull(), GetThrowReleaseLateralOverrideOrNull() );
-            _heldBall = null;
+            if ( _heldBall.Throw( dropDirection, dropF, GetThrowReleaseWorldUpOverrideOrNull(), GetThrowReleaseLateralOverrideOrNull() ) )
+                _heldBall = null;
         }
 
         if ( _heldProp is not null )
         {
             var dropDirection = GetCameraThrowDirection();
             var dropF = _heldProp.ThrowForce > 0f ? _heldProp.ThrowForce * 0.55f : 400f;
-            _heldProp.Throw( dropDirection, dropF, GetThrowReleaseWorldUpOverrideOrNull() );
-            _heldProp = null;
+            if ( _heldProp.Throw( dropDirection, dropF, GetThrowReleaseWorldUpOverrideOrNull() ) )
+                _heldProp = null;
         }
 
         _playerController = ResolvePlayerController();
@@ -68,8 +68,8 @@ public sealed partial class BallCarrier
         _activeRagdoll = _playerController.CreateRagdoll( "ChargeStuntRagdoll" );
         if ( _activeRagdoll is not null )
         {
-            if ( SoftMidlineBarrier.SceneHasPlayerBlockingSoftWall( Scene ) )
-                SoftMidlineBarrier.ConfigureRagdollHierarchy( this, _activeRagdoll );
+            if ( PlayerOnlyWall.SceneHasPlayerBlockingSoftWall( Scene ) )
+                PlayerOnlyWall.ConfigureRagdollHierarchy( this, _activeRagdoll );
 
             var ownerLink = _activeRagdoll.Components.GetOrCreate<RagdollOwnerLink>();
             ownerLink.OwnerRoot = GameObject;

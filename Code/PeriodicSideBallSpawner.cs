@@ -73,17 +73,39 @@ public sealed class PeriodicSideBallSpawner : Component
         if ( clone is null || !clone.IsValid() )
             return;
 
+        // Ne pas laisser la balle enfant d'un GO en Snapshot (ex. GameMode) : le moteur ne traite
+        // pas la physique / l'ownership comme un NetworkObject dédié → lancer sans mouvement.
+        clone.Parent = null;
+
         clone.Enabled = true;
 
         if ( Networking.IsActive )
-            clone.NetworkSpawn();
-
-        var rb = clone.Components.Get<Rigidbody>() ?? clone.Components.GetInChildren<Rigidbody>( true );
-        if ( rb is not null )
         {
+            clone.NetworkMode = NetworkMode.Object;
+            try
+            {
+                clone.NetworkSpawn();
+            }
+            catch ( System.Exception e )
+            {
+                Log.Error( $"[PeriodicSideBallSpawner] NetworkSpawn a echoue : {e.Message}" );
+                clone.Destroy();
+                return;
+            }
+        }
+
+        // Après NetworkSpawn : remettre la vélocité au frame suivant pour ne pas annuler l'init réseau / ownership.
+        var captured = clone;
+        Invoke( 0f, () =>
+        {
+            if ( captured is null || !captured.IsValid() )
+                return;
+            var rb = captured.Components.Get<Rigidbody>() ?? captured.Components.GetInChildren<Rigidbody>( true );
+            if ( rb is null )
+                return;
             rb.Velocity = Vector3.Zero;
             rb.AngularVelocity = Vector3.Zero;
-        }
+        } );
 
         Log.Info( $"[PeriodicSideBallSpawner] Balle spawn côté {side} à {pos} (rouge={counts.red}, bleu={counts.blue})." );
     }

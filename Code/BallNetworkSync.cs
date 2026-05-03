@@ -1,29 +1,11 @@
 using Sandbox;
 
 /// <summary>
-/// Couche reseau "CS-AK style" pour la balle. A poser sur le meme GameObject que <see cref="BallPickup"/>.
-///
-/// Modele : <b>owner-driven</b>. Quand un joueur prend la balle, il en devient l'owner reseau
-/// (<see cref="GameObject.NetworkAccessor.TakeOwnership"/>). L'owner simule TOUT en local :
-/// position quand il la tient (suivi main), physique quand il la lance (rigidbody actif). Le
-/// transform et la velocite sont sync via NetworkMode = Object → les autres clients voient le
-/// resultat smooth (avec interpolation native).
-///
-/// Resultat : aucun delay, aucune prediction, aucun snap. Le owner a le meme feeling qu'en solo,
-/// les autres voient la balle bouger via le sync (avec leur ping vers le owner, c'est inevitable).
-/// Quand la balle se "calme" (rebonds max), l'owner drop l'ownership → l'host reprend la main pour
-/// le prochain ramassage.
-///
-/// Evenements gameplay (jail / liberation) : detectes par l'owner via <see cref="BallPickup"/>,
-/// puis broadcast a tous les clients via RPC pour qu'ils appliquent l'effet sur leur copie locale
-/// du joueur cible.
+/// Multijoueur : la balle est un objet réseau. Le client qui la porte prend <see cref="GameObject.NetworkAccessor.TakeOwnership"/>
+/// et simule localement (tenue + lancer) ; les autres reçoivent transform / état via sync.
 /// </summary>
-public sealed class BallNetworkSync : Component
+public sealed class BallNetworkSync : Component, Component.INetworkSpawn
 {
-    /// <summary>
-    /// Etat reseau replique <b>depuis l'owner courant</b> (pas FromHost). Quand un client prend
-    /// la balle, il devient owner et c'est lui qui pousse le state.
-    /// </summary>
     [Sync] public GameObject NetHolder { get; set; }
     [Sync] public GameObject NetLastThrower { get; set; }
     [Sync] public bool NetIsThrown { get; set; }
@@ -37,30 +19,117 @@ public sealed class BallNetworkSync : Component
     private bool _lastSeenIsThrown;
     private int _lastSeenStateVersion;
     private bool _lastSeenIsOwner;
+    private bool _optimisticBallOwnership;
+
+    private bool _interpolationConfigured;
+    private bool _takeoverRulesConfigured;
+
+    /// <summary> True quand interpolation + takeover sont en place (évite de spammer <see cref="RunNetworkSpawnBootstrap"/>). </summary>
+    private bool _networkSpawnBootstrapComplete;
+
+    private void EnsureRefs()
+    {
+        _ball ??= Components.Get<BallPickup>() ?? Components.GetInChildren<BallPickup>( true );
+        _rigidbody ??= Components.Get<Rigidbody>() ?? Components.GetInChildren<Rigidbody>( true );
+    }
+
+    protected override void OnAwake()
+    {
+        EnsureRefs();
+    }
+
+    /// <summary>
+    /// Après <c>Clone</c> + <c>NetworkSpawn()</c>, <see cref="GameObject.NetworkAccessor.Active"/> peut encore être faux dans <see cref="OnStart"/>.
+    /// On réessaie chaque frame jusqu'à appliquer Takeover / interpolation côté hôte.
+    /// </summary>
+    private void TryConfigureNetworkedBallRules()
+    {
+        if ( !Networking.IsActive || !GameObject.Network.Active )
+            return;
+
+        var changed = false;
+
+        if ( !_interpolationConfigured )
+        {
+            GameObject.Network.Interpolation = true;
+            _interpolationConfigured = true;
+            changed = true;
+        }
+
+        // Takeover doit exister sur chaque machine (pas seulement l’hôte), sinon TakeOwnership au pickup/lancer
+        // peut rester sans effet sur les balles spawnées plus tard en session.
+        if ( !_takeoverRulesConfigured )
+        {
+            GameObject.Network.SetOwnerTransfer( OwnerTransfer.Takeover );
+            if ( Networking.IsHost )
+                GameObject.Network.SetOrphanedMode( NetworkOrphaned.Host );
+            _takeoverRulesConfigured = true;
+            changed = true;
+        }
+
+        if ( changed )
+        {
+            UpdateLocalPhysicsBasedOnOwnership();
+            SnapshotLastSeen();
+        }
+    }
 
     protected override void OnStart()
     {
-        _ball = Components.Get<BallPickup>();
-        _rigidbody = Components.Get<Rigidbody>();
+        EnsureRefs();
 
-        if ( Networking.IsActive && GameObject.Network.Active )
+        if ( !Networking.IsActive )
         {
-            // L'host configure : n'importe qui peut prendre l'ownership (pickup),
-            // si l'owner se deconnecte l'host reprend la main.
-            if ( Networking.IsHost )
-            {
-                GameObject.Network.SetOwnerTransfer( OwnerTransfer.Takeover );
-                GameObject.Network.SetOrphanedMode( NetworkOrphaned.Host );
-            }
-            GameObject.Network.Interpolation = true;
+            TryConfigureNetworkedBallRules();
+            UpdateLocalPhysicsBasedOnOwnership();
+            SnapshotLastSeen();
+            ApplyHolderFromNetwork();
+            ApplyThrownFromNetwork();
+            _networkSpawnBootstrapComplete = true;
+            return;
         }
 
+        // En ligne : ordre indéterminé vs <see cref="INetworkSpawn"/> / autres composants — plusieurs passes.
+        Invoke( 0f, RunNetworkSpawnBootstrap );
+        Invoke( 0.05f, RunNetworkSpawnBootstrap );
+        Invoke( 0.15f, RunNetworkSpawnBootstrap );
+    }
+
+    /// <summary>
+    /// Réapplique config + état sync ; peut tourner avant que <see cref="BallPickup"/> soit prêt si appelé trop tôt
+    /// (d&apos;où les <see cref="Component.Invoke"/> et le repli <see cref="OnUpdate"/>).
+    /// </summary>
+    private void RunNetworkSpawnBootstrap()
+    {
+        EnsureRefs();
+        if ( _ball is null )
+            return;
+
+        if ( !Networking.IsActive || !GameObject.Network.Active )
+            return;
+
+        TryConfigureNetworkedBallRules();
         UpdateLocalPhysicsBasedOnOwnership();
         SnapshotLastSeen();
-
-        // Si on join une session avec une balle deja tenue : applique l'etat localement.
         ApplyHolderFromNetwork();
         ApplyThrownFromNetwork();
+
+        if ( _interpolationConfigured && _takeoverRulesConfigured )
+            _networkSpawnBootstrapComplete = true;
+    }
+
+    /// <summary>
+    /// Quand l&apos;objet est spawné sur le réseau (join en cours de partie, balles après chargement, etc.).
+    /// </summary>
+    public void OnNetworkSpawn( Connection connection )
+    {
+        _interpolationConfigured = false;
+        _takeoverRulesConfigured = false;
+        _networkSpawnBootstrapComplete = false;
+
+        Invoke( 0f, RunNetworkSpawnBootstrap );
+        Invoke( 0.05f, RunNetworkSpawnBootstrap );
+        Invoke( 0.15f, RunNetworkSpawnBootstrap );
     }
 
     protected override void OnUpdate()
@@ -68,32 +137,36 @@ public sealed class BallNetworkSync : Component
         if ( !Networking.IsActive )
             return;
 
-        // Detecte les changements d'ownership (ex. un autre client a pris la balle pendant
-        // qu'on l'avait optimistiquement pris). Met a jour l'inhibition de la physique.
+        if ( GameObject.Network.Active && !_networkSpawnBootstrapComplete )
+            RunNetworkSpawnBootstrap();
+
+        TryConfigureNetworkedBallRules();
+
         var weAreOwnerNow = GameObject.Network.IsOwner;
-        if ( weAreOwnerNow != _lastSeenIsOwner )
+        if ( weAreOwnerNow )
+            _optimisticBallOwnership = false;
+
+        var effectiveOwner = weAreOwnerNow || _optimisticBallOwnership;
+        if ( effectiveOwner != _lastSeenIsOwner )
         {
-            _lastSeenIsOwner = weAreOwnerNow;
+            _lastSeenIsOwner = effectiveOwner;
             UpdateLocalPhysicsBasedOnOwnership();
         }
 
         DetectStateChanges();
     }
 
-    /// <summary>
-    /// Owner = simule physique localement (rigidbody TOUJOURS actif, freeze velocite quand tenu).
-    /// Proxy = laisse le sync moteur driver le transform (rigidbody desactive, zero conflit).
-    ///
-    /// Important : on n'utilise pas un toggle Enabled false→true pendant le throw, car dans s&box
-    /// ca peut casser le setter Velocity au reactivation. On garde le rigidbody actif cote owner
-    /// en permanence et on freeze la velocite pendant la tenue (cf. BallPickup.OnUpdate / ApplyPickupLocal).
-    /// </summary>
     private void UpdateLocalPhysicsBasedOnOwnership()
     {
         if ( _ball is null )
             return;
 
-        var weAreOwner = !Networking.IsActive || GameObject.Network.IsOwner;
+        // IsOwner peut rester faux sur l’hôte pour une balle « orpheline » alors que l’hôte la simule
+        // (voir doc IsProxy : non-proxy = simulé localement, ex. balle sans owner côté serveur).
+        var weAreOwner = !Networking.IsActive
+            || GameObject.Network.IsOwner
+            || _optimisticBallOwnership
+            || (Networking.IsHost && !GameObject.Network.IsProxy);
         _ball.LocalPhysicsInhibited = !weAreOwner;
 
         if ( _rigidbody is null )
@@ -101,42 +174,32 @@ public sealed class BallNetworkSync : Component
 
         if ( !weAreOwner )
         {
-            // Proxy : kill toute physique locale, le sync moteur drive le transform.
             _rigidbody.Velocity = Vector3.Zero;
             _rigidbody.AngularVelocity = Vector3.Zero;
             _rigidbody.Enabled = false;
         }
-        else
+        else if ( !_rigidbody.Enabled )
         {
-            // Owner : assure que le rigidbody est actif (on simule). Si on freeze a 0,0,0
-            // pendant la tenue, OnUpdate dans BallPickup s'en charge chaque frame.
-            if ( !_rigidbody.Enabled )
-                _rigidbody.Enabled = true;
+            _rigidbody.Enabled = true;
         }
     }
 
-    #region API appelee par BallPickup (pickup / throw)
     public bool RequestPickup( GameObject player, GameObject holdPoint )
     {
+        EnsureRefs();
         if ( _ball is null || _ball.IsHeld )
             return false;
 
         if ( !Networking.IsActive )
             return _ball.ApplyPickupLocal( player, holdPoint );
 
-        // CS-AK : on prend l'ownership de la balle. On devient le simulateur authoritative.
-        // L'OwnerTransfer = Takeover dans la scene (ou force par l'host dans OnStart) le permet.
         if ( !GameObject.Network.IsOwner )
         {
-            var taken = GameObject.Network.TakeOwnership();
-            if ( !taken )
+            if ( !GameObject.Network.TakeOwnership() )
                 return false;
+            _optimisticBallOwnership = true;
         }
 
-        // OPTIMISTE : TakeOwnership a succedee mais Network.IsOwner peut prendre 1 round-trip
-        // pour devenir true cote local (latence reseau). On force directement l'etat "owner local"
-        // pour que OnUpdate puisse driver la position de la balle vers la main *immediatement*,
-        // sans attendre la confirmation reseau (sinon delai 1-2s a haut ping).
         _ball.LocalPhysicsInhibited = false;
         if ( _rigidbody is not null && !_rigidbody.Enabled )
             _rigidbody.Enabled = true;
@@ -145,59 +208,57 @@ public sealed class BallNetworkSync : Component
         var ok = _ball.ApplyPickupLocal( player, holdPoint );
         if ( ok )
         {
-            // [Sync] sans FromHost : on est owner, c'est nous qui poussons l'etat aux autres.
             NetHolder = player;
             NetIsThrown = false;
             NetLastThrower = null;
             NetStateVersion++;
             SnapshotLastSeen();
         }
+        else
+            _optimisticBallOwnership = false;
+
         return ok;
     }
 
-    public void RequestThrow( Vector3 direction, float? customForce, float? releaseWorldUpOverride, float? releaseLateralOverride )
+    /// <returns> Faux si le lancer n’a pas pu s’appliquer (ex. <see cref="GameObject.NetworkAccessor.TakeOwnership"/> refusé). </returns>
+    public bool RequestThrow( Vector3 direction, float? customForce, float? releaseWorldUpOverride, float? releaseLateralOverride )
     {
+        EnsureRefs();
         if ( _ball is null || !_ball.IsHeld )
-            return;
+            return false;
 
         if ( !Networking.IsActive )
         {
             _ball.ApplyThrowLocal( direction, customForce, releaseWorldUpOverride, releaseLateralOverride );
-            return;
+            return true;
         }
 
-        // On doit etre owner (pris l'ownership au pickup). Si race, on refuse.
-        if ( !GameObject.Network.IsOwner )
-            return;
+        if ( !GameObject.Network.IsOwner && !_optimisticBallOwnership )
+        {
+            if ( !GameObject.Network.TakeOwnership() )
+                return false;
+            _optimisticBallOwnership = true;
+            _ball.LocalPhysicsInhibited = false;
+            if ( _rigidbody is not null && !_rigidbody.Enabled )
+                _rigidbody.Enabled = true;
+            _lastSeenIsOwner = true;
+        }
 
-        // ApplyThrowLocal active le rigidbody localement (LocalPhysicsInhibited = false car owner)
-        // et applique la velocite. Le sync moteur de NetworkMode=Object envoie la position aux
-        // autres clients en continu pendant le vol (smooth interpolation chez eux).
         _ball.ApplyThrowLocal( direction, customForce, releaseWorldUpOverride, releaseLateralOverride );
+        // Ne pas remettre _optimisticBallOwnership à false ici : IsOwner peut rester faux 1+ frames après
+        // TakeOwnership → sinon OnUpdate remet LocalPhysicsInhibited et annule la vélocité du lancer.
 
         NetHolder = null;
         NetIsThrown = true;
         NetLastThrower = _ball.LastThrower;
         NetStateVersion++;
         SnapshotLastSeen();
+        return true;
     }
-    #endregion
 
-    /// <summary>
-    /// Appele par <see cref="BallPickup"/> apres un clean cote owner (rebonds max atteints).
-    /// On notifie tous les autres clients du changement d'etat (rouge/bleu → blanc).
-    ///
-    /// IMPORTANT : on NE drop PAS l'ownership ici. La balle est encore en l'air, en train de
-    /// rebondir physiquement ; lacher l'ownership transfererait la simulation a l'host avec
-    /// une velocite a 0 (le proxy host avait zero la velocite) → la balle se figerait au mur.
-    /// Le owner garde la main jusqu'au prochain pickup (Takeover) ou disconnect (NetworkOrphaned.Host).
-    /// </summary>
     public void OnHostBallCleaned()
     {
-        if ( !Networking.IsActive )
-            return;
-
-        if ( !GameObject.Network.IsOwner )
+        if ( !Networking.IsActive || !GameObject.Network.IsOwner )
             return;
 
         NetIsThrown = false;
@@ -206,11 +267,10 @@ public sealed class BallNetworkSync : Component
         SnapshotLastSeen();
     }
 
-    #region Reception du sync (proxies)
     private void DetectStateChanges()
     {
-        // Si on est owner, c'est nous qui poussons : pas de detection a faire.
-        if ( GameObject.Network.IsOwner )
+        // Même logique que effectiveOwner : évite qu’un ack réseau écrase le lancer local pendant la fenêtre TakeOwnership.
+        if ( GameObject.Network.IsOwner || _optimisticBallOwnership )
         {
             SnapshotLastSeen();
             return;
@@ -252,10 +312,9 @@ public sealed class BallNetworkSync : Component
             var holdPoint = carrier?.HoldPoint ?? newHolder;
             ball.ApplyPickupLocal( newHolder, holdPoint );
         }
-        else
+        else if ( ball.IsHeld )
         {
-            if ( ball.IsHeld )
-                ball.ApplyForceReleaseFromNetwork();
+            ball.ApplyForceReleaseFromNetwork();
         }
     }
 
@@ -270,20 +329,12 @@ public sealed class BallNetworkSync : Component
             if ( !ball.IsThrown || !ReferenceEquals( ball.LastThrower, NetLastThrower ) )
                 ball.ApplyThrowAckFromNetwork( NetLastThrower );
         }
-        else
+        else if ( ball.IsThrown )
         {
-            if ( ball.IsThrown )
-                ball.ApplyCleanLocal();
+            ball.ApplyCleanLocal();
         }
     }
-    #endregion
 
-    #region Evenements gameplay : broadcast jail
-    /// <summary>
-    /// Appele par <see cref="BallPickup"/> quand l'owner detecte une collision qui doit jailer
-    /// un joueur. On replique l'evenement a tous les clients via RPC pour qu'ils appliquent
-    /// l'effet sur leur copie locale du joueur cible (ragdoll prison + TP).
-    /// </summary>
     public void BroadcastJailEvent( GameObject victimRoot, GameObject throwerRoot, Vector3 ballVelocity )
     {
         if ( victimRoot is null )
@@ -291,12 +342,10 @@ public sealed class BallNetworkSync : Component
 
         if ( !Networking.IsActive )
         {
-            // Solo : pas besoin de RPC, applique direct.
             ApplyJailLocal( victimRoot, throwerRoot, ballVelocity );
             return;
         }
 
-        // Le owner (qui a detecte la collision) declenche le broadcast pour tous.
         if ( !GameObject.Network.IsOwner )
             return;
 
@@ -314,9 +363,6 @@ public sealed class BallNetworkSync : Component
         if ( victimRoot is null || !victimRoot.IsValid() )
             return;
 
-        // Anti-race "catch vs kill" : si la victime a deja attrape la balle localement (catch
-        // optimiste via E + TakeOwnership) avant que ce broadcast jail n'arrive, on ignore le
-        // jail. Le catch a gagne la course cote victime, c'est lui qui fait foi.
         if ( _ball is not null && _ball.IsHeld && ReferenceEquals( _ball.Holder, victimRoot ) )
             return;
 
@@ -328,12 +374,8 @@ public sealed class BallNetworkSync : Component
         if ( !victim.ShouldJailFromBall( throwerRoot ) )
             return;
 
-        Vector3? jailKnock = null;
-        if ( ballVelocity.Length > 8f )
-        {
-            jailKnock = ballVelocity;
-        }
-        else
+        Vector3? jailKnock = ballVelocity.Length > 8f ? ballVelocity : null;
+        if ( jailKnock is null )
         {
             var push = ( victim.GameObject.WorldPosition - WorldPosition ).WithZ( 0f );
             if ( push.Length > 0.1f )
@@ -350,7 +392,6 @@ public sealed class BallNetworkSync : Component
                 throwerPlayer.FreeToArena();
         }
     }
-    #endregion
 
     private void SnapshotLastSeen()
     {
@@ -358,6 +399,8 @@ public sealed class BallNetworkSync : Component
         _lastSeenThrower = NetLastThrower;
         _lastSeenIsThrown = NetIsThrown;
         _lastSeenStateVersion = NetStateVersion;
-        _lastSeenIsOwner = !Networking.IsActive || GameObject.Network.IsOwner;
+        _lastSeenIsOwner = !Networking.IsActive
+            || GameObject.Network.IsOwner
+            || _optimisticBallOwnership;
     }
 }

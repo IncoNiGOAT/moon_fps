@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 /// <summary>
-/// Spawn dynamique des joueurs : 1 perso en solo (pas de session réseau), 1 par connexion en multijoueur.
-/// Calqué sur le NetworkHelper du moteur : <see cref="OnActive(Connection)"/> puis <see cref="GameObject.NetworkSpawn"/>.
-/// <para><b>Setup :</b> garde UN joueur complet dans la scène comme modèle (désactivé), assigne-le à <see cref="PlayerPrefab"/>.
-/// Mets les anciens Player Controller de test dans <see cref="RemoveFromSceneOnStart"/> pour les détruire au lancement.
+/// Solo : spawn + bots. Multijoueur : le <b>serveur</b> (<see cref="Networking.IsHost"/>) spawn chaque joueur via
+/// <see cref="ReceiveConnectionActive"/> — y compris <b>serveur dédié</b> sans joueur local (<see cref="Connection.Local"/> null) :
+/// équipe auto-équilibrée, pas d&apos;écran de choix bloquant.
+/// Brancher <see cref="MoonPlayerSpawnerNetworkRelay"/> pour <c>INetworkListener.OnActive</c>.
 /// </summary>
 [Title( "Moon Player Spawner" )]
-public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
+public sealed class MoonPlayerSpawner : Component
 {
     [Property] public GameObject PlayerPrefab { get; set; }
     [Property] public TeamSpawnManager ArenaSpawns { get; set; }
@@ -17,7 +17,8 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
     [Property] public bool EnforceTeamBalance { get; set; } = true;
     [Property] public int MaxTeamSizeDelta { get; set; } = 1;
     [Property] public bool RequireOfflineTeamChoice { get; set; } = true;
-    [Property] public bool RequireOnlineTeamChoice { get; set; } = true;
+    /// <summary> Listen server / client avec clavier : si faux, spawn direct (défaut pour dédié). </summary>
+    [Property] public bool RequireOnlineTeamChoice { get; set; } = false;
     [Property] public string ChooseRedAction { get; set; } = "Slot1";
     [Property] public string ChooseBlueAction { get; set; } = "Slot2";
     [Property] public bool ShowOfflineTeamHud { get; set; } = true;
@@ -25,35 +26,23 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
     [Property] public TeamId OfflinePreferredTeam { get; set; } = TeamId.Red;
     [Property] public List<GameObject> RemoveFromSceneOnStart { get; set; } = new();
     [Property] public int MaxPlayers { get; set; } = 10;
-    /// <summary> Solo / éditeur : après ton spawn, remplit l'arène de bots pour tester (désactivé en multijoueur). </summary>
     [Property] public bool SpawnOfflineTestBots { get; set; } = true;
     [Property] public int OfflineTestBotsPerTeam { get; set; } = 3;
 
     private int _spawnedCount;
     private readonly Dictionary<Connection, TeamId> _preferredTeams = new();
     private readonly Dictionary<Connection, GameObject> _spawnedByConnection = new();
-    /// <summary> Liste (pas HashSet) pour éviter tout souci avec GetHashCode/Equals sur <see cref="Connection"/> côté moteur. </summary>
     private readonly List<Connection> _pendingOnlineChoices = new();
     private bool _offlineWaitingForChoice;
-    /// <summary> Solo : perso humain après choix d'équipe (pour ne pas piloter la caméra depuis les bots). </summary>
     private GameObject _offlineHumanRoot;
 
-    /// <summary>
-    /// Avant <see cref="OnStart"/> : retire le <c>GameManager</c> du package sandbox (voir <see cref="MoonFpsNetworkSanitizer"/>).
-    /// </summary>
-    protected override void OnAwake()
-    {
-        KillConflictingTemplateGameManagers();
-    }
+    protected override void OnAwake() => MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
 
     protected override void OnStart()
     {
-        KillConflictingTemplateGameManagers();
+        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
         Invoke( 0.05f, BootstrapOfflineIfNeeded );
     }
-
-    private void KillConflictingTemplateGameManagers() =>
-        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
 
     protected override void OnUpdate()
     {
@@ -77,10 +66,8 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         }
     }
 
-    /// <summary> Solo / éditeur : pas de session <see cref="Networking"/>. </summary>
     private void BootstrapOfflineIfNeeded()
     {
-        // Ne jamais détruire ces objets en multijoueur : la liste sert aux vieux persos de test en solo.
         if ( !Networking.IsActive )
         {
             foreach ( var go in RemoveFromSceneOnStart )
@@ -108,71 +95,52 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         TrySpawnOffline( OfflinePreferredTeam );
     }
 
-    /// <summary> Hôte : connexion prête (équivalent doc s&amp;box <c>INetworkListener.OnActive</c>). </summary>
-    public void OnActive( Connection channel ) => ReceiveConnectionActive( channel );
-
-    /// <summary> Point d’entrée interne (tests / relais obsolète). </summary>
+    /// <summary> Appelé par <see cref="MoonPlayerSpawnerNetworkRelay"/> (serveur uniquement). </summary>
     public void ReceiveConnectionActive( Connection channel )
     {
         try
         {
-            KillConflictingTemplateGameManagers();
+            MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
 
-            // Ne pas lire channel.IsActive ici : sur certaines builds l’accès peut lever alors que la connexion est pourtant valide pour l’enqueue.
             if ( channel is null )
                 return;
 
-            bool isHost;
-            try
-            {
-                isHost = Networking.IsHost;
-            }
-            catch ( System.Exception ex )
-            {
-                Log.Error( $"[MoonPlayerSpawner] ReceiveConnectionActive: Networking.IsHost a levé : {ex.Message}" );
-                return;
-            }
-
-            if ( !isHost )
+            if ( !Networking.IsHost )
                 return;
 
-            // Si deux GameMode / deux scènes ont un MoonPlayerSpawner, seul le premier actif traite le join
-            // (sinon double enqueue ou double NetworkSpawn pour la même Connection → exception moteur).
             if ( !IsPrimaryMoonPlayerSpawner() )
                 return;
+
+            BootstrapArenaBallSpawningForHost();
 
             if ( _spawnedCount >= MaxPlayers )
                 return;
 
-            // Important : faire passer la connexion en « attente équipe » SANS toucher au prefab tout de suite.
-            // Après une recompilation massive d’assets, la résolution du PlayerPrefab peut être instable une frame ;
-            // l’ancien ordre (IsValid avant ce bloc) provoquait des exceptions ici alors que le spawn réel n’a lieu qu’après le choix.
-            if ( RequireOnlineTeamChoice )
+            var dedicatedOrNoTeamUi = Connection.Local is null || !RequireOnlineTeamChoice;
+            if ( !dedicatedOrNoTeamUi )
             {
                 PendingAddOnlineChoice( channel );
                 return;
             }
 
-            var prefab = PlayerPrefab;
-            if ( prefab is null || !prefab.IsValid() )
-            {
-                Log.Warning( "[MoonPlayerSpawner] ReceiveConnectionActive : PlayerPrefab manquant ou invalide. Assigne un perso dans la scène (GameMode → Moon Player Spawner)." );
-                return;
-            }
-
             var host = Connection.Host ?? Connection.Local;
-            if ( host is null )
-                return;
-
             SpawnOnlineForConnection( channel, host );
         }
         catch ( System.Exception e )
         {
-            Log.Error( $"[MoonPlayerSpawner] ReceiveConnectionActive (exception) : {e.Message}\n{e.StackTrace}" );
+            Log.Error( $"[MoonPlayerSpawner] ReceiveConnectionActive: {e.Message}\n{e.StackTrace}" );
         }
     }
 
-    /// <summary> Premier <see cref="MoonPlayerSpawner"/> activé et valide dans la scène (ordre stable des composants). </summary>
+    private void BootstrapArenaBallSpawningForHost()
+    {
+        if ( Scene is null )
+            return;
+
+        foreach ( var spawner in Scene.GetAllComponents<ArenaStartBallSpawner>() )
+            spawner?.StartNetworkSessionBallSpawningOnce();
+    }
+
     private bool IsPrimaryMoonPlayerSpawner()
     {
         if ( Scene is null )
@@ -228,10 +196,6 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         }
     }
 
-    /// <summary>
-    /// API à brancher sur un UI/menu plus tard : enregistre l'équipe préférée d'une connexion.
-    /// Le prochain spawn de cette connexion utilisera ce choix si l'équilibrage l'autorise.
-    /// </summary>
     public void SetPreferredTeam( Connection channel, TeamId preferredTeam )
     {
         if ( channel is null )
@@ -249,7 +213,7 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
     [Button]
     public void ChooseBlueOfflineNow() => TrySpawnOffline( TeamId.Blue );
 
-    private GameObject SpawnCloneAtTeam( TeamId team, int arenaSlot, bool offline, bool setAsOfflineHumanRoot = false )
+    private GameObject SpawnCloneAtTeam( TeamId team, int arenaSlot, bool setAsOfflineHumanRoot = false )
     {
         if ( PlayerPrefab is null || !PlayerPrefab.IsValid() )
             return null;
@@ -264,25 +228,23 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             return null;
 
         clone.Enabled = true;
-        if ( offline && setAsOfflineHumanRoot )
+        if ( setAsOfflineHumanRoot )
             _offlineHumanRoot = clone;
 
         FaceTowardsArenaCenter( clone );
-        // Certains controllers écrasent la rotation juste après le spawn.
-        // On réapplique brièvement pour stabiliser orientation perso + caméra.
         Invoke( 0.02f, () => FaceTowardsArenaCenter( clone ) );
         Invoke( 0.08f, () => FaceTowardsArenaCenter( clone ) );
 
-        if ( !offline )
-            return clone;
-
-        ApplyTeam( clone, team, arenaSlot );
-
-        var pc = clone.Components.Get<PlayerController>();
-        if ( pc?.Body is not null )
+        if ( setAsOfflineHumanRoot || !Networking.IsActive )
         {
-            pc.Body.Velocity = Vector3.Zero;
-            pc.Body.AngularVelocity = Vector3.Zero;
+            ApplyTeam( clone, team, arenaSlot );
+
+            var pc = clone.Components.Get<PlayerController>();
+            if ( pc?.Body is not null )
+            {
+                pc.Body.Velocity = Vector3.Zero;
+                pc.Body.AngularVelocity = Vector3.Zero;
+            }
         }
 
         return clone;
@@ -294,43 +256,21 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             return;
 
         if ( !TryGetArenaCenter( out var center ) )
-        {
-            Log.Warning( $"[MoonPlayerSpawner] FaceTowardsArenaCenter: no arena center for {root.Name}." );
             return;
-        }
 
         var dir = (center - root.WorldPosition).WithZ( 0f );
         if ( dir.LengthSquared < 0.0001f )
-        {
-            Log.Warning( $"[MoonPlayerSpawner] FaceTowardsArenaCenter: direction too small for {root.Name}. root={root.WorldPosition} center={center}" );
             return;
-        }
 
         var lookRot = Rotation.LookAt( dir.Normal, Vector3.Up );
-        Log.Info( $"[MoonPlayerSpawner] FaceTowardsArenaCenter: root={root.Name} pos={root.WorldPosition} center={center} rot={lookRot}" );
         root.WorldRotation = lookRot;
 
         var pc = root.Components.Get<PlayerController>() ?? root.Components.GetInChildren<PlayerController>( true );
         if ( pc?.Body is not null )
-        {
             pc.Body.WorldRotation = lookRot;
-            Log.Info( $"[MoonPlayerSpawner] Body rotation applied on {root.Name}." );
-        }
-        else
-        {
-            Log.Warning( $"[MoonPlayerSpawner] No PlayerController.Body found on {root.Name}." );
-        }
 
-        // Confort local : aligne la caméra seulement pour le joueur humain (pas chaque bot en solo).
         if ( Scene?.Camera is not null && ShouldApplyCameraLookFromSpawn( root ) )
-        {
             Scene.Camera.WorldRotation = lookRot;
-            Log.Info( $"[MoonPlayerSpawner] Camera rotation applied for {root.Name}." );
-        }
-        else
-        {
-            Log.Info( $"[MoonPlayerSpawner] Camera rotation skipped for {root.Name}. hasCamera={(Scene?.Camera is not null)} applyCam={ShouldApplyCameraLookFromSpawn( root )}" );
-        }
     }
 
     private bool ShouldApplyCameraLookFromSpawn( GameObject root )
@@ -355,15 +295,10 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
     private bool TryGetArenaCenter( out Vector3 center )
     {
         var mgr = ResolveArenaTeamSpawnManager();
-        Log.Info( $"[MoonPlayerSpawner] TryGetArenaCenter: manager={(mgr is null ? "null" : mgr.GameObject?.Name)} explicitAssigned={(ArenaSpawns is not null)}" );
         if ( mgr is not null && mgr.TryGetArenaCenter( out center ) )
-        {
-            Log.Info( $"[MoonPlayerSpawner] TryGetArenaCenter: center={center}" );
             return true;
-        }
 
         center = WorldPosition;
-        Log.Warning( $"[MoonPlayerSpawner] TryGetArenaCenter failed. fallback={center}" );
         return false;
     }
 
@@ -372,10 +307,7 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         tx = default;
         var mgr = ResolveArenaTeamSpawnManager();
         if ( mgr is null )
-        {
-            Log.Warning( $"[MoonPlayerSpawner] TryGetSpawnTransform: no TeamSpawnManager for team={team}, slot={arenaSlot}." );
             return false;
-        }
 
         GameObject pt = null;
         if ( mgr.UseSlotBasedArenaSpawns && arenaSlot >= 0 )
@@ -385,17 +317,12 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             pt = mgr.GetSpawnPoint( team );
 
         if ( pt is null )
-        {
-            Log.Warning( $"[MoonPlayerSpawner] TryGetSpawnTransform: no spawn point found for team={team}, slot={arenaSlot} on manager={mgr.GameObject?.Name}." );
             return false;
-        }
 
         tx = pt.WorldTransform;
-        Log.Info( $"[MoonPlayerSpawner] TryGetSpawnTransform: team={team}, slot={arenaSlot}, point={pt.Name}, pos={tx.Position}, rot={tx.Rotation}" );
         return true;
     }
 
-    /// <summary> Premier index libre dans la liste de spawns de l'équipe (0..Count-1). </summary>
     private int AllocateArenaSlot( TeamId team )
     {
         var mgr = ResolveArenaTeamSpawnManager();
@@ -429,6 +356,9 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
 
     private static TeamId TeamForConnection( Connection channel, Connection host, bool hostGetsRed )
     {
+        if ( host is null )
+            return TeamId.Red;
+
         var isHost = channel == host;
         return hostGetsRed
             ? (isHost ? TeamId.Red : TeamId.Blue)
@@ -437,8 +367,12 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
 
     private TeamId ResolveTeamForNewConnection( Connection channel, Connection host )
     {
-        var counts = TeamCountsFromConnections();
-        var defaultTeam = TeamForConnection( channel, host, HostGetsRedTeam );
+        var counts = TeamCountsFromScene();
+        TeamId defaultTeam;
+        if ( host is null )
+            defaultTeam = counts.red <= counts.blue ? TeamId.Red : TeamId.Blue;
+        else
+            defaultTeam = TeamForConnection( channel, host, HostGetsRedTeam );
 
         if ( !_preferredTeams.TryGetValue( channel, out var preferredTeam ) )
             preferredTeam = defaultTeam;
@@ -459,7 +393,6 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         if ( CanJoinTeam( opposite, counts ) )
             return opposite;
 
-        // Cas extrême (delta trop strict) : on choisit quand même l'équipe la moins peuplée.
         return counts.red <= counts.blue ? TeamId.Red : TeamId.Blue;
     }
 
@@ -468,23 +401,6 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         var redAfter = counts.red + (team == TeamId.Red ? 1 : 0);
         var blueAfter = counts.blue + (team == TeamId.Blue ? 1 : 0);
         return System.Math.Abs( redAfter - blueAfter ) <= MaxTeamSizeDelta;
-    }
-
-    private (int red, int blue) TeamCountsFromConnections()
-    {
-        _spawnedByConnection.RemoveAll( kv => kv.Key is null || kv.Value is null || !kv.Value.IsValid() );
-
-        var red = 0;
-        var blue = 0;
-
-        foreach ( var kv in _spawnedByConnection )
-        {
-            var team = FindTeamOnRoot( kv.Value );
-            if ( team == TeamId.Red ) red++;
-            else blue++;
-        }
-
-        return (red, blue);
     }
 
     private (int red, int blue) TeamCountsFromScene()
@@ -518,15 +434,12 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
 
         _pendingOnlineChoices.RemoveAll( ShouldDropPendingConnection );
 
-        // On lit les touches de CHAQUE connexion sur l'hote.
-        // Ainsi chaque joueur choisit sa team avec les memes binds (Slot1/Slot2).
         var pendingSnapshot = _pendingOnlineChoices.ToList();
         foreach ( var channel in pendingSnapshot )
         {
             if ( _spawnedCount >= MaxPlayers )
                 return;
 
-            // Sur listen server, Connection.Pressed peut ne pas recevoir Slot1/Slot2 pour la connexion locale.
             var local = Connection.Local;
             var red = channel.Pressed( ChooseRedAction )
                 || ( local is not null && ReferenceEquals( channel, local ) && Input.Pressed( ChooseRedAction ) );
@@ -540,9 +453,7 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             }
 
             if ( blue )
-            {
                 SetPreferredTeam( channel, TeamId.Blue );
-            }
         }
     }
 
@@ -555,9 +466,6 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             return;
 
         var host = Connection.Host ?? Connection.Local;
-        if ( host is null )
-            return;
-
         SpawnOnlineForConnection( channel, host );
     }
 
@@ -566,28 +474,36 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         if ( channel is null || _spawnedByConnection.ContainsKey( channel ) )
             return;
 
-        var prefab = PlayerPrefab;
-        if ( prefab is null || !prefab.IsValid() )
+        if ( PlayerPrefab is null || !PlayerPrefab.IsValid() )
         {
-            Log.Warning( "[MoonPlayerSpawner] Spawn multijoueur bloqué : PlayerPrefab manquant ou invalide." );
+            Log.Warning( "[MoonPlayerSpawner] Spawn multijoueur : PlayerPrefab invalide." );
             return;
         }
 
         var team = ResolveTeamForNewConnection( channel, host );
         var slot = AllocateArenaSlot( team );
-        var clone = SpawnCloneAtTeam( team, slot, offline: false );
+        var clone = SpawnCloneAtTeam( team, slot, setAsOfflineHumanRoot: false );
         if ( clone is null )
             return;
 
-        clone.Name = $"Player [{channel.DisplayName}]";
         ApplyTeam( clone, team, slot );
+
+        var pc = clone.Components.Get<PlayerController>() ?? clone.Components.GetInChildren<PlayerController>( true );
+        if ( pc?.Body is not null )
+        {
+            pc.Body.Velocity = Vector3.Zero;
+            pc.Body.AngularVelocity = Vector3.Zero;
+        }
+
+        clone.Name = $"Player [{channel.DisplayName}]";
+
         try
         {
             clone.NetworkSpawn( channel );
         }
         catch ( System.Exception e )
         {
-            Log.Error( $"[MoonPlayerSpawner] NetworkSpawn a échoué pour {channel.DisplayName} : {e.Message}\n{e.StackTrace}" );
+            Log.Error( $"[MoonPlayerSpawner] NetworkSpawn: {e.Message}\n{e.StackTrace}" );
             if ( clone.IsValid() )
                 clone.Destroy();
             return;
@@ -609,7 +525,7 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             : preferredTeam;
 
         var slot = AllocateArenaSlot( team );
-        var clone = SpawnCloneAtTeam( team, slot, offline: true, setAsOfflineHumanRoot: true );
+        var clone = SpawnCloneAtTeam( team, slot, setAsOfflineHumanRoot: true );
         if ( clone is null )
             return;
 
@@ -639,7 +555,7 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
                     return;
 
                 var botSlot = AllocateArenaSlot( sideTeam );
-                var bot = SpawnCloneAtTeam( sideTeam, botSlot, offline: true, setAsOfflineHumanRoot: false );
+                var bot = SpawnCloneAtTeam( sideTeam, botSlot, setAsOfflineHumanRoot: false );
                 if ( bot is null )
                     continue;
 
@@ -667,10 +583,6 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         }
     }
 
-    /// <summary>
-    /// Sans <see cref="LocalSoloInputGate"/> dans la scène, les clones peuvent rester avec UseLookControls désactivé
-    /// (ex. ordre d'init). On force le humain actif pour la souris / caméra TPS.
-    /// </summary>
     private void EnsureOfflineLookControlsIfNoGate( GameObject humanRoot )
     {
         if ( Networking.IsActive || humanRoot is null || !humanRoot.IsValid() )
@@ -716,7 +628,6 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
         if ( local is not null && PendingContainsOnlineChoice( local ) )
             return true;
 
-        // Fallback visuel client : pas encore de joueur possédé localement.
         return !HasOwnedPlayer();
     }
 
@@ -787,11 +698,11 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
             member.ArenaSlotIndex = arenaSlot;
         member.ApplyTeamVisual();
 
-        if ( SoftMidlineBarrier.SceneHasPlayerBlockingSoftWall( root.Scene ) )
+        if ( PlayerOnlyWall.SceneHasPlayerBlockingSoftWall( root.Scene ) )
         {
             var pc = root.Components.Get<PlayerController>() ?? root.Components.GetInChildren<PlayerController>( true );
             if ( pc?.Body is not null )
-                SoftMidlineBarrier.ConfigurePlayerBody( this, pc.Body );
+                PlayerOnlyWall.ConfigurePlayerBody( this, pc.Body );
         }
     }
 
@@ -803,21 +714,5 @@ public sealed class MoonPlayerSpawner : Component, Component.INetworkListener
 
         foreach ( var gate in scene.GetAllComponents<LocalSoloInputGate>() )
             gate?.Apply();
-    }
-}
-
-public static class MoonPlayerSpawnerDictionaryExtensions
-{
-    public static void RemoveAll<TKey, TValue>( this Dictionary<TKey, TValue> dictionary, System.Func<KeyValuePair<TKey, TValue>, bool> predicate )
-    {
-        var keys = new List<TKey>();
-        foreach ( var pair in dictionary )
-        {
-            if ( predicate( pair ) )
-                keys.Add( pair.Key );
-        }
-
-        foreach ( var key in keys )
-            dictionary.Remove( key );
     }
 }

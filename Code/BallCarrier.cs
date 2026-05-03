@@ -77,7 +77,7 @@ public sealed partial class BallCarrier : Component
 
     #endregion
 
-    #region Network — Anim répliquée (proxies / host voient le même graphe)
+    #region Anim balle (sync pour proxies)
 
     /// <summary> Port d’arme / buste « balle en main » (<see cref="BallCarryUpperBodyAnimParameter"/>). </summary>
     [Sync] public bool NetAnimBallCarryUpperBody { get; set; }
@@ -284,11 +284,7 @@ public sealed partial class BallCarrier : Component
             StartThrowCharge();
     }
 
-    /// <summary>
-    /// Synchronise charge / port de balle sur l’AnimGraph. Les bools <see cref="NetAnimBallCarryUpperBody"/> /
-    /// <see cref="NetAnimBallChargeHold"/> sont poussés par le <b>propriétaire</b> du pawn ; toutes les instances
-    /// (host, autres clients) appliquent les mêmes paramètres au renderer.
-    /// </summary>
+    /// <summary> Met à jour les bools AnimGraph charge / port de balle (local). </summary>
     private void UpdateBallThrowAnimParameters()
     {
         UpdateOverchargeDashAnimHoldExpiry();
@@ -472,6 +468,16 @@ public sealed partial class BallCarrier : Component
         {
             _freeOverchargeFromEnemyCatch = false;
             _enemyCatchBonusFromEnemy = false;
+
+            // Fin de la fenêtre alors que le joueur garde le clic : sortir du pic épinglé et repasser en charge « normale ».
+            if ( _isChargingThrow && _pinChargeAtOverchargePeakUntilRelease )
+            {
+                _pinChargeAtOverchargePeakUntilRelease = false;
+                var maxCharge = MaxChargeTime <= 0f ? 0.01f : MaxChargeTime;
+                var normalEnd = GetNormalZoneEnd01();
+                _currentCharge01 = (normalEnd * 0.99f).Clamp( 0.05f, normalEnd );
+                _timeSinceChargeStarted = _currentCharge01 * maxCharge;
+            }
         }
     }
 
@@ -523,9 +529,6 @@ public sealed partial class BallCarrier : Component
         if ( _playerController is null )
             return false;
 
-        if ( Networking.IsActive )
-            return TryGetNetworkRoot( GameObject, out var root ) && root.Network.IsOwner;
-
         if ( _playerController.UseCameraControls )
             return true;
 
@@ -552,42 +555,40 @@ public sealed partial class BallCarrier : Component
         if ( !Networking.IsActive )
             return true;
 
-        return TryGetNetworkRoot( GameObject, out var root ) && root.Network.IsOwner;
+        var go = GameObject;
+        while ( go is not null )
+        {
+            if ( go.Network.Active )
+                return go.Network.IsOwner;
+
+            go = go.Parent;
+        }
+
+        return true;
     }
 
-    /// <summary>
-    /// Appelé par <see cref="BallPickup"/> sur chaque machine quand l'hôte confirme via [Sync] que
-    /// la balle vient d'être ramassée par ce joueur. Rend la référence cohérente partout.
-    /// </summary>
+    /// <summary> Appelé par <see cref="BallPickup"/> quand la balle est ramassée. </summary>
     internal void NetSetHeldBallFromNetwork( BallPickup ball )
     {
         _heldBall = ball;
     }
 
-    /// <summary>
-    /// Appelé par <see cref="BallPickup"/> sur chaque machine quand l'hôte confirme via [Sync] que
-    /// ce joueur ne tient plus la balle (lancer, vol, ou pickup gagné par un autre client).
-    /// </summary>
+    /// <summary> Appelé par <see cref="BallPickup"/> quand le joueur ne tient plus la balle. </summary>
     internal void NetClearHeldBallFromNetwork()
     {
         _heldBall = null;
     }
 
-    private static bool TryGetNetworkRoot( GameObject start, out GameObject root )
+    /// <summary> Appelé par <see cref="ThrowablePropPickup"/> / <see cref="ThrowablePropNetworkSync"/> (pickup répliqué). </summary>
+    internal void NetSetHeldPropFromNetwork( ThrowablePropPickup prop )
     {
-        var go = start;
-        while ( go is not null )
-        {
-            if ( go.Network.Active )
-            {
-                root = go.Network.RootGameObject ?? go;
-                return true;
-            }
-
-            go = go.Parent;
-        }
-
-        root = null;
-        return false;
+        _heldProp = prop;
     }
+
+    /// <summary> Appelé quand le prop est lâché côté réseau. </summary>
+    internal void NetClearHeldPropFromNetwork()
+    {
+        _heldProp = null;
+    }
+
 }

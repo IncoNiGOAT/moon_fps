@@ -80,7 +80,8 @@ public sealed class DebugPrisonTools : Component
                 if ( p is null )
                     continue;
 
-                if ( TryGetNetworkRoot( p.GameObject, out var root ) && root.Network.IsOwner )
+                var pc = p.Components.Get<PlayerController>() ?? p.GameObject.Components.GetInChildren<PlayerController>( true );
+                if ( pc is not null && pc.UseCameraControls )
                 {
                     player = p;
                     return true;
@@ -97,24 +98,6 @@ public sealed class DebugPrisonTools : Component
             }
         }
 
-        return false;
-    }
-
-    private static bool TryGetNetworkRoot( GameObject start, out GameObject root )
-    {
-        var go = start;
-        while ( go is not null )
-        {
-            if ( go.Network.Active )
-            {
-                root = go.Network.RootGameObject ?? go;
-                return true;
-            }
-
-            go = go.Parent;
-        }
-
-        root = null;
         return false;
     }
 

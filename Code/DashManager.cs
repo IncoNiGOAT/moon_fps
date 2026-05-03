@@ -17,8 +17,10 @@ public sealed class DashManager : Component
     [Property, Title( "Dash — Skinned renderer (optional)" )]
     public SkinnedModelRenderer DashPoseRenderer { get; set; }
 
-    /// <summary> Répliqué : dash physique actif (même bool que <c>_dashDistanceRemaining &gt; 0</c> côté owner). </summary>
+    /// <summary> Proxies : anim dash alignée sur l&apos;état répliqué. </summary>
     [Sync] public bool NetDashPhysicsActive { get; set; }
+
+    bool _dashAnimPhysicsActive;
 
     private TimeSince _lastJumpTap;
     private TimeSince _lastDash;
@@ -78,13 +80,16 @@ public sealed class DashManager : Component
                 }
             }
 
-            NetDashPhysicsActive = _dashDistanceRemaining > 0f;
+            _dashAnimPhysicsActive = _dashDistanceRemaining > 0f;
+            NetDashPhysicsActive = _dashAnimPhysicsActive;
         }
+        else
+            _dashAnimPhysicsActive = NetDashPhysicsActive;
 
         ApplyDashAnimToRenderer();
     }
 
-    /// <summary> Toutes les machines : <see cref="NetDashPhysicsActive"/> + dash surchauffe répliqué sur <see cref="BallCarrier"/>. </summary>
+    /// <summary> Anim dash + surchauffe lancer (<see cref="BallCarrier"/>). </summary>
     private void ApplyDashAnimToRenderer()
     {
         if ( string.IsNullOrWhiteSpace( DashAnimBoolParameter ) )
@@ -109,7 +114,7 @@ public sealed class DashManager : Component
 
         var carrier = Components.Get<BallCarrier>() ?? Components.GetInChildren<BallCarrier>( true );
         var overchargeThrowDash = carrier is not null && carrier.NetAnimOverchargeThrowDash;
-        renderer.Set( DashAnimBoolParameter, NetDashPhysicsActive || overchargeThrowDash );
+        renderer.Set( DashAnimBoolParameter, _dashAnimPhysicsActive || overchargeThrowDash );
     }
 
     private void QueueDashRequest( Vector3 direction )
@@ -304,28 +309,6 @@ public sealed class DashManager : Component
         if ( !_playerController.UseInputControls )
             return false;
 
-        // En réseau: seuls les objets possédés localement doivent consommer l'input.
-        if ( !Networking.IsActive )
-            return true;
-
-        return TryGetNetworkRoot( GameObject, out var root ) && root.Network.IsOwner;
-    }
-
-    private static bool TryGetNetworkRoot( GameObject start, out GameObject root )
-    {
-        var go = start;
-        while ( go is not null )
-        {
-            if ( go.Network.Active )
-            {
-                root = go.Network.RootGameObject ?? go;
-                return true;
-            }
-
-            go = go.Parent;
-        }
-
-        root = null;
-        return false;
+        return true;
     }
 }

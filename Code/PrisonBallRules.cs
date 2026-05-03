@@ -22,10 +22,7 @@ public sealed class PrisonBallRules : Component
     private readonly List<GameObject> _bluePrisonBag = new();
     private bool _frozen;
 
-    protected override void OnStart()
-    {
-        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
-    }
+    protected override void OnStart() => MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
 
     public void Register( PrisonBallPlayer player )
     {

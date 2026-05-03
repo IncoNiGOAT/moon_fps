@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sandbox;
-using Sandbox.Network;
 
 /// <summary>
 /// Menu principal minimal pour prototyper le flow:
@@ -37,15 +36,8 @@ public sealed class MainMenuController : Component
     private bool _quickJoinBusy;
     private bool _noLobbyDialogOpen;
 
-    protected override void OnAwake()
-    {
-        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
-    }
-
     protected override void OnStart()
     {
-        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
-
         if ( ForceMouseVisible )
             Mouse.Visibility = MouseVisibility.Visible;
     }
@@ -98,50 +90,16 @@ public sealed class MainMenuController : Component
         _quickJoinBusy = true;
         try
         {
-            if ( !Networking.IsActive && !Networking.IsConnecting )
-            {
-                Networking.CreateLobby( new LobbyConfig
-                {
-                    Name = "moon_fps_dev",
-                    Privacy = LobbyPrivacy.Public,
-                    Hidden = false,
-                    MaxPlayers = 10
-                } );
-                Networking.SetData( "mode", "moon_fps_dev" );
-                Networking.SetData( "version", "dev" );
-            }
-
-            // Laisse le temps au lobby d'être réellement créé/annoncé avant de changer de scène.
-            for ( var i = 0; i < 20; i++ )
-            {
-                if ( Networking.IsActive && Networking.IsHost )
-                    break;
-
-                await Task.Delay( 100 );
-            }
-
-            if ( !Networking.IsHost && Networking.IsActive )
-            {
-                Log.Warning( "[Menu] Create aborted: une session existe deja et tu n'es pas host." );
-                State = MenuState.Main;
-                return;
-            }
-
-            if ( !Networking.IsActive )
-            {
-                State = MenuState.Main;
-                Log.Warning( "[Menu] Lobby non prêt. Reessaie Create." );
-                return;
-            }
+            await Task.Delay( 50 );
 
             if ( !TryLoadArenaScene() )
             {
                 State = MenuState.Main;
-                Log.Warning( "[Menu] Impossible de charger l'arene. Verifie que Assets/Arena.scene existe et recompile ; en dedie on essaie Arena.scene, Assets/Arena.scene, etc." );
+                Log.Warning( "[Menu] Impossible de charger l'arene. Verifie Arena.scene / Assets/Arena.scene." );
                 return;
             }
 
-            Log.Info( $"[Menu] Partie creee. host={Networking.IsHost} active={Networking.IsActive}" );
+            Log.Info( "[Menu] Arene chargee (solo / local)." );
         }
         finally
         {
@@ -164,56 +122,18 @@ public sealed class MainMenuController : Component
         _quickJoinBusy = true;
         try
         {
-            var packageIdent = Game.Ident;
-            var joined = false;
+            await Task.Delay( 50 );
 
-            Log.Info( $"[Menu] QuickJoin start. ident={packageIdent}" );
-
-            // Plusieurs tentatives: le lobby vient parfois juste d'être créé.
-            for ( var i = 0; i < 3; i++ )
+            if ( TryLoadArenaScene() )
             {
-                await Networking.JoinBestLobby( packageIdent );
-                if ( Networking.IsActive || Networking.IsConnecting )
-                {
-                    joined = true;
-                    break;
-                }
-
-                await Networking.JoinBestLobby( "moon_fps_dev" );
-                if ( Networking.IsActive || Networking.IsConnecting )
-                {
-                    joined = true;
-                    break;
-                }
-
-                await Task.Delay( 300 );
-            }
-
-            // L'API est async et ne renvoie pas un bool de succes.
-            // Si apres tentative on n'est toujours pas en reseau, on considere un echec.
-            if ( joined || Networking.IsActive || Networking.IsConnecting )
-            {
-                Log.Info( $"[Menu] Quick Join en cours pour {packageIdent}." );
+                Log.Info( "[Menu] Arene chargee (rejoindre = meme flux local que Creer)." );
                 return;
             }
 
-            Log.Warning( "[Menu] Aucun lobby rejoignable trouve (ou requete indisponible)." );
-
-            if ( TryDirectConnectOnJoinFail && !string.IsNullOrWhiteSpace( DirectConnectAddress ) )
-            {
-                Log.Info( $"[Menu] Fallback direct connect -> {DirectConnectAddress}" );
-                Networking.Connect( DirectConnectAddress );
-                await Task.Delay( 400 );
-                if ( Networking.IsActive || Networking.IsConnecting )
-                {
-                    Log.Info( "[Menu] Direct connect en cours." );
-                    return;
-                }
-            }
+            Log.Warning( "[Menu] Impossible de charger l'arene." );
 
             if ( AutoCreateIfJoinFails )
             {
-                Log.Info( "[Menu] Fallback: creation d'un lobby local." );
                 OnCreatePressed();
                 return;
             }

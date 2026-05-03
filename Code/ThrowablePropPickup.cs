@@ -4,6 +4,7 @@ using Sandbox;
 /// <summary>
 /// Cube / prop ramassable en prison uniquement (voir <see cref="BallCarrier"/>).
 /// Portage devant le perso selon la <b>caméra du joueur</b> (vue TPS), pas la main ; le buste qui tourne suit la vue.
+/// En ligne : <see cref="ThrowablePropNetworkSync"/>.
 /// </summary>
 [Title( "Throwable prop pickup" )]
 public sealed class ThrowablePropPickup : Component
@@ -27,11 +28,16 @@ public sealed class ThrowablePropPickup : Component
     public bool IsHeld { get; private set; }
     public GameObject Holder { get; private set; }
 
+    /// <summary> Proxy / spectateur : pas de portage piloté localement (transform réseau). </summary>
+    public bool LocalPhysicsInhibited { get; set; }
+
+    private ThrowablePropNetworkSync _netSync;
     private Rigidbody _rigidbody;
     private readonly List<Collider> _disabledColliders = new();
 
     protected override void OnStart()
     {
+        _netSync = Components.Get<ThrowablePropNetworkSync>();
         _rigidbody = Components.Get<Rigidbody>();
         ApplyCcdIfNeeded();
     }
@@ -46,6 +52,9 @@ public sealed class ThrowablePropPickup : Component
 
     protected override void OnUpdate()
     {
+        if ( LocalPhysicsInhibited )
+            return;
+
         if ( !IsHeld )
             return;
 
@@ -53,6 +62,26 @@ public sealed class ThrowablePropPickup : Component
     }
 
     public bool PickUp( GameObject player )
+    {
+        _netSync ??= Components.Get<ThrowablePropNetworkSync>();
+        if ( _netSync is not null && Networking.IsActive )
+            return _netSync.RequestPickup( player );
+
+        return ApplyPickupLocal( player );
+    }
+
+    public bool Throw( Vector3 direction, float? customForce = null, float? releaseWorldUpOverride = null )
+    {
+        _netSync ??= Components.Get<ThrowablePropNetworkSync>();
+        if ( _netSync is not null && Networking.IsActive )
+            return _netSync.RequestThrow( direction, customForce, releaseWorldUpOverride );
+
+        ApplyThrowLocal( direction, customForce, releaseWorldUpOverride );
+        return true;
+    }
+
+    /// <summary> Ramassage local (ou appliqué depuis le sync sur tous les pairs). </summary>
+    internal bool ApplyPickupLocal( GameObject player )
     {
         if ( IsHeld || player is null || !player.IsValid() )
             return false;
@@ -70,16 +99,28 @@ public sealed class ThrowablePropPickup : Component
         }
 
         GameObject.Parent = null;
+
+        var carrier = player.Components.Get<BallCarrier>() ?? player.Components.GetInChildren<BallCarrier>( true );
+        carrier?.NetSetHeldPropFromNetwork( this );
+
         return true;
     }
 
-    public void Throw( Vector3 direction, float? customForce = null, float? releaseWorldUpOverride = null )
+    /// <summary> Lancer local (ou rejoué depuis le sync). </summary>
+    internal void ApplyThrowLocal( Vector3 direction, float? customForce, float? releaseWorldUpOverride )
     {
         if ( !IsHeld )
             return;
 
+        var holderGo = Holder;
+
         IsHeld = false;
         Holder = null;
+
+        var carrier = holderGo is not null && holderGo.IsValid()
+            ? holderGo.Components.Get<BallCarrier>() ?? holderGo.Components.GetInChildren<BallCarrier>( true )
+            : null;
+        carrier?.NetClearHeldPropFromNetwork();
 
         var force = customForce ?? ThrowForce;
         var throwDir = direction.Length > 0.001f ? direction.Normal : Vector3.Forward;
@@ -102,13 +143,20 @@ public sealed class ThrowablePropPickup : Component
         }
     }
 
-    public void ForceReleaseWithoutThrow()
+    internal void ApplyForceReleaseLocal()
     {
         if ( !IsHeld )
             return;
 
+        var holderGo = Holder;
         IsHeld = false;
         Holder = null;
+
+        var carrier = holderGo is not null && holderGo.IsValid()
+            ? holderGo.Components.Get<BallCarrier>() ?? holderGo.Components.GetInChildren<BallCarrier>( true )
+            : null;
+        carrier?.NetClearHeldPropFromNetwork();
+
         SetCollidersEnabled( true );
 
         if ( _rigidbody is not null )
@@ -116,6 +164,18 @@ public sealed class ThrowablePropPickup : Component
             _rigidbody.Enabled = true;
             ApplyCcdIfNeeded();
         }
+    }
+
+    public void ForceReleaseWithoutThrow()
+    {
+        _netSync ??= Components.Get<ThrowablePropNetworkSync>();
+        if ( _netSync is not null && Networking.IsActive )
+        {
+            _netSync.RequestForceReleaseFromHolder();
+            return;
+        }
+
+        ApplyForceReleaseLocal();
     }
 
     private void SetCollidersEnabled( bool enabled )
@@ -232,7 +292,7 @@ public sealed class ThrowablePropPickup : Component
                 return fallback;
         }
 
-        if ( scene is not null && scene.Camera is not null && scene.Camera.IsValid() && IsHolderLocallyControlled( holder ) )
+        if ( scene is not null && scene.Camera is not null && scene.Camera.IsValid() && IsHolderLocallyControlled( holder, pc ) )
             return scene.Camera;
 
         return null;
@@ -251,33 +311,31 @@ public sealed class ThrowablePropPickup : Component
             AccumulateCamerasRecursive( child, dst );
     }
 
-    private static bool IsHolderLocallyControlled( GameObject holder )
+    private static bool IsHolderLocallyControlled( GameObject holder, PlayerController pc )
     {
         if ( holder is null || !holder.IsValid() )
+            return false;
+
+        pc ??= ResolvePlayerControllerOnRoot( holder );
+        if ( pc is null )
+            return false;
+
+        if ( !pc.UseInputControls )
             return false;
 
         if ( !Networking.IsActive )
             return true;
 
-        return TryGetNetworkRoot( holder, out var root ) && root is not null && root.Network.IsOwner;
-    }
-
-    private static bool TryGetNetworkRoot( GameObject start, out GameObject root )
-    {
-        var go = start;
+        var go = holder;
         while ( go is not null )
         {
             if ( go.Network.Active )
-            {
-                root = go.Network.RootGameObject ?? go;
-                return true;
-            }
+                return go.Network.IsOwner;
 
             go = go.Parent;
         }
 
-        root = null;
-        return false;
+        return true;
     }
 
     private static PlayerController ResolvePlayerControllerOnRoot( GameObject root )

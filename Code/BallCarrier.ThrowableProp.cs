@@ -8,7 +8,9 @@ public sealed partial class BallCarrier
             return;
 
         var dir = GetCameraThrowDirection();
-        _heldProp.Throw( dir, null, GetThrowReleaseWorldUpOverrideOrNull() );
+        if ( !_heldProp.Throw( dir, null, GetThrowReleaseWorldUpOverrideOrNull() ) )
+            return;
+
         _heldProp = null;
     }
 

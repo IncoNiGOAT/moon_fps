@@ -25,13 +25,11 @@ public sealed class TeamMember : Component
 
     public void ApplyTeamVisual()
     {
-        if ( !TintBodyByTeam )
-            return;
-
-        var renderer = Components.GetInChildren<SkinnedModelRenderer>( true );
-        if ( renderer is null )
-            return;
-
-        renderer.Tint = Team == TeamId.Red ? RedColor : BlueColor;
+        if ( TintBodyByTeam )
+        {
+            var renderer = Components.GetInChildren<SkinnedModelRenderer>( true );
+            if ( renderer is not null )
+                renderer.Tint = Team == TeamId.Red ? RedColor : BlueColor;
+        }
     }
 }

@@ -1,9 +1,8 @@
 using Sandbox;
 
 /// <summary>
-/// Multijoueur : n'active clavier / souris / caméra que sur le <see cref="PlayerController"/> dont la racine réseau
-/// appartient au joueur local (<see cref="GameObject.Network.IsOwner"/>).
-/// Mets ce composant sur le GameMode avec <see cref="MoonPlayerSpawner"/>.
+/// Multijoueur : n&apos;active clavier / souris / caméra que pour le <see cref="GameObject.Network.IsOwner"/>
+/// du prefab joueur. Hors réseau : tout activé (solo / bots / éditeur).
 /// </summary>
 public sealed class NetworkLocalInputLock : Component
 {
@@ -14,65 +13,40 @@ public sealed class NetworkLocalInputLock : Component
         if ( !EnabledLock )
             return;
 
-        // Hors session (play solo / éditeur) : laisse LocalSoloInputGate + DebugPlayerSwitcher gérer les entrées.
-        if ( !Networking.IsActive )
-            return;
-
-        // Tant qu'aucun perso n'est possédé localement, ne rien verrouiller (choix d'équipe MoonPlayerSpawner, lobby, etc.).
-        var hasLocalOwnedPlayer = false;
         foreach ( var pc in Scene.GetAllComponents<PlayerController>() )
         {
             if ( pc is null )
                 continue;
 
-            if ( !TryGetNetworkRoot( pc.GameObject, out var root ) )
-                continue;
-
-            if ( root.Network.IsOwner )
+            if ( !Networking.IsActive )
             {
-                hasLocalOwnedPlayer = true;
-                break;
-            }
-        }
-
-        if ( !hasLocalOwnedPlayer )
-            return;
-
-        foreach ( var pc in Scene.GetAllComponents<PlayerController>() )
-        {
-            if ( pc is null )
-                continue;
-
-            if ( !TryGetNetworkRoot( pc.GameObject, out var root ) )
-            {
-                pc.UseInputControls = false;
-                pc.UseLookControls = false;
-                pc.UseCameraControls = false;
+                pc.UseInputControls = true;
+                pc.UseLookControls = true;
+                pc.UseCameraControls = true;
                 continue;
             }
 
-            var own = root.Network.IsOwner;
-            pc.UseInputControls = own;
-            pc.UseLookControls = own;
-            pc.UseCameraControls = own;
+            var owned = IsLocallyOwnedHierarchy( pc.GameObject );
+            pc.UseInputControls = owned;
+            pc.UseLookControls = owned;
+            pc.UseCameraControls = owned;
         }
     }
 
-    private static bool TryGetNetworkRoot( GameObject start, out GameObject root )
+    private static bool IsLocallyOwnedHierarchy( GameObject start )
     {
+        if ( start is null || !start.IsValid() )
+            return false;
+
         var go = start;
         while ( go is not null )
         {
             if ( go.Network.Active )
-            {
-                root = go.Network.RootGameObject ?? go;
-                return true;
-            }
+                return go.Network.IsOwner;
 
             go = go.Parent;
         }
 
-        root = null;
         return false;
     }
 }

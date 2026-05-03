@@ -12,10 +12,10 @@ public sealed partial class BallCarrier
         _timeSinceChargeStarted = 0f;
         _currentCharge01 = 0f;
 
+        // Ne pas effacer _freeOverchargeFromEnemyCatch ici : sinon <see cref="UpdateEnemyCatchBonusExpiry"/>
+        // ne tourne plus et le bonus « surchauffe gratuite » reste épinglé tant que le clic est maintenu.
         if ( _freeOverchargeFromEnemyCatch )
         {
-            _freeOverchargeFromEnemyCatch = false;
-            _enemyCatchBonusFromEnemy = false;
             _pinChargeAtOverchargePeakUntilRelease = true;
             var peakOvercharge01 = GetOverchargeZoneEnd01();
             _timeSinceChargeStarted = peakOvercharge01 * maxCharge;
@@ -121,6 +121,8 @@ public sealed partial class BallCarrier
         _pinChargeAtOverchargePeakUntilRelease = false;
         _isChargingThrow = false;
         _isThrowing = true;
+        _freeOverchargeFromEnemyCatch = false;
+        _enemyCatchBonusFromEnemy = false;
         if ( overchargeThrow )
         {
             _overchargeDashAnimHoldActive = true;
@@ -163,7 +165,12 @@ public sealed partial class BallCarrier
 
         var throwDirection = GetCameraThrowDirection();
         var forceToUse = _queuedThrowForce > 0f ? _queuedThrowForce : ThrowForce;
-        _heldBall.Throw( throwDirection, forceToUse, GetThrowReleaseWorldUpOverrideOrNull(), GetThrowReleaseLateralOverrideOrNull() );
+        if ( !_heldBall.Throw( throwDirection, forceToUse, GetThrowReleaseWorldUpOverrideOrNull(), GetThrowReleaseLateralOverrideOrNull() ) )
+        {
+            StopThrowAnimation();
+            return;
+        }
+
         _heldBall = null;
         _queuedThrowForce = 0f;
         StopThrowAnimation();

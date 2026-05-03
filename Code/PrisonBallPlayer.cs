@@ -203,8 +203,8 @@ public sealed class PrisonBallPlayer : Component
             return;
         }
 
-        if ( SoftMidlineBarrier.SceneHasPlayerBlockingSoftWall( Scene ) )
-            SoftMidlineBarrier.ConfigureRagdollHierarchy( this, _jailKnockdownRagdoll );
+        if ( PlayerOnlyWall.SceneHasPlayerBlockingSoftWall( Scene ) )
+            PlayerOnlyWall.ConfigureRagdollHierarchy( this, _jailKnockdownRagdoll );
 
         var ownerLink = _jailKnockdownRagdoll.Components.GetOrCreate<RagdollOwnerLink>();
         ownerLink.OwnerRoot = GameObject;
@@ -479,31 +479,8 @@ public sealed class PrisonBallPlayer : Component
             Scene.Camera.WorldRotation = rotation;
     }
 
-    private bool IsLocalOwnedPlayer()
-    {
-        if ( !Networking.IsActive )
-            return _playerController?.UseCameraControls ?? false;
-
-        return TryGetNetworkRoot( GameObject, out var root ) && root.Network.IsOwner;
-    }
-
-    private static bool TryGetNetworkRoot( GameObject start, out GameObject root )
-    {
-        var go = start;
-        while ( go is not null )
-        {
-            if ( go.Network.Active )
-            {
-                root = go.Network.RootGameObject ?? go;
-                return true;
-            }
-
-            go = go.Parent;
-        }
-
-        root = null;
-        return false;
-    }
+    private bool IsLocalOwnedPlayer() =>
+        _playerController?.UseCameraControls ?? false;
 
     private static bool AreSameTeam( GameObject a, GameObject b )
     {

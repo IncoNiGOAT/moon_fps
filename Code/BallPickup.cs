@@ -1,14 +1,7 @@
 using Sandbox;
 using System.Collections.Generic;
 
-/// <summary>
-/// Balle 100% locale (gameplay solo). Aucun code reseau ici.
-///
-/// Si un <see cref="BallNetworkSync"/> est present sur le meme GameObject (multijoueur),
-/// les API publiques <see cref="PickUp"/> et <see cref="Throw"/> lui sont deleguees pour
-/// que l'hote reste autoritaire. Sinon (offline/editeur), tout s'applique directement
-/// via les methodes <c>ApplyXxxLocal</c>.
-/// </summary>
+/// <summary> Ramassage / lancer : solo local ; en ligne via <see cref="BallNetworkSync"/> (ownership + sync). </summary>
 public sealed class BallPickup : Component, Component.ICollisionListener
 {
     #region Inspector
@@ -52,14 +45,16 @@ public sealed class BallPickup : Component, Component.ICollisionListener
     private TimeSince _timeSinceThrow;
     private int _throwBounceCount;
 
-    /// <summary> Permet a <see cref="BallNetworkSync"/> d'inhiber la simulation locale du rigidbody. </summary>
-    internal bool LocalPhysicsInhibited { get; set; }
-
     private bool _devAttackFlightPreview;
     private GameObject _devFakeThrowerForTint;
     private TeamId? _devForcedAttackTintTeam;
     private float _devSimulatedLinearSpeedForTrail;
     private float _devPreviewMotionTimeScale = 1f;
+
+    /// <summary> Spectateur / proxy : pas de tenue locale, le transform est piloté par le réseau. </summary>
+    public bool LocalPhysicsInhibited { get; set; }
+
+    private BallNetworkSync _netSync;
 
     public float DevSimulatedLinearSpeedForTrail => _devSimulatedLinearSpeedForTrail;
     public float DevPreviewMotionTimeScale => _devPreviewMotionTimeScale;
@@ -73,8 +68,7 @@ public sealed class BallPickup : Component, Component.ICollisionListener
 
     protected override void OnStart()
     {
-        MoonFpsNetworkSanitizer.DisableTemplateGameManagers( Scene );
-
+        _netSync = Components.Get<BallNetworkSync>();
         _rigidbody = Components.Get<Rigidbody>();
         EnsureBallContinuousCollision();
         CacheBallRenderers();
@@ -84,8 +78,6 @@ public sealed class BallPickup : Component, Component.ICollisionListener
 
     protected override void OnUpdate()
     {
-        // Proxy reseau : le sync moteur drive le transform (NetworkMode=Object).
-        // On ne doit PAS ecrire la position, sinon conflit avec le sync.
         if ( LocalPhysicsInhibited )
             return;
 
@@ -127,31 +119,29 @@ public sealed class BallPickup : Component, Component.ICollisionListener
         WorldRotation = Holder.WorldRotation;
     }
 
-    #region API publique (utilisee par BallCarrier) — delegue au reseau si dispo
+    #region API publique (BallCarrier)
     public bool PickUp( GameObject player, GameObject holdPoint )
     {
-        var sync = Components.Get<BallNetworkSync>();
-        if ( sync is not null )
-            return sync.RequestPickup( player, holdPoint );
+        _netSync ??= Components.Get<BallNetworkSync>();
+        if ( _netSync is not null && Networking.IsActive )
+            return _netSync.RequestPickup( player, holdPoint );
 
         return ApplyPickupLocal( player, holdPoint );
     }
 
-    public void Throw( Vector3 direction, float? customForce = null, float? releaseWorldUpOverride = null, float? releaseLateralOverride = null )
+    public bool Throw( Vector3 direction, float? customForce = null, float? releaseWorldUpOverride = null, float? releaseLateralOverride = null )
     {
-        var sync = Components.Get<BallNetworkSync>();
-        if ( sync is not null )
-        {
-            sync.RequestThrow( direction, customForce, releaseWorldUpOverride, releaseLateralOverride );
-            return;
-        }
+        _netSync ??= Components.Get<BallNetworkSync>();
+        if ( _netSync is not null && Networking.IsActive )
+            return _netSync.RequestThrow( direction, customForce, releaseWorldUpOverride, releaseLateralOverride );
 
         ApplyThrowLocal( direction, customForce, releaseWorldUpOverride, releaseLateralOverride );
+        return true;
     }
     #endregion
 
-    #region Application locale (gameplay solo / appele par BallNetworkSync sur l'autoritaire)
-    /// <summary> Applique le ramassage purement localement (sans reseau). </summary>
+    #region Application locale
+    /// <summary> Ramassage local. </summary>
     internal bool ApplyPickupLocal( GameObject player, GameObject holdPoint )
     {
         if ( IsHeld || player is null || !player.IsValid() || holdPoint is null || !holdPoint.IsValid() )
@@ -185,7 +175,7 @@ public sealed class BallPickup : Component, Component.ICollisionListener
         return true;
     }
 
-    /// <summary> Applique le lancer purement localement. Active la physique locale sauf si <see cref="LocalPhysicsInhibited"/>. </summary>
+    /// <summary> Lancer local. </summary>
     internal void ApplyThrowLocal( Vector3 direction, float? customForce, float? releaseWorldUpOverride, float? releaseLateralOverride )
     {
         if ( !IsHeld )
@@ -219,10 +209,8 @@ public sealed class BallPickup : Component, Component.ICollisionListener
 
         SetCollidersEnabled( true );
 
-        if ( !LocalPhysicsInhibited && _rigidbody is not null )
+        if ( _rigidbody is not null )
         {
-            // Ensure enabled (defensive) - mais on doit JAMAIS avoir besoin de toggler ici
-            // si BallNetworkSync.UpdateLocalPhysicsBasedOnOwnership a fait son boulot.
             if ( !_rigidbody.Enabled )
                 _rigidbody.Enabled = true;
 
@@ -235,9 +223,7 @@ public sealed class BallPickup : Component, Component.ICollisionListener
             LastThrowSpeed = releaseVelocity.Length;
         }
         else
-        {
             LastThrowSpeed = force;
-        }
 
         RefreshBallTint();
     }
@@ -277,7 +263,7 @@ public sealed class BallPickup : Component, Component.ICollisionListener
         LastThrower = null;
         RefreshBallTint();
 
-        if ( !LocalPhysicsInhibited && _rigidbody is not null && !IsHeld )
+        if ( _rigidbody is not null && !IsHeld )
         {
             _rigidbody.Enabled = true;
             EnsureBallContinuousCollision();
@@ -387,11 +373,6 @@ public sealed class BallPickup : Component, Component.ICollisionListener
         if ( !IsThrown || IsHeld )
             return;
 
-        // Seul le owner reseau (qui simule physiquement) detecte les collisions et decide.
-        // Sur les proxies, LocalPhysicsInhibited = true → on ignore (le sync recevra le resultat).
-        if ( LocalPhysicsInhibited )
-            return;
-
         var otherObject = other.Other.GameObject;
         if ( otherObject is null )
             return;
@@ -416,33 +397,30 @@ public sealed class BallPickup : Component, Component.ICollisionListener
             return;
         }
 
-        // Broadcast du jail aux autres clients via le sync reseau (chacun appliquera le ragdoll
-        // sur sa copie locale du joueur cible). En offline, applique direct.
         var ballVel = _rigidbody is not null ? _rigidbody.Velocity : Vector3.Zero;
-        var sync = Components.Get<BallNetworkSync>();
-        if ( sync is not null )
+        _netSync ??= Components.Get<BallNetworkSync>();
+        if ( _netSync is not null && Networking.IsActive )
         {
-            sync.BroadcastJailEvent( victim.GameObject, LastThrower, ballVel );
+            _netSync.BroadcastJailEvent( victim.GameObject, LastThrower, ballVel );
+            RegisterThrowSurfaceHit();
+            return;
         }
+
+        Vector3? jailKnock = null;
+        if ( ballVel.Length > 8f )
+            jailKnock = ballVel;
         else
         {
-            // Solo / pas de sync : applique directement
-            Vector3? jailKnock = null;
-            if ( ballVel.Length > 8f )
-                jailKnock = ballVel;
-            else
-            {
-                var push = ( victim.GameObject.WorldPosition - WorldPosition ).WithZ( 0f );
-                if ( push.Length > 0.1f )
-                    jailKnock = push.Normal * 400f;
-            }
-
-            victim.Jail( jailKnock );
-
-            var thrower = LastThrower is not null ? FindPrisonBallPlayerFromRoot( LastThrower ) : null;
-            if ( thrower is not null && thrower != victim && thrower.InPrison )
-                thrower.FreeToArena();
+            var push = ( victim.GameObject.WorldPosition - WorldPosition ).WithZ( 0f );
+            if ( push.Length > 0.1f )
+                jailKnock = push.Normal * 400f;
         }
+
+        victim.Jail( jailKnock );
+
+        var thrower = LastThrower is not null ? FindPrisonBallPlayerFromRoot( LastThrower ) : null;
+        if ( thrower is not null && thrower != victim && thrower.InPrison )
+            thrower.FreeToArena();
 
         RegisterThrowSurfaceHit();
     }
@@ -452,11 +430,11 @@ public sealed class BallPickup : Component, Component.ICollisionListener
         _throwBounceCount++;
         if ( _throwBounceCount >= MaxKillBounces )
         {
-            ApplyCleanLocal();
+            _netSync ??= Components.Get<BallNetworkSync>();
+            if ( _netSync is not null && Networking.IsActive && GameObject.Network.IsOwner )
+                _netSync.OnHostBallCleaned();
 
-            // Notifie le sync reseau (s'il existe) pour repliquer le clean aux autres machines.
-            var sync = Components.Get<BallNetworkSync>();
-            sync?.OnHostBallCleaned();
+            ApplyCleanLocal();
         }
     }
 

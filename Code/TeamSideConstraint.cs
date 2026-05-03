@@ -7,7 +7,7 @@ public enum TeamConstraintAxis
 }
 
 /// <summary>
-/// <b>Recommandé :</b> ne plus utiliser le clamp ici ; murs médians avec <see cref="InvisibleBarrier"/> (passage props / <see cref="InvisibleBarrier.BlockPlayer"/> selon le besoin).
+/// <b>Recommandé :</b> ne plus utiliser le clamp ici ; murs médians avec <see cref="PlayerOnlyWall"/> (tout traverse sauf joueurs).
 /// <para>Ce composant reste en secours si <see cref="UseCodeClamp"/> est coché (ancien comportement).</para>
 /// </summary>
 public sealed class TeamSideConstraint : Component
