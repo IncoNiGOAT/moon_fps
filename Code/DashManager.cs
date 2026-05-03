@@ -25,6 +25,8 @@ public sealed class DashManager : Component
     private TimeSince _lastJumpTap;
     private TimeSince _lastDash;
     private bool _waitingForSecondJumpTap;
+    /// <summary> Dash vertical (double espace) : un seul par phase aérienne pour éviter le fly ; Run / Duck inchangés. </summary>
+    private bool _upAirDashConsumed;
 
     private float _dashDistanceRemaining;
     private float _dashStartDistance;
@@ -47,6 +49,9 @@ public sealed class DashManager : Component
         if ( IsLocallyControlled() )
         {
             DisableRunning();
+
+            if ( _playerController?.IsOnGround == true )
+                _upAirDashConsumed = false;
 
             if ( _waitingForSecondJumpTap && _lastJumpTap >= DoubleJumpTapTime )
             {
@@ -141,7 +146,7 @@ public sealed class DashManager : Component
 
     private void TryStartDash( Vector3 direction )
     {
-        if ( !CanStartDash() )
+        if ( !CanStartDash( direction ) )
         {
             return;
         }
@@ -150,7 +155,7 @@ public sealed class DashManager : Component
         _dashRequestRemaining = 0f;
     }
 
-    private bool CanStartDash()
+    private bool CanStartDashCore()
     {
         if ( _dashDistanceRemaining > 0f )
             return false;
@@ -161,7 +166,29 @@ public sealed class DashManager : Component
         if ( DashDistance <= 0.01f || DashSpeed <= 0.01f )
             return false;
 
+        _playerController ??= Components.Get<PlayerController>();
+        return _playerController is not null;
+    }
+
+    /// <param name="direction"> Direction normalisée ou quasi (ex. <see cref="Vector3.Up"/> pour double saut). </param>
+    private bool CanStartDash( Vector3 direction )
+    {
+        if ( !CanStartDashCore() )
+            return false;
+
+        if ( IsUpwardDash( direction ) && !_playerController.IsOnGround && _upAirDashConsumed )
+            return false;
+
         return true;
+    }
+
+    /// <summary> Dash « double espace » (poussée monde +Z), pas Run / Duck. </summary>
+    private static bool IsUpwardDash( Vector3 direction )
+    {
+        if ( direction.Length < 0.001f )
+            return false;
+
+        return direction.Normal.Dot( Vector3.Up ) > 0.85f;
     }
 
     private Vector3 GetMoveDashDirection()
@@ -184,6 +211,10 @@ public sealed class DashManager : Component
 
     private void StartDash( Vector3 direction )
     {
+        _playerController ??= Components.Get<PlayerController>();
+        if ( _playerController is not null && IsUpwardDash( direction ) && !_playerController.IsOnGround )
+            _upAirDashConsumed = true;
+
         _dashDir = direction.Normal;
         _dashStartDistance = DashDistance <= 0f ? 0f : DashDistance;
         _dashDistanceRemaining = _dashStartDistance;
@@ -275,7 +306,7 @@ public sealed class DashManager : Component
     /// <summary> Indique si un appui dash serait accepté tout de suite (hors dash en cours). </summary>
     public bool IsDashReady()
     {
-        return CanStartDash();
+        return CanStartDashCore();
     }
 
     /// <summary> <c>true</c> pendant que le déplacement dash est appliqué (pour HUD). </summary>

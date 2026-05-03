@@ -88,6 +88,18 @@ public sealed partial class BallCarrier : Component
     /// <summary> Extension dash après lancer surchauffe (<see cref="DashManager"/> lit cette valeur). </summary>
     [Sync] public bool NetAnimOverchargeThrowDash { get; set; }
 
+    /// <summary> Ragdoll stunt (surcharge ratée) : incrémenté côté propriétaire (événement / debug). </summary>
+    [Sync] public int NetChargeStuntRagdollVersion { get; set; }
+
+    /// <summary> Impulsion monde du stunt (même valeur que le propriétaire). </summary>
+    [Sync] public Vector3 NetChargeStuntRagdollImpulse { get; set; }
+
+    /// <summary> Vrai tant que le propriétaire est en stunt : les autres clients s&apos;alignent dessus. </summary>
+    [Sync] public bool NetChargeStuntRagdollActive { get; set; }
+
+    /// <summary> Position monde du root ragdoll côté propriétaire (mise à jour chaque frame pendant le stunt). </summary>
+    [Sync] public Vector3 NetChargeStuntRagdollAnchorWorld { get; set; }
+
     #endregion
 
     #region Inspector — Stunt (ragdoll)
@@ -150,6 +162,8 @@ public sealed partial class BallCarrier : Component
     private float _savedJumpSpeed;
     private float _currentRagdollDuration;
     private readonly List<(SkinnedModelRenderer Renderer, bool WasEnabled)> _ragdollSkinnedRestore = new();
+    private bool _stuntRagdollWalkLocked;
+    private bool _stuntRagdollNetworkProxyVisual;
 
     /// <summary> État exposé à <see cref="PlayerHud"/> / <see cref="BallCarrierAimZoom"/>. </summary>
     public bool HasHeldBall => _heldBall is not null;
@@ -244,6 +258,8 @@ public sealed partial class BallCarrier : Component
     private void OnUpdateCore()
     {
         RefreshDevAlwaysOverchargeBonusFromPlayerHud();
+
+        SyncChargeStuntRagdollFromOwnerAuthority();
 
         if ( IsJailKnockdownRagdollActive )
         {
