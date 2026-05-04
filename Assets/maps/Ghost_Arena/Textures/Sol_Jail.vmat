@@ -1,0 +1,41 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/complex.shader"
+
+	//---- PBR ----
+	F_METALNESS_TEXTURE 1
+	F_SPECULAR 1
+
+	//---- Ambient Occlusion ----
+	g_flAmbientOcclusionDirectDiffuse "0.000"
+	g_flAmbientOcclusionDirectSpecular "0.000"
+	TextureAmbientOcclusion "maps/ghost_arena/textures/ghost_arena_offi_sol_jail_ao.1001.png"
+
+	//---- Color ----
+	g_flModelTintAmount "1.000"
+	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
+	TextureColor "maps/ghost_arena/textures/ghost_arena_offi_sol_jail_basecolor.1001.png"
+
+	//---- Fade ----
+	g_flFadeExponent "1.000"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+
+	//---- Metalness ----
+	TextureMetalness "maps/ghost_arena/textures/ghost_arena_offi_sol_jail_metallic.1001.png"
+
+	//---- Normal ----
+	TextureNormal "maps/ghost_arena/textures/ghost_arena_offi_sol_jail_normal.1001.png"
+
+	//---- Roughness ----
+	g_flRoughnessScaleFactor "1.000"
+	TextureRoughness "maps/ghost_arena/textures/ghost_arena_offi_sol_jail_roughness.1001.png"
+
+	//---- Texture Coordinates ----
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	g_vTexCoordScrollSpeed "[0.000 0.000]"
+}

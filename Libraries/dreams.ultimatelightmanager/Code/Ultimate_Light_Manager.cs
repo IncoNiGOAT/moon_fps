@@ -213,38 +213,12 @@ public class LightManager : Component, Component.ExecuteInEditor
             return; 
         }
 
-        // 3. Frustum Culling
-        if (EnableFrustumCulling)
-        {
-            var camPos = Scene.Camera.Transform.Position;
-            var camForward = Scene.Camera.Transform.Rotation.Forward;
-            var dirToLight = Transform.Position - camPos;
-
-            if (Vector3.Dot(camForward, dirToLight) <= 0) return; 
-
-            var screenPos = Scene.Camera.PointToScreenNormal(Transform.Position);
-            bool onScreen = screenPos.x > -0.2f && screenPos.x < 1.2f && 
-                            screenPos.y > -0.2f && screenPos.y < 1.2f;
-
-            if (!onScreen) return; 
-        }
-
-        // 4. LOD Temporel
-        if (EnableLOD)
-        {
-            if (Time.Now < _nextUpdate) return;
-            
-            float delay = 0.0f;
-            if (_distSquaredToCam > 1000 * 1000) delay = 0.1f;      
-            else if (_distSquaredToCam > 500 * 500) delay = 0.05f;  
-
-            _nextUpdate = Time.Now + delay + Game.Random.Float(0.0f, 0.01f);
-        }
-
         EnsureCorrectLightType();
 
         // ---------------------------------------------------------
-        // B. GAMEPLAY LOGIC
+        // B. GAMEPLAY LOGIC (toujours appliqué si la lumière est dans la distance max)
+        // Frustum / LOD ne doivent pas court-circuiter avant Enabled/Couleur : sinon la lumière
+        // peut rester à Enabled=false après le culling distance (vue depuis l’autre équipe / autre côté de la map).
         // ---------------------------------------------------------
 
         // 1. Sensor Logic
@@ -271,6 +245,46 @@ public class LightManager : Component, Component.ExecuteInEditor
         
         // 4. Couleur
         light.LightColor = CalculateColor(finalBrightness);
+
+        // 3. Frustum Culling — uniquement audio / debug (l’état de la lumière est déjà à jour)
+        if (EnableFrustumCulling)
+        {
+            var camPos = Scene.Camera.Transform.Position;
+            var camForward = Scene.Camera.Transform.Rotation.Forward;
+            var dirToLight = Transform.Position - camPos;
+
+            if (Vector3.Dot(camForward, dirToLight) <= 0) 
+            {
+                UpdateAudio( false );
+                return;
+            }
+
+            var screenPos = Scene.Camera.PointToScreenNormal(Transform.Position);
+            bool onScreen = screenPos.x > -0.2f && screenPos.x < 1.2f && 
+                            screenPos.y > -0.2f && screenPos.y < 1.2f;
+
+            if (!onScreen)
+            {
+                UpdateAudio( false );
+                return;
+            }
+        }
+
+        // 4. LOD Temporel — ne ralentit plus l’intensité / Enabled ; seulement audio + debug
+        if (EnableLOD)
+        {
+            if (Time.Now < _nextUpdate)
+            {
+                UpdateAudio( shouldBeOn );
+                return;
+            }
+            
+            float delay = 0.0f;
+            if (_distSquaredToCam > 1000 * 1000) delay = 0.1f;      
+            else if (_distSquaredToCam > 500 * 500) delay = 0.05f;   
+
+            _nextUpdate = Time.Now + delay + Game.Random.Float(0.0f, 0.01f);
+        }
 
         // 5. Audio
         UpdateAudio(shouldBeOn);

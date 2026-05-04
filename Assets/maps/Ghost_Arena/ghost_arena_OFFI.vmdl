@@ -30,16 +30,28 @@
 								to = "maps/ghost_arena/textures/low_res_out.vmat"
 							},
 							{
-								from = "wall_ground_jail.vmat"
-								to = "maps/ghost_arena/textures/ground_jail.vmat"
-							},
-							{
 								from = "big_light.vmat"
 								to = "maps/ghost_arena/textures/big_light.vmat"
 							},
 							{
 								from = "toit.vmat"
 								to = "maps/ghost_arena/textures/toit.vmat"
+							},
+							{
+								from = "topjail.vmat"
+								to = "maps/ghost_arena/textures/top_jail.vmat"
+							},
+							{
+								from = "wallbas.001.vmat"
+								to = "maps/ghost_arena/textures/wall_bas.vmat"
+							},
+							{
+								from = "sol_jail.vmat"
+								to = "maps/ghost_arena/textures/sol_jail.vmat"
+							},
+							{
+								from = "mur_jail.vmat"
+								to = "maps/ghost_arena/textures/mur_jail.vmat"
 							},
 						]
 						use_global_default = false
@@ -63,26 +75,8 @@
 						parent_bone = ""
 						import_filter = 
 						{
-							exclude_by_default = true
-							exception_list = 
-							[
-								"Cube_005",
-								"Plane_005",
-								"Plane_008",
-								"Plane_009",
-								"Sol_001",
-								"tOIT",
-								"Cube_008",
-								"Cube_009",
-								"Cube_010",
-								"Plane_010",
-								"Plane_012",
-								"Plane_013",
-								"Plane_014",
-								"Sol_002",
-								"tOIT_001",
-								"Cylinder",
-							]
+							exclude_by_default = false
+							exception_list = [  ]
 						}
 					},
 				]

@@ -4,6 +4,9 @@ Layer0
 {
 	shader "shaders/complex.shader"
 
+	//---- Normal ----
+	F_SCALE_NORMAL_MAP 1
+
 	//---- PBR ----
 	F_METALNESS_TEXTURE 1
 	F_SPECULAR 1
@@ -11,12 +14,12 @@ Layer0
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
 	g_flAmbientOcclusionDirectSpecular "0.000"
-	TextureAmbientOcclusion "maps/Ghost_Arena/Textures/Ghost_Arena_one side_for txt_Sol_AO.1001.png"
+	TextureAmbientOcclusion "maps/ghost_arena/textures/ghost_arena_offi_sol_ao.1001.png"
 
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "maps/Ghost_Arena/Textures/Ghost_Arena_one side_for txt_Sol_BaseColor.1001.png"
+	TextureColor "maps/ghost_arena/textures/ghost_arena_offi_sol_basecolor.1001.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -25,14 +28,15 @@ Layer0
 	g_bFogEnabled "1"
 
 	//---- Metalness ----
-	TextureMetalness "maps/Ghost_Arena/Textures/Ghost_Arena_one side_for txt_Sol_Metallic.1001.png"
+	TextureMetalness "maps/ghost_arena/textures/ghost_arena_offi_sol_metallic.1001.png"
 
 	//---- Normal ----
-	TextureNormal "maps/Ghost_Arena/Textures/Ghost_Arena_one side_for txt_Sol_Normal.1001.png"
+	g_flNormalMapScaleFactor "1.000"
+	TextureNormal "maps/ghost_arena/textures/ghost_arena_offi_sol_normal.1001.png"
 
 	//---- Roughness ----
-	g_flRoughnessScaleFactor "1.000"
-	TextureRoughness "maps/Ghost_Arena/Textures/Ghost_Arena_one side_for txt_Sol_Roughness.1001.png"
+	g_flRoughnessScaleFactor "0.983"
+	TextureRoughness "maps/ghost_arena/textures/ghost_arena_offi_sol_roughness.1001.png"
 
 	//---- Texture Coordinates ----
 	g_vTexCoordOffset "[0.000 0.000]"

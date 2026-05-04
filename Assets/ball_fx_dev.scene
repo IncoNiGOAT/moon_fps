@@ -200,7 +200,7 @@
           "Position": "14.7965851,0,0",
           "Rotation": "0,0,0,1",
           "Scale": "1,1,1",
-          "Tags": "particles,hidden",
+          "Tags": "particles",
           "Enabled": true,
           "NetworkMode": 2,
           "NetworkFlags": 0,
@@ -427,7 +427,7 @@
           "Position": "-14.7376261,0,0",
           "Rotation": "0,0,0,1",
           "Scale": "1,1,1",
-          "Tags": "particles,hidden",
+          "Tags": "particles",
           "Enabled": true,
           "NetworkMode": 2,
           "NetworkFlags": 0,
@@ -654,7 +654,7 @@
           "Position": "0,0,0",
           "Rotation": "0,0,0.707106769,0.707106769",
           "Scale": "1,1,1",
-          "Tags": "particles,hidden",
+          "Tags": "particles",
           "Enabled": true,
           "NetworkMode": 2,
           "NetworkFlags": 0,
@@ -881,7 +881,7 @@
           "Position": "0,0,0",
           "Rotation": "-0.49999997,0.49999997,0.49999997,0.49999997",
           "Scale": "1,1,1",
-          "Tags": "particles,hidden",
+          "Tags": "particles",
           "Enabled": true,
           "NetworkMode": 2,
           "NetworkFlags": 0,
@@ -1108,7 +1108,7 @@
           "Position": "0,0,0",
           "Rotation": "0,0,0,1",
           "Scale": "1.66666663,1.66666663,1.66666663",
-          "Tags": "particles,hidden",
+          "Tags": "particles",
           "Enabled": true,
           "NetworkMode": 2,
           "NetworkFlags": 0,
@@ -1674,13 +1674,13 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.MovieMaker.MovieRecorderSystem": {
-        "DisableClientRecording": false
-      },
       "Sandbox.SelectionSetsSystem": {
         "Data": {
           "SelectionSets": []
         }
+      },
+      "Sandbox.MovieMaker.MovieRecorderSystem": {
+        "DisableClientRecording": false
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {

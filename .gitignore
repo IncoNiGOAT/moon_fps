@@ -16,6 +16,7 @@ Exports/
 # Cache éditeur s&box (pas des assets projet ; gigantesque si versionné)
 .sbox/thumbnails/
 .sbox/cloud.db
+.sbox/cloud/**/*.tmp
 
 # Profils de debug machine locale
 *launchSettings.json
