@@ -1,0 +1,21 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Ghost Arena Red",
+      "Type": "map",
+      "Org": "local",
+      "Ident": "ghostarenared",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": [],
+      "EditorReferences": [],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "maps/ghost_arena/ghost_arena_red.vmap"
+      }
+    }
+  }
+}

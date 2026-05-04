@@ -37,6 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="../Libraries/dreams.ultimatelightmanager/Code/ultimatelightmanager.csproj" />
 		<ProjectReference Include="../../../../SteamLibrary/steamapps/common/sbox/addons/base/code/Base Library.csproj" />
 		<ProjectReference Include="../Libraries/pumpedbit.citizenretarget/Code/citizenretarget.csproj" />
 	</ItemGroup>

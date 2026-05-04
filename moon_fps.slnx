@@ -8,6 +8,9 @@
     <Project Path="../../../SteamLibrary/steamapps/common/sbox/addons/base/code/Base Library.csproj" />
   </Folder>
   <Folder Name="/Libraries/">
+    <Project Path="Libraries/dreams.ultimatelightmanager/Code/ultimatelightmanager.csproj" />
+    <Project Path="Libraries/dreams.ultimatelightmanager/Editor/ultimatelightmanager.editor.csproj" />
+    <Project Path="Libraries/dreams.ultimatelightmanager/UnitTests/ultimatelightmanager.unittest.csproj" />
     <Project Path="Libraries/pumpedbit.citizenretarget/Code/citizenretarget.csproj" />
     <Project Path="Libraries/pumpedbit.citizenretarget/Editor/citizenretarget.editor.csproj" />
   </Folder>
