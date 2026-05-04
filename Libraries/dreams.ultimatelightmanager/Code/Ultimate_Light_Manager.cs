@@ -199,7 +199,7 @@ public class LightManager : Component, Component.ExecuteInEditor
         if ( Scene.Camera == null ) return;
 
         // 1. Calcul Distance au Carré
-        _distSquaredToCam = Transform.Position.DistanceSquared(Scene.Camera.Transform.Position);
+        _distSquaredToCam = WorldPosition.DistanceSquared(Scene.Camera.WorldPosition);
         float maxDistSq = MaxDistance * MaxDistance;
 
         // 2. Hard Distance Culling
@@ -249,9 +249,9 @@ public class LightManager : Component, Component.ExecuteInEditor
         // 3. Frustum Culling — uniquement audio / debug (l’état de la lumière est déjà à jour)
         if (EnableFrustumCulling)
         {
-            var camPos = Scene.Camera.Transform.Position;
-            var camForward = Scene.Camera.Transform.Rotation.Forward;
-            var dirToLight = Transform.Position - camPos;
+            var camPos = Scene.Camera.WorldPosition;
+            var camForward = Scene.Camera.WorldRotation.Forward;
+            var dirToLight = WorldPosition - camPos;
 
             if (Vector3.Dot(camForward, dirToLight) <= 0) 
             {
@@ -259,7 +259,7 @@ public class LightManager : Component, Component.ExecuteInEditor
                 return;
             }
 
-            var screenPos = Scene.Camera.PointToScreenNormal(Transform.Position);
+            var screenPos = Scene.Camera.PointToScreenNormal(WorldPosition);
             bool onScreen = screenPos.x > -0.2f && screenPos.x < 1.2f && 
                             screenPos.y > -0.2f && screenPos.y < 1.2f;
 
@@ -426,14 +426,14 @@ public class LightManager : Component, Component.ExecuteInEditor
 
         if ( active != _wasActiveLastFrame )
         {
-            if ( active && SoundOn != null ) Sound.Play( SoundOn, Transform.Position );
+            if ( active && SoundOn != null ) Sound.Play( SoundOn, WorldPosition );
             _wasActiveLastFrame = active;
         }
 
         if ( active && SoundLoop != null )
         {
-            if ( !_loopHandle.IsValid() ) _loopHandle = Sound.Play( SoundLoop, Transform.Position );
-            _loopHandle.Position = Transform.Position;
+            if ( !_loopHandle.IsValid() ) _loopHandle = Sound.Play( SoundLoop, WorldPosition );
+            _loopHandle.Position = WorldPosition;
         }
         else _loopHandle?.Stop();
     }
@@ -474,7 +474,7 @@ public class LightManager : Component, Component.ExecuteInEditor
             if ( ShowLuxMeter )
             {
                 Gizmo.Draw.Color = Color.Yellow;
-                Gizmo.Draw.Text( $"INT: {Brightness * _masterFade:F1}", new Transform(Transform.Position + Vector3.Up * 10) );
+                Gizmo.Draw.Text( $"INT: {Brightness * _masterFade:F1}", new Transform( WorldPosition + Vector3.Up * 10, WorldRotation, 1f ) );
             }
 
             if ( ShowHeatmap )
@@ -485,7 +485,7 @@ public class LightManager : Component, Component.ExecuteInEditor
                 foreach(var l in AllLights)
                 {
                     if (l == this) continue;
-                    if (l.Transform.Position.DistanceSquared(Transform.Position) < warningRadius * warningRadius)
+                    if (l.WorldPosition.DistanceSquared(WorldPosition) < warningRadius * warningRadius)
                     {
                         overlapCount++;
                     }
@@ -495,7 +495,7 @@ public class LightManager : Component, Component.ExecuteInEditor
                 {
                     float heat = Math.Clamp(overlapCount / 3.0f, 0f, 1f);
                     Gizmo.Draw.Color = Color.Lerp(Color.Green, Color.Red, heat);
-                    Gizmo.Draw.LineSphere(Transform.Position, warningRadius / 2);
+                    Gizmo.Draw.LineSphere(WorldPosition, warningRadius / 2);
                 }
             }
         }

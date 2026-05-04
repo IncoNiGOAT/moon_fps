@@ -16,7 +16,7 @@ Layer0
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "maps/ghost_arena/textures/ghost_arena_one side_for txt_etx_lowres_basecolor.1001.png"
+	TextureColor "maps/ghost_arena/textures/ghost_arena_offi_etx_lowres_basecolor.1001.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
